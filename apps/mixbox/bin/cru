@@ -1,0 +1,41 @@
+#!/bin/sh
+#copyright by monlor
+source /etc/mixbox/bin/base
+
+# 添加定时任务，利用uci来储存信息，cru {a|d|c} [name] [crontab] 
+method="$1"
+name="$2"
+content="$3"
+
+case "$method" in
+a) 
+	[ -z "$name" -o -z "$content" ] && exit 1
+	mbdb set mixbox.cru.${name}="${content}"
+	;;
+d) 
+	[ -z "$name" ] && exit 1
+	mbdb del mixbox.cru.${name}
+ 	;;
+c)
+	mbdb clear mixbox.cru
+	;;
+l)
+	mbdb show mixbox.cru
+	;;
+esac
+
+# 使定时任务生效
+if [ -d /etc/crontabs/ ]; then 
+	cronpath="/etc/crontabs/root"
+elif [ -d /var/spool/cron/ ]; then
+	cronpath="/var/spool/cron/root"
+elif [ -d /var/spool/cron/crontabs/ ]; then
+	cronpath="/var/spool/cron/crontabs/root"
+else
+	logsh "【Tools】" "找不到定时任务文件！" -p
+	exit 1
+fi
+sed -i "/#mixbox-cru/d" ${cronpath} &> /dev/null
+[ -n "`mbdb keys mixbox.cru`" ] && mbdb values mixbox.cru | sed -e 's/.*/& #mixbox-cru/g' >> ${cronpath}
+
+exit 0

@@ -1,0 +1,3 @@
+#!/bin/sh
+grep -v $1  /tmp/pptp_connected > /tmp/pptp_connected.new
+mv /tmp/pptp_connected.new /tmp/pptp_connected

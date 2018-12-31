@@ -1,0 +1,7 @@
+service="AliDDNS"
+appname="aliddns"
+needver="0.0.1"
+supports="linux_arm,linux_mips,linux_x86_64,darwin_x86_64"
+appinfo="动态将你的路由器IP绑定到域名"
+newinfo=""
+version="0.0.2"

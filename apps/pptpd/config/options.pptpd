@@ -1,0 +1,19 @@
+name pptpd
+refuse-pap
+refuse-chap
+refuse-mschap
+require-mschap-v2
+mppe required,no40,no56,stateless
+mtu 1450
+mru 1450
+proxyarp
+lock
+nobsdcomp 
+novj
+novjccomp
+nologfd
+lcp-echo-interval 2
+lcp-echo-failure 3
+ip-up-script /etc/mixbox/apps/pptpd/scripts/ip-up
+ip-down-script /etc/mixbox/apps/pptpd/scripts/ip-down
+# tools

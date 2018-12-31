@@ -1,0 +1,7 @@
+service="MIXBOX"
+appname="mixbox"
+needver=""
+supports="linux_arm,linux_mips,linux_x86_64,darwin_x86_64"
+appinfo="一款支持多平台，多架构的Shell工具箱"
+newinfo="全新版本会尝试支持更多的平台，但还需要一点时间！"
+version="0.0.5"

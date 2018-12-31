@@ -1,0 +1,11 @@
+source /etc/mixbox/bin/base 
+appname="tools"
+uciname="profile"
+profilepath="${mbroot}/bin${profilepath}:$PATH"
+[ -z "${LD_LIBRARY_PATH}" ] && libpath="/usr/lib:/lib${libpath}" || libpath="${LD_LIBRARY_PATH}${libpath}"
+
+export PATH="${profilepath}"
+export LD_LIBRARY_PATH="${libpath}"
+export TERM=xterm
+
+alias ll="ls -l"

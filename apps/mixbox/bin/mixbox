@@ -1,0 +1,467 @@
+#!/bin/sh
+#copyright by monlor
+#------------------【Tools】--------------------
+source /etc/mixbox/bin/base
+param=$1
+
+get_status() {
+	applist installed -n 2> /dev/null | while read line; do
+		${mbroot}/apps/${line}/scripts/${line}.sh status 
+	done
+}
+
+title() {
+
+	clear
+	newver=$(applist mixbox -v)
+	if [ -z "$newver" ]; then
+		newver="获取中"
+		check_update_text=""
+	else
+		[ "$(versioncmp $mbver $newver)" = '1' ] && check_update_text="[\033[36m输入u更新工具箱\033[0m]" || check_update_text=""
+	fi
+	echo "***************************************"
+	echo "     *****   MIXBOX 工具箱   *****     "
+	echo "***************************************"
+	echo -e "当前版本：[$mbver]\t最新版本：[$newver]"
+	[ -f /proc/dmu/temperature ] && temp="`cat /proc/dmu/temperature | awk '{printf$4}' | cut -b 1-2`°C"
+	[ -f /sys/devices/virtual/thermal/thermal_zone0/temp ] && temp="$(cat /sys/devices/virtual/thermal/thermal_zone0/temp 2> /dev/null)°C"
+	if [ ! -z "$temp" ]; then
+		temptext="核心温度：[$temp]" 
+	else
+		wan_type="$(nvram get nv_wan_type 2> /dev/null)"
+		[ -n "$wan_type" ] && temptext="上网方式：[$wan_type]" || temptext="主机名称：[`uname -n`]"
+	fi
+	echo -e "设备型号：[$xq]  \t$temptext"
+	echo "***************************************"
+
+}
+
+# install_app() {
+# 	echo
+# 	echo "获取工具箱插件列表..."
+# 	wgetsh ${mbtmp}/applist.txt $mburl/temp/applist_"$xq".txt
+# 	if [ $? -ne 0 ]; then
+# 		[ "$model" == "arm" ] && applist="applist.txt"
+# 		[ "$model" == "mips" ] && applist="applist_mips.txt"
+# 		wgetsh ${mbtmp}/applist.txt $mburl/temp/"$applist"
+# 	fi
+# 	echo "********* 安装/更新插件 ***********"
+# 	echo "00. 返回"
+# 	i=1
+# 	if [ -f ${mbtmp}/applist.txt ]; then
+# 		cat ${mbtmp}/applist.txt | while read line
+# 		do
+# 			checkuci ${line} && tmp="`echo -e "\033[32m已安装\033[0m"`" || tmp="`echo -e "\033[31m未安装\033[0m"`"
+# 			[ "$i" -lt "10" ] && k="0$i" || k="$i"
+# 			echo "$k. [$tmp] ${line}"
+# 			let i=$i+1
+# 		done
+# 	else
+# 		echo "[插件列表未找到，请检查网络问题！]"
+# 	fi
+# 	echo
+# 	read -p "请选择要安装/更新的插件：" res
+# 	if [ ! -z "$res" ]; then 
+# 		if [ "$res" == '0' -o "$res" == '00' -o ! -f ${mbtmp}/applist.txt ]; then
+# 			manage
+# 		else
+# 			result=$(echo $res | grep -c "^[0-9][0-9]*$")
+# 			if [ "$result" == '1' ]; then
+# 				appname=$(cat ${mbtmp}/applist.txt | sed -n "$res"p)
+# 				if [ ! -z "${appname}" ]; then
+# 					if checkuci ${appname}; then 
+# 						read -p "插件${appname}已安装，是否要更新？[1/0] " res
+# 						[ "$res" == '1' ] && ${mbroot}/scripts/appmanage.sh upgrade ${appname} 
+# 					else
+# 						${mbroot}/scripts/appmanage.sh install ${appname}
+# 						if checkuci ${appname}; then 
+# 							source "${mbroot}"/apps/${appname}/config/mixbox.conf 
+# 							${appname}
+# 							
+# 						fi
+# 					fi
+# 				else
+# 					echo "输入有误！"
+# 				fi
+# 			fi 
+# 		fi
+# 	fi
+# }
+
+uninstall_app() {
+	echo
+	echo "********* 卸载插件 ***********"
+	echo "00. 返回管理菜单"
+	i=1
+	applist installed -n | while read line
+	do
+		[ "$i" -lt "10" ] && k="0$i" || k="$i"
+		echo "$k. ${line}"
+		let i=$i+1
+	done
+	echo
+	read -p "请选择要卸载的插件：" res
+	if [ ! -z "$res" ]; then
+		if [ "$res" == '0' ]; then
+			manage_menu
+		else
+			appname=$(applist installed -n | sed -n "$res"p)
+			if [ ! -z "${appname}" ]; then
+				${mbroot}/scripts/appmanage.sh uninstall ${appname}
+			else
+				echo "输入有误，请重新输入！"
+				uninstall_app
+			fi
+		fi
+	fi
+}
+
+backup() {
+	if [ -f "$mbbackup".tar.gz ]; then
+		read -p "检测到已被备份插件配置, 确认覆盖？[1/0] " res
+	else
+		read -p "确定要备份所有插件配置吗？[1/0] " res
+	fi
+	if [ "$res" == '1' ]; then
+		rm -rf $mbbackup
+		rm -rf "$mbbackup".tar.gz
+		mkdir -p $mbbackup
+		cp -rf ${mbroot}/mbdb $mbbackup
+		applist installed -n | while read line; do
+			echo "$(mbdb get ${line}.main.backupfiles)" | tr ',' '\n' | while read file; do
+			    [ -z "$file" ] && continue
+				savepath="$(dirname $mbbackup/${line}/$file)"
+				[ ! -d "$savepath" ] && mkdir -p $savepath
+				cp -rf ${mbroot}/apps/${line}/$file $mbbackup/${line}/$file &> /dev/null
+			done
+		done
+		cp -rf ${mbroot}/scripts/userscript.sh $mbbackup/userscript.sh
+		cp -rf ${mbroot}/mbdb $mbbackup/mbdb
+		tar zcvf "$mbbackup".tar.gz $mbbackup > /dev/null 2>&1
+		rm -rf $mbbackup
+		echo "备份完成, 配置已备份至$mbbackup.tar.gz"
+	fi
+}
+
+recover(){
+	read -p "确定要恢复所有插件配置吗(将会覆盖当前配置)？[1/0] " res
+	if [ "$res" == '1' ]; then
+		[ ! -f "$mbbackup".tar.gz ] && echo "未找到备份文件！" && return 1
+		rm -rf $mbbackup
+		tar zxvf "$mbbackup".tar.gz -C / > /dev/null 2>&1
+		cp -rf $mbbackup/applist.txt ${mbroot}/config/applist.txt
+		applist installed -n | while read line 
+		do
+			checkuci ${line} || ${mbroot}/scripts/appmanage.sh install ${line} 
+			[ -d "$mbbackup/${line}" ] && cp -rf $mbbackup/${line}/* ${mbroot}/apps/${line}/
+		done
+		# 恢复uci配置
+		cp -rf $mbbackup/mbdb ${mbroot}/
+		cp -rf $mbbackup/userscript.sh ${mbroot}/scripts/userscript.sh
+		rm -rf $mbbackup
+		echo "恢复完成, 初始化工具箱..."
+		${mbroot}/scripts/init.sh
+	fi	
+}
+
+modify_source() {
+	local mburl_tmp=""
+	case "$mburl" in
+		"$mburl_coding") url_text="coding下载源" ;;
+		"$mburl_github") url_text="github下载源" ;;
+		# "$mburl_test") url_text="coding测试源" ;;
+		*) url_text="$mburl" ;;
+	esac
+	echo "下载源【$url_text】使用中"
+	echo "0. 不修改"
+	echo "1. coding下载源"
+	echo "2. github下载源"
+	# echo "3. coding测试源(不推荐)"
+	read -p "请选择或输入下载源：" res
+	case "$res" in
+		0) return ;;
+		1) mburl_tmp="$mburl_coding" ;;
+		2) mburl_tmp="$mburl_github" ;;
+		# 3) mburl="$mburl_test" ;;
+		*) [ -n "$res" ] && mburl_tmp="$res" ;;
+	esac
+	if [ -n "$mburl_tmp" ]; then
+		mbdb set mixbox.main.url="$mburl_tmp" 
+		
+		applist update
+	fi
+}
+
+# enable_webui() {
+# 	read -p "是否要启用工具箱web界面？[1/0] " res
+# 	mbdb set mixbox.main.webui="$res"
+# 	if [ "$res" == '0' ]; then
+# 		umount -lf /usr/lib/lua/luci
+# 		rm -rf ${mbtmp}/mountfiles
+# 		rm -rf ${mbtmp}/syslogbackup/css
+# 		rm -rf ${mbtmp}/syslogbackup/img
+# 		rm -rf ${mbtmp}/luci-modulecache
+# 		rm -rf ${mbtmp}/luci-indexcache
+# 	elif [ "$res" == '1' ]; then
+# 		${mbroot}/scripts/addweb.sh
+# 	fi
+# }
+
+uninstall() {
+	wgetsh ${mbtmp}/uninstall.sh $mburl/apps/mixbox/scripts/uninstall.sh
+	[ $? -eq 0 ] && ${mbtmp}/uninstall.sh || echo "获取卸载脚本失败！"
+	exit
+}
+
+update() {
+	wgetsh ${mbtmp}/update.sh $mburl/apps/mixbox/scripts/update.sh 
+	[ $? -eq 0 ] && ${mbtmp}/update.sh || echo "获取更新脚本失败！"
+	exit
+}
+
+check_install() {
+
+	if checkuci $1; then
+		status=$(mbdb get $1.main.status | cut -d'|' -f1) > /dev/null 2>&1
+		if [ ! -z "$status" ]; then
+			if [ "$status" != "未运行" ]; then
+				echo -n "[\033[32m$status\033[0m]" 
+			else
+				echo -n "[\033[31m$status\033[0m]" 
+			fi
+		else
+			echo -n "[\033[31m未运行\033[0m]" 
+		fi
+	else 
+		echo -n "[选择以安装]"
+	fi
+}
+
+check_update() {
+	[ -z "$1" ] && return
+	[ -n "$2" ] && newver="$2" || newver="$(applist $1 -v)"
+	oldver=$(mbdb get $1.main.version)
+	if [ ! -z "$newver" -a ! -z "$oldver" ] && [ "$(versioncmp $oldver $newver)" = '1' ]; then
+		echo -n "[\033[36m有更新\033[0m]"
+		return 0
+	fi
+	return 1
+
+}
+
+menulist() {
+
+	# if [ "$1" = '0' ]; then
+	# # 检查是否在进行状态检查
+	# 	for i in $(seq 1 5); do
+	# 		if [ -n "$(pssh | grep "mixbox.*status")" ]; then
+	# 			echo "正在检查插件状态，请稍等一会儿~" && sleep 2
+	# 		else
+	# 			break
+	# 		fi
+	# 	done
+	# fi
+	rm -rf ${mbtmp}/applist_menu.txt
+	echo "00. 返回主菜单"
+	i=0;
+	if [ "$1" = '0' ]; then
+		applist installed -a > ${mbtmp}/applist_all.txt
+	else
+		applist all -a > ${mbtmp}/applist_all.txt
+	fi
+
+	while read line
+	do
+		if [ "$1" = '0' ]; then
+			info=""
+			name="$(echo "$line" | cut -d'|' -f1)"
+			checkuci $name || continue
+		elif [ "$1" = '1' ]; then
+			name="$(echo "$line" | cut -d'|' -f1)"
+			info=["$(echo "$line" | cut -d'|' -f2)"]
+			checkuci $name && continue
+			
+		fi
+		appver="$(cat $mbtmp/applist.txt | grep "^$name|" | cut -d'|' -f4)"
+		echo $name >> ${mbtmp}/applist_menu.txt
+		let i=$i+1
+		args="\t"
+		[ "$i" -ge 10 ] && head="$i. $name" || head="0$i. $name"
+		[ "${#head}" -lt 8 ] && args="\t\t"
+		[ "${#head}" -eq 16 ] && args=""
+		if [ "$1" = '0' ]; then
+			echo -e "$head$args`check_install $name` `check_update $name $appver`"
+		elif [ "$1" = '1' ]; then
+			echo -e "$head$info [\033[31m未安装\033[0m]"
+		fi
+
+	done < ${mbtmp}/applist_all.txt
+	rm -rf ${mbtmp}/applist_all.txt
+
+	if [ "$i" = '0' ]; then
+		[ "$1" = '0' ] && echo -e "[未安装任何插件！]" || echo -e "[已经没有插件可安装了哦！]"
+	fi
+	echo
+}
+
+wait_back() {
+	echo
+	#echo "$1秒后返回..."
+	#sleep $1
+	echo -n "按任意键返回."
+	read 
+
+}
+
+select_app() {
+	read -p "请输入你的选择`echo -e $check_update_text`：" select
+	if [ "$select" = 'u' ]; then
+		update
+	elif [ `echo $select | grep -c '^[0-9][0-9]*$'` -eq 1 ]; then
+		if [ "$select" -eq '0' ]; then
+			return 0
+		elif [ "$select" -gt '0' ] && [ "$select" -le "$(cat ${mbtmp}/applist_menu.txt | wc -l)" ]; then
+			appname=$(cat ${mbtmp}/applist_menu.txt | sed -n "$select"p)
+			if [ ! -z "${appname}" ]; then
+				if ! checkuci ${appname}; then
+					read -p "确定要安装${appname}插件？[1/0] " install
+					[ "$install" = '1' ] && ${mbroot}/scripts/appmanage.sh install ${appname} 
+				else
+					if [ -n "$(check_update ${appname})" ]; then
+						read -p "是否要更新${appname}插件？[1/0] " update
+						[ "$update" == '1' ] && ${mbroot}/scripts/appmanage.sh upgrade ${appname} 
+					fi
+
+					source "${mbroot}"/apps/${appname}/config/mixbox.conf 
+					${appname}
+					${mbroot}/apps/${appname}/scripts/${appname}.sh status
+				fi
+			else 
+				echo "输入有误，未找到该插件！"
+			fi
+		else
+			echo "输入有误，没有该序号！"
+		fi
+	else
+		echo "输入有误，请输入数字！"
+	fi
+	rm -rf ${mbtmp}/applist_menu.txt
+	wait_back && (title && menulist $1 && select_app $1)
+}
+
+auto_update() {
+	[ "$(mbdb get mixbox.main.autoupdate)" = '1' ] && local tmptext="已启用" || local tmptext="未启用"
+	read -p "【谨慎】是否要自动更新工具箱和插件($tmptext)？[1/0] " res
+	checkread $res && mbdb set mixbox.main.autoupdate="$res"
+}
+
+manage_menu() {
+	echo "00. 返回主菜单"
+	echo "01. 更换工具箱下载源"
+	echo "02. 备份工具箱配置"
+	echo "03. 恢复工具箱配置"
+	echo "04. 自动更新工具箱和插件"
+	echo "05. 卸载插件"
+	echo "06. 卸载工具箱"
+	echo 
+	read -p "请输入你的选择`echo -e $check_update_text`：" select
+	case "$select" in
+		1|01) modify_source ;;
+		2|02) backup ;;
+		3|03) recover ;;
+		4|04) auto_update ;;
+		5|05) uninstall_app ;;
+		6|06) uninstall && exit ;;
+		u) update && exit ;;
+		0|00) return ;;
+		*) echo "输入有误，请重新输入！" 
+	esac
+	wait_back && (title && manage_menu)
+}
+
+menu() {
+
+	while(true)
+	do
+	title
+	echo "00. 退出工具箱"
+	echo "01. 已安装插件"
+	echo "02. 未安装插件"
+	echo "03. 工具箱管理"
+	echo
+	read -p "请输入你的选择`echo -e $check_update_text`：" select
+	case "$select" in 
+		00|0) exit 1 ;;
+		01|1) title && menulist 0 && select_app 0;;
+		02|2) title && menulist 1 && select_app 1;;
+		03|3) title && manage_menu ;;
+		u) update ;;
+		*) echo "输入有误，请重新输入！" && wait_back ;;
+	esac
+	echo
+	
+	done
+
+}
+
+install() {
+	${mbroot}/scripts/appmanage.sh install $1
+}
+
+remove() {
+	${mbroot}/scripts/appmanage.sh uninstall $1
+}
+
+upgrade() {
+	${mbroot}/scripts/appmanage.sh upgrade $1
+}
+
+start() {
+	mbdb set $1.main.enable=1
+	/etc/mixbox/apps/$1/scripts/$1.sh start
+}
+
+restart() {
+	mbdb set $1.main.enable=1
+	/etc/mixbox/apps/$1/scripts/$1.sh restart
+}
+
+stop() {
+	mbdb set $1.main.enable=0
+	/etc/mixbox/apps/$1/scripts/$1.sh stop
+}
+
+help() {
+	cat << EOF
+Usages: $0 {install|remove|upgrade|start|restart|stop|update|backup|recover|uninstall} 
+Options:
+		install appname   	Install App
+		remove appname    	Remove App
+		upgrade appname     Upgrade App
+		start appname     	Start App
+		restart appname   	Restart App
+		stop appname      	Stop App
+		update  		  Update Tool
+		backup  		  Backup Tool
+		recover 		  Recover Tool
+		uninstall  		  Uninstall Tool
+Example:
+		1. mixbox install shadowsocks
+		2. mixbox upgrade kms
+		3. mixbox update
+
+EOF
+}
+
+#------------------【Tools】--------------------
+if [ ! -z $param ]; then 
+	[ -f ${mbroot}/apps/$param/config/mixbox.conf ] && source ${mbroot}/apps/$param/config/mixbox.conf
+	shift 1
+	$param $@
+else 
+	echo "获取工具箱插件列表..."
+	applist update &
+	get_status 
+	menu
+fi

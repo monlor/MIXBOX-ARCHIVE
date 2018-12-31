@@ -1,0 +1,8 @@
+service="VsFtpd"
+appname="vsftpd"
+needver="0.0.1"
+supports="linux_arm,linux_mips,linux_x86_64"
+backupfiles="config/ftpuser.conf"
+appinfo="快速搭建Ftp服务器，局域网文件共享"
+newinfo=""
+version="0.0.2"

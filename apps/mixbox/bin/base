@@ -1,0 +1,281 @@
+#!/bin/sh
+#copyright by monlor
+export PATH=$PATH:/etc/mixbox/bin
+
+mburl_coding="https://qcloud.coding.net/u/monlor/p/MIXBOX/git/raw/master/install.sh"
+mburl_github="https://raw.githubusercontent.com/monlor/MIXBOX/master"
+mburl=$(mbdb get mixbox.main.url) || mburl="$mburl_coding"
+mbroot=$(mbdb get mixbox.main.path)
+mbdisk=$(mbdb get mixbox.main.mbdisk)
+mbbackup="/etc/mbbackup"
+[ -z "$mbdisk" ] && mbdisk="${mbroot}"
+wanip=$(ubus call network.interface.wan status 2> /dev/null | grep \"address\" | grep -oE '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}') || wanip="127.0.0.1"
+lanip=$(uci get network.lan.ipaddr 2> /dev/null) || lanip="127.0.0.1"
+profilepath=$(mbdb get mixbox.main.profilepath) 
+libpath=$(mbdb get mixbox.main.libpath) 
+mbver=$(mbdb get mixbox.main.version)
+mbtmp=/tmp/mbtmp
+[ ! -d "${mbtmp}" ] && mkdir -p ${mbtmp}
+model=$(mbdb get mixbox.main.model)
+xq=$(cat /proc/xiaoqiang/model 2> /dev/null) || xq="$(uname -s)"
+
+# if [ "$xq" == "R1D" -o "$xq" == "R2D" -o "$xq" == "R3D"  ]; then
+# 	model=arm
+# elif [ "$xq" == "R3" -o "$xq" == "R3P" -o "$xq" == "R3G" -o "$xq" == "R1CM" ]; then
+# 	model=mips
+# fi
+
+
+# 备份uci配置，主要为了系统升级后能恢复配置
+# if [ -f "/etc/config/mixbox" ]; then
+# 	[ ! -f ${mbroot}/config/mixbox.uci ] && touch ${mbroot}/config/mixbox.uci
+# 	md5_1=$(md5sum /etc/config/mixbox | cut -d' ' -f1)
+# 	md5_2=$(md5sum ${mbroot}/config/mixbox.uci | cut -d' ' -f1)
+# 	if [ "$md5_1" != "$md5_2" ]; then
+# 		cp -rf /etc/config/mixbox ${mbroot}/config/mixbox.uci
+# 	fi
+# fi
+
+checkuci() {
+	# 最初用来检查插件的uci是否存在，现在当插件已经安装则返回0
+	result=$(mbdb show $1.main)
+	if [ ! -z "$result" -a -d ${mbroot}/apps/$1 ]; then
+		return 0
+	else
+		return 1
+	fi
+
+}
+
+checkread() {
+	# 传入参数为0或1则返回0，否则返回1
+	if [ "$1" == '1' -o "$1" == '0' ]; then
+		return 0
+	else
+		return 1
+	fi
+}
+
+cutsh() {
+	# 传入要分割的文本和要分割出的位置，以逗号分割
+	local delimiter=","
+	if [ -n "$1" -a -n "$2" ]; then
+		[ -n "$3" ] && delimiter="$3"
+		echo $1 | cut -d"${delimiter}" -f"$2"
+	elif [ -n "$1" -a -z "$2" ]; then
+		[ -n "$2" ] && delimiter="$2"
+		xargs | cut -d"${delimiter}" -f"$1" 
+	fi
+
+}
+
+logsh() {
+	# 输出信息到/tmp/messages和标准输出，-s只输入到标准输出，-p只输入到日志文件
+	command -v logger &> /dev/null
+	if [ $? -eq 0 ]; then
+		if [ "$3" == "-s" ]; then
+			logger -s -t "$1" "$2"
+		elif [ "$3" == "-p" ]; then
+			logger -p 1 -t "$1" "$2"
+		else
+			logger -s -p 1 -t "$1" "$2"
+		fi
+		return 0
+	else
+		alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
+		if [ "$3" == "-s" ]; then
+			echo_date "$2"
+		elif [ "$3" == "-p" ]; then
+			echo_date "$2" &> ${mbroot}/var/log/mixbox.log
+		else
+			echo_date "$2" | tee ${mbroot}/var/log/mixbox.log
+		fi
+	fi
+	
+}
+
+wgetsh() {
+	# 传入下载的文件位置和下载地址，自动下载到${mbtmp}，若成功则移到下载位置
+	[ -z "$1" -o -z "$2" ] && return 1
+	[ -x /opt/bin/curl ] && alias curl=/opt/bin/curl
+	local wgetfilepath="$1"
+	local wgetfilename=$(basename $wgetfilepath)
+	local wgetfiledir=$(dirname $wgetfilepath)
+	local wgeturl="$2"
+	[ ! -d "$wgetfiledir" ] && mkdir -p $wgetfiledir
+	[ ! -d ${mbtmp} ] && mkdir -p ${mbtmp}
+	rm -rf ${mbtmp}/${wgetfilename}
+	result1=$(curl -skL --connect-timeout 10 -m 20 -w %{http_code} -o "${mbtmp}/${wgetfilename}" "$wgeturl")
+	[ -f "${mbtmp}/${wgetfilename}" ] && result2=$(du -sh "${mbtmp}/${wgetfilename}" 2> /dev/null | awk '{print$1}')
+	if [ "$result1" != "200" -a "$result2" == '0' ]; then
+		rm -rf ${mbtmp}/${wgetfilename}
+		return 1
+	else
+		chmod +x ${mbtmp}/${wgetfilename} > /dev/null 2>&1
+		mv -f ${mbtmp}/${wgetfilename} $wgetfilepath > /dev/null 2>&1
+		return 0
+	fi
+
+}
+
+pssh() {
+
+	ps -aux &> /dev/null
+	[ $? -eq 0 ] && ps -aux | grep -v grep || ps -w | grep -v grep
+
+}
+
+pingsh() {
+
+	ping qq.com -c 2 &> /dev/null
+	result1="$?"
+	ping baidu.com -c 2 &> /dev/null
+	result2="$?"
+	[ "$result1" -eq 0 -o "$result2" -eq 0 ] && return 0 || return 1
+
+}
+
+echosh() {
+	local length=""
+	local string=""
+	if [ -z "$2" ]; then
+		length="$1"
+		string="$(xargs)"
+	else
+		string="$1"
+		length="$2"
+	fi
+	if [ "${#string}" -gt "$length" ]; then
+		let length="$length"-2
+		string="$(echo "$string" | cut -b 1-"$length")"..
+	fi
+	echo -e "$string"
+}
+
+readsh() {
+	local readtext="$1"
+	local uciname="$2"
+	local value="$(mbdb get ${appname}.main.$2)"
+	local default="$3"
+	if [ -z "$value" ]; then
+		[ -n "$default" ] && showtext="[回车即$default]" || showtext="[未设置]"
+	else
+		showtext="[回车即$value]"
+	fi
+	read -p "$readtext$showtext：" res
+	if [ "$uciname" = "res" ]; then
+		res="$res"
+		return 0
+	fi
+	
+	if [ "$res" = '-1' ]; then
+		mbdb del ${appname}.main.$uciname
+	else
+		if [ -z "$res" ]; then
+			if [ -n "$value" ]; then
+				mbdb set $appname.main.$uciname="$value" || echo "设置key:"$uciname"等于value:"$value"出错！"
+			else
+				mbdb set $appname.main.$uciname="$default" || echo "设置key:"$uciname"等于value:"$default"出错！"
+			fi
+		else
+			if [ "$uciname" = "port" -a -n "$(netstat -tunpl 2> /dev/null | grep -w "$res")" ]; then
+				echo "端口已被占用！请重新输入！"
+				readsh $@
+			else
+				mbdb set $appname.main.$uciname="$res" || echo "设置key:"$uciname"等于value:"$res"出错！"
+				eval `expr $uciname="$res"`
+				return 0
+			fi
+		fi
+	fi
+	return 0
+}
+
+umountsh() {
+	local mount_point="$1"
+	[ -z "$mount_point" ] && return 1
+	mount_points="$(df -h | grep -Ew "[ ]*"$mount_point"[ ]*" | awk '{print$6}')"
+	[ -n "$mount_points" ] && umount -lf "$mount_points" &> /dev/null
+	return 0
+}
+
+write_firewall_start(){
+	if [ "$openport" == "1" ];then
+		logsh "【$service】" "添加nat-start触发事件..."
+		mbdb set mixbox.firewall.${appname}=1
+	fi
+	
+}
+
+remove_firewall_start(){
+	logsh "【$service】" "删除nat-start触发..."
+	[ -z "${appname}" ] && return 1
+	mbdb set mixbox.firewall.${appname}=0
+}
+
+daemon() {
+	local binpath="$1"
+	local binname="$(basename ${binpath})"
+	shift 1
+	local args="$*"
+	command -v start-stop-daemon &> /dev/null
+	# if [ $? -eq 0 ]; then
+	# 	start-stop-daemon -S -q -b -m -p ${mbroot}/var/run/${binname}.pid -x ${binpath} -- ${args} 
+	# else
+		nohup ${binpath} ${args} &> ${mbroot}/var/log/${binname}.log &
+	# fi
+	return $?
+}
+
+open_port () {
+	local protocol=""
+	[ -n "$1" ] && local port="$1"
+	[ -n "$2" ] && protocol="$2" || protocol="tcp"
+    if [ "$openport" = '1' ]; then
+    	if [ -n "$(echo ${port} | grep ',')" ]; then
+    		iptables -I INPUT -p "$protocol" -m multiport --dport "${port}" -m comment --comment "mixbox-${appname}" -j ACCEPT 
+    	else
+    		iptables -I INPUT -p "$protocol" --dport "${port}" -m comment --comment "mixbox-${appname}" -j ACCEPT 
+    	fi
+    fi
+
+}
+
+close_port () {
+
+	eval `iptables -S | grep "mixbox-${appname}" | sed -e 's/-A/iptables -D/g' | sed -e 's/\$/;/g'`
+
+}
+
+bincheck () {
+
+	binname="$@"
+	command -v apt &> /dev/null
+	if [ $? -eq 0 ]; then
+		logsh "【$service】" "监测到apt程序，使用apt安装..."
+		echo y | apt install ${binname} &> /dev/null
+	fi
+	command -v yum &> /dev/null
+	if [ $? -eq 0 ]; then
+		logsh "【$service】" "监测到yum程序，使用yum安装..."
+		yum install ${binname} -y &> /dev/null
+	fi
+	command -v pacman &> /dev/null
+	if [ $? -eq 0 ]; then
+		logsh "【$service】" "监测到pacman程序，使用pacman安装..."
+		pacman -S ${binname} --noconfirm &> /dev/null
+	fi
+	command -v opkg &> /dev/null
+	if [ $? -eq 0 ]; then
+		logsh "【$service】" "监测到opkg程序，使用opkg安装..."
+		opkg install ${binname} &> /dev/null
+		[ $? -ne 0 -a -x /opt/bin/opkg ] && /opt/bin/opkg install ${binname} &> /dev/null
+	fi
+	command -v brew &> /dev/null
+	if [ $? -eq 0 ]; then
+		logsh "【$service】" "监测到brew程序，使用brew安装..."
+		brew install ${binname} &> /dev/null
+	fi
+	return $?
+}
+
