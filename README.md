@@ -4,6 +4,7 @@
 
 * Telegram群：[MBOX CHAT](https://t.me/joinchat/FMraA0lwzH9fzEW1wXdCFA)
 * 我的博客：[Monlor's Blog](https://www.mixbox.com)
+* GitHub地址：[monlor/MIXBOX](https://github.com/monlor/MIXBOX)
 
 ### 介绍
 
@@ -52,19 +53,19 @@
 #### 一键安装
 
 ``` shell
-$ sh -c "$(curl -kfsSl https://qcloud.coding.net/u/monlor/p/MIXBOX/git/raw/master/install.sh)" && source /etc/profile &> /dev/null
+sh -c "$(curl -kfsSl https://qcloud.coding.net/u/monlor/p/MIXBOX/git/raw/master/install.sh)" && source /etc/profile &> /dev/null
 ```
 
 #### 卸载`Monlor Tools`工具箱
 
 ``` shell
-$ sh -c "$(curl -kfsSl https://qcloud.coding.net/u/monlor/p/MIXBOX-BETA/git/raw/master/temp/uninstall_old.sh)" && source /etc/profile &> /dev/null
+sh -c "$(curl -kfsSl https://qcloud.coding.net/u/monlor/p/MIXBOX-BETA/git/raw/master/temp/uninstall_old.sh)" && source /etc/profile &> /dev/null
 ```
 
 #### 一键更新所有插件（请先更新工具箱）
 
 ``` shell
-$ applist installed -n | while read line; do mixbox upgrade $line; done
+applist installed -n | while read line; do mixbox upgrade $line; done
 ```
 
 ### 小米路由器目录结构  
@@ -124,18 +125,18 @@ $ applist installed -n | while read line; do mixbox upgrade $line; done
 
 #### 步骤
 
-* git clone https://github.com/monlor/MIXBOX.git
-* cd MIXBOX/
-* chmod +x ./tools/\*.sh
-* ./tools/newapp.sh [插件名] [插件服务名] [插件介绍]
+* `git clone https://github.com/monlor/MIXBOX.git`
+* `cd MIXBOX/`
+* `chmod +x ./tools/\*.sh`
+* `./tools/newapp.sh [插件名] [插件服务名] [插件介绍]`
 * 修改插件脚本和配置文件
-* ./tools/gitsync.sh pack [插件名] [-v]
+* `./tools/gitsync.sh pack [插件名] [-v]`
 
 #### 注意事项
 
 * 插件名必须为小写，插件服务名一般为驼峰的写法
 * 执行完插件生成脚本后，插件会生成在apps中，注意名称不能与现有插件重复
-* gitsync.sh是打包插件的脚本，-v为更新版本号[`可无`]，打包的插件生成在appstore下
+* `gitsync.sh`是打包插件的脚本，-v为更新版本号`可无`，打包的插件生成在appstore下
 	
 
 
