@@ -127,7 +127,7 @@ applist installed -n | while read line; do mixbox upgrade $line; done
 
 * `git clone https://github.com/monlor/MIXBOX.git`
 * `cd MIXBOX/`
-* `chmod +x ./tools/\*.sh`
+* `chmod +x ./tools/*.sh`
 * `./tools/newapp.sh [插件名] [插件服务名] [插件介绍]`
 * 修改插件脚本和配置文件
 * `./tools/gitsync.sh pack [插件名] [-v]`
