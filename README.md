@@ -1,8 +1,9 @@
 # MIXBOX 
 
 > MIXBOX是一款全新的，完全基于Shell脚本的工具箱，为在路由器上实现程序的快速配置及运行管理，欢迎大佬们start、fork及pr.
-> Telegram群：[MBOX CHAT](https://t.me/joinchat/FMraA0lwzH9fzEW1wXdCFA)
-> 我的博客：[Monlor's Blog](https://www.mixbox.com)
+
+* Telegram群：[MBOX CHAT](https://t.me/joinchat/FMraA0lwzH9fzEW1wXdCFA)
+* 我的博客：[Monlor's Blog](https://www.mixbox.com)
 
 ### 介绍
 
@@ -43,8 +44,8 @@
 
 ### 注意事项
 
-	* 用户目录是指存放一下大文件的目录，如下载的文件等
-	* 经测试`R3`不支持`EntWare`环境，原因未知，所以基于`EntWare`的程序都无法使用
+* 用户目录是指存放一下大文件的目录，如下载的文件等
+* **经测试`R3`不支持`EntWare`环境，原因未知，所以基于`EntWare`的程序都无法使用**
 
 ### 命令
 
@@ -54,7 +55,7 @@
 $ sh -c "$(curl -kfsSl https://qcloud.coding.net/u/monlor/p/MIXBOX/git/raw/master/install.sh)" && source /etc/profile &> /dev/null
 ```
 
-#### 工具箱卸载旧版
+#### 卸载`Monlor Tools`工具箱
 
 ``` shell
 $ sh -c "$(curl -kfsSl https://qcloud.coding.net/u/monlor/p/MIXBOX-BETA/git/raw/master/temp/uninstall_old.sh)" && source /etc/profile &> /dev/null
@@ -75,7 +76,7 @@ $ applist installed -n | while read line; do mixbox upgrade $line; done
 	|    |--- /config/      --- 工具箱配置文件目录
 	|    |--- /scripts/     --- 工具箱脚本目录
 	|    |--- /mbdb/        --- 工具箱数据文件目录
-	|	 |--- /var/			--- 工具箱运行pid及日志存放目录
+	|	 |--- /var/		--- 工具箱运行pid及日志存放目录
 	|--- /tmp
 	|    |--- /messages     --- 系统日志，工具箱日志
 	|--- /userdisk
@@ -108,7 +109,7 @@ $ applist installed -n | while read line; do mixbox upgrade $line; done
 18. [QianDao](http://koolshare.cn/thread-127783-1-1.html)
 19. [FileBrowser](https://github.com/filebrowser/filebrowser)
 20. [ZeroTier](https://www.zerotier.com)
-21. [MIWIFI]
+21. MIWIFI
 22. [AliDDNS]
 23. [BaiduPCS]
 24. [DropBear]
@@ -119,13 +120,22 @@ $ applist installed -n | while read line; do mixbox upgrade $line; done
 29. [Transmission]
 30. [WebD]
 
+### 快速制作插件
 
+#### 步骤
 
+* git clone https://github.com/monlor/MIXBOX.git
+* cd MIXBOX/
+* chmod +x ./tools/\*.sh
+* ./tools/newapp.sh [插件名] [插件服务名] [插件介绍]
+* 修改插件脚本和配置文件
+* ./tools/gitsync.sh pack [插件名] [-v]
 
+#### 注意事项
 
-	
-
-
+* 插件名必须为小写，插件服务名一般为驼峰的写法
+* 执行完插件生成脚本后，插件会生成在apps中，注意名称不能与现有插件重复
+* gitsync.sh是打包插件的脚本，-v为更新版本号[`可无`]，打包的插件生成在appstore下
 	
 
 
