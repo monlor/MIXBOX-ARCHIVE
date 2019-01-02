@@ -37,7 +37,9 @@ init() {
 		[ $? -ne 0 ] && logsh "【Tools】" "创建目录失败，检查你的路径是否正确！" && end
 		umount -lf /opt > /dev/null 2>&1
 		mount -o blind $path /opt
-		if [ "$model" = "linux_arm" ]; then
+		if [ "$xq" = "R3" -o "$xq" = "R1CM" ]; then
+			wget -O - http://pkg.entware.net/binaries/mipsel/installer/installer.sh | sh
+		elif [ "$model" = "linux_arm" ]; then
 			if [ "$(uname -r | cut -d'.' -f1)" -ge '3' ]; then
 				wget -O - http://bin.entware.net/armv7sf-k3.2/installer/generic.sh | sh
 			else
