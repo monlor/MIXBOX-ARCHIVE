@@ -124,7 +124,7 @@ mount_admin_root() {
 start () {
 
 	result=$(ps | grep -E 'nginx|php-cgi' | grep -v sysa | grep -v grep | wc -l)
-    	if [ "$result" != '0' ];then
+    	if [ "$result" != '0' -a -f /opt/etc/nginx/vhost/${appname}.conf ];then
 		logsh "【$service】" "${appname}已经在运行！"
 		exit 1
 	fi
