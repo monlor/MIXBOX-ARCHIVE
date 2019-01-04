@@ -28,10 +28,10 @@ case "$method" in
 		uci -q del ${appname}.${uciname}.${key}
 	;;
 	keys)
-		uci -q show ${appname}.${uciname} | sed 1d | sed -e "s/${appname}.${uciname}.//g" | awk -F '=' '{print$1}'
+		uci -q get ${appname}.${uciname} &> /dev/null && uci -q show ${appname}.${uciname} | sed 1d | sed -e "s/${appname}.${uciname}.//g" | awk -F '=' '{print$1}'
 	;;
 	values)
-		uci -q show ${appname}.${uciname} | sed 1d | sed -e "s/${appname}.${uciname}.//g" | awk -F '=' '{print$2}'
+		uci -q get ${appname}.${uciname} &> /dev/null && uci -q show ${appname}.${uciname} | sed 1d | sed -e "s/${appname}.${uciname}.//g" | awk -F '=' '{print$2}'
 	;;
 	show)
 		if [ -z "${uciname}" ]; then 
@@ -45,7 +45,7 @@ case "$method" in
 	;;
 	export)
 		[ -z "${uciname}" ] && uciname="main"
-		uci -q show ${appname}.${uciname} | sed 1d | sed -e "s/${appname}.${uciname}.//g" | awk -F '=' '{print$1"=\""$2"\""}' | tr "\n" ";"
+		uci -q get ${appname}.${uciname} &> /dev/null && uci -q show ${appname}.${uciname} | sed 1d | sed -e "s/${appname}.${uciname}.//g" | awk -F '=' '{print$1"=\""$2"\""}' | tr "\n" ";"
 	;;
 	*)
 		echo "\`mbdb $@\` error!"
