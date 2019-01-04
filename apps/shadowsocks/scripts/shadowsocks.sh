@@ -349,13 +349,14 @@ ipset_rules() {
 			ipset -! add customize_white ${line} &> /dev/null
 		fi
 	done 
-	echo "server=/.apple.com/$CDN#53" >> ${mbtmp}/wblist.conf
-	echo "ipset=/.apple.com/customize_white" >> ${mbtmp}/wblist.conf
-	echo "server=/.microsoft.com/$CDN#53" >> ${mbtmp}/wblist.conf
-	echo "ipset=/.microsoft.com/customize_white" >> ${mbtmp}/wblist.conf
-	
+	if [ "$ss_mode" != "homemode" ]; then
+		echo "server=/.apple.com/$CDN#53" >> ${mbtmp}/wblist.conf
+		echo "ipset=/.apple.com/customize_white" >> ${mbtmp}/wblist.conf
+		echo "server=/.microsoft.com/$CDN#53" >> ${mbtmp}/wblist.conf
+		echo "ipset=/.microsoft.com/customize_white" >> ${mbtmp}/wblist.conf
+	fi
 	#黑白名单规则
-	if [ "$ss_mode" = "whitelist" -o "$ssg_mode" = "frgame" ]; then
+	if [ "$ss_mode" = "whitelist" -o "$ssg_mode" = "frgame" -o "$ss_mode" = "homemode" ]; then
 		sed -e "s/^/-A nogfwnet &/g" -e "1 i\-N nogfwnet hash:net" ${mbroot}/apps/${appname}/config/chnroute.txt | ipset -R -! 
 	elif [ "$ss_mode" = "gfwlist" -o "$ssg_mode" = "cngame" ]; then
 		cp -rf ${mbroot}/apps/${appname}/config/gfwlist.conf ${mbtmp}/gfwlist.conf
