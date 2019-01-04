@@ -25,7 +25,7 @@ ssserver|快速搭建ss服务端程序||0.0.2|SSServer|linux_arm,linux_x86_64
 tinyproxy|轻量级的Http代理工具||0.0.2|TinyProxy|linux_arm,linux_mips,linux_x86_64
 transmission|一款BT下载神器||0.0.3|Transmission|linux_arm,linux_mips,linux_x86_64
 verysync|基于p2p的文件同步工具，局域网同步速度快||0.0.3|VerySync|linux_arm,linux_mips,linux_x86_64
-vsftpd|快速搭建Ftp服务器，局域网文件共享||0.0.2|VsFtpd|linux_arm,linux_mips,linux_x86_64
+vsftpd|快速搭建Ftp服务器，局域网文件共享||0.0.3|VsFtpd|linux_arm,linux_mips,linux_x86_64
 webd|一款只有40k大小的mini个人网盘||0.0.2|WebD|linux_arm,linux_mips,linux_x86_64,darwin_linux_x86_64
 webshell|网页ssh工具，可在网页上管理路由器||0.0.2|WebShell|linux_arm,linux_mips,linux_x86_64
 zerotier|一款非常简单易用的内网穿透工具||0.0.2|ZeroTier|linux_arm,linux_mips,linux_x86_64
