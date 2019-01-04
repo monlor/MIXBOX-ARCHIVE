@@ -27,8 +27,8 @@ config_php() {
 	sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 2000M/' ${mbtmp}/php.ini
 	umountsh $PHPCONF
 	mount --bind ${mbtmp}/php.ini $PHPCONF
-	echo "<?php phpinfo(); ?>" > $WWW/info.php
-	rm -rf $WWW/index.html
+	# echo "<?php phpinfo(); ?>" > $WWW/info.php
+	# rm -rf $WWW/index.html
 }
 
 config_nginx() {
