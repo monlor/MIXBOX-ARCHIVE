@@ -4,7 +4,7 @@ eval `mbdb export vsftpd`
 
 port=21
 FTPUSER=${mbroot}/apps/vsftpd/config/ftpuser.conf
-binname="${appname} ${appname}-ext"
+# binname="${appname} ${appname}-ext"
 
 add(){
 	sed -i "/$1/"d /etc/passwd
@@ -82,16 +82,16 @@ start () {
 		exit 1
 	fi
 	logsh "【$service】" "正在启动${appname}服务... "
-	if [ ! -f ${mbroot}/apps/${appname}/bin/${appname} ]; then
-		bincheck ${binname} 
-    	if [ $? -eq 0 ]; then
-    		logsh "【$service】" "安装程序成功，链接程序到工具箱..."
-    		ln -sf $(which $binname) ${mbroot}/apps/${appname}/bin/${appname} 
-    	else
-    		logsh "【$service】" "程序安装失败！"
-    		end
-    	fi
-	fi
+	# if [ ! -f ${mbroot}/apps/${appname}/bin/${appname} ]; then
+	# 	bincheck ${binname} 
+ #    	if [ $? -eq 0 ]; then
+ #    		logsh "【$service】" "安装程序成功，链接程序到工具箱..."
+ #    		ln -sf $(which $binname) ${mbroot}/apps/${appname}/bin/${appname} 
+ #    	else
+ #    		logsh "【$service】" "程序安装失败！"
+ #    		end
+ #    	fi
+	# fi
 	# init_mount
 	set_config
 	
