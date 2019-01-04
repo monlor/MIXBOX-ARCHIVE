@@ -188,7 +188,7 @@ stop () {
 	logsh "【$service】" "关闭或卸载不会删除opkg的软件包和${appname}的web文件！"
 	umountsh $PHPCONF && rm -rf ${mbtmp}/php.ini
 	umountsh $NGINXCONF && rm -rf ${mbtmp}/nginx.conf
-	rm -rf ${mbtmp}/${appname}.conf 
+	rm -rf ${mbtmp}/${appname}.conf /opt/etc/nginx/vhost/${appname}.conf
 	umountsh $WWW/data/User/admin/home 
 
 }
