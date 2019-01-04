@@ -35,9 +35,9 @@ case "$method" in
 	;;
 	show)
 		if [ -z "${uciname}" ]; then 
-			uci -q show ${appname} | sed -e "/${appname}.[a-z]\+\=config/d" -e 's/${appname}\.[a-z]\+\.//'
+			uci -q show ${appname} | sed -e "/${appname}.[a-z]\+\=config/d" -e "s/${appname}\.[a-z]\+\.//"
 		else
-			uci -q get ${appname}.${uciname} &> /dev/null && uci -q show ${appname}.${uciname} | sed -e "/${appname}.[a-z]\+\=config/d" -e 's/${appname}\.[a-z]\+\.//'
+			uci -q get ${appname}.${uciname} &> /dev/null && uci -q show ${appname}.${uciname} | sed -e "/${appname}.[a-z]\+\=config/d" -e "s/${appname}\.[a-z]\+\.//"
 		fi
 	;;
 	clear)
