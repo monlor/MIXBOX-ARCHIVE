@@ -6,7 +6,7 @@ eval `mbdb export frpc`
 [ -z "$tcp_mux" ] && tcp_mux="true"
 [ -z "$user" ] && user="mixbox"
 [ -z "$protocol" ] && protocol="tcp"
-[ -z "$runver" ] && runver=0.21.0
+[ -z "$runver" ] && runver=`${mbroot}/apps/${appname}/bin/${appname} -v`
 
 set_config() {
 
