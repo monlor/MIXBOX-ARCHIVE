@@ -8,7 +8,7 @@ PHPBIN=/opt/bin/spawn-fcgi
 NGINXBIN=/opt/sbin/nginx
 NGINXCONF=/opt/etc/nginx/nginx.conf
 PHPCONF=/opt/etc/php.ini
-WWW=/opt/share/nginx/html
+WWW=/opt/share/nginx/html/kodexplorer
 CONF="/opt/etc/nginx/vhost/kodexplorer.conf"
 path=$(mbdb get ${appname}.main.path)
 port=$(mbdb get ${appname}.main.port) || port=81
@@ -67,7 +67,7 @@ config_nginx() {
 	        server_name  kodexplorer;
 
 	        location / {
-	            root   /opt/share/nginx/html;
+	            root   /opt/share/nginx/html/kodexplorer;
 	            index  index.php index.html index.htm;
 	        }
 
@@ -77,7 +77,7 @@ config_nginx() {
 	        }
 
 	        location ~ \.php$ {
-	            root           /opt/share/nginx/html;
+	            root           /opt/share/nginx/html/kodexplorer;
 	            fastcgi_pass   127.0.0.1:9009;
 	            fastcgi_index  index.php;
 	            fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
@@ -93,6 +93,7 @@ config_nginx() {
 detect_webfiles() {
 	if [ ! -d $WWW/app/kod/ ]; then
 		logsh "【$service】" "未检测到${appname}文件，正在下载"
+		[ ! -d $WWW ] && mkdir $WWW
 		wgetsh $WWW/kodexplorer.zip $mburl/appsbin/kodexplorer.zip
 		[ $? -ne 0 ] && logsh "【$service】" "${appname}文件下载失败" && stop
 		unzip $WWW/kodexplorer.zip -d $WWW
