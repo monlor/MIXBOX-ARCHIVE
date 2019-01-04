@@ -40,8 +40,8 @@ if [ -n "$(echo "$mbdisk" | grep -E "^[0-9][0-9]*$")" ]; then
 fi
 
 if [ -d "${mbroot}" -o -d /etc/mixbox -o -L /etc/mixbox ]; then
-	logsh "【Tools】" "工具箱已安装，请卸载后重新安装！" 
-	exit 1
+	read -p "工具箱已安装，清除并继续？[1/0] " res 
+	[ "$res" = '1' ] && rm -rf /etc/mixbox || exit 1
 fi
 
 logsh "【Tools】" "下载工具箱文件..."

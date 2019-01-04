@@ -12,10 +12,10 @@ frps|内网穿透工具Frp服务端|frp程序更新到0.21.0|0.0.2|Frps|linux_ar
 httpfile|搭建简单的web文件浏览页面||0.0.2|HttpFile|linux_arm,linux_mips,linux_x86_64
 jetbrains|快速搭建JetBrains激活服务器||0.0.2|JetBrains|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 kms|快速搭建Windows、Office激活服务器|Support for Windows 10 1809, Windows Server 2019 and Office 2019 built-in|0.0.2|Kms|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
-kodexplorer|可道云，在线文档管理器，需要entware环境||0.0.2|KodExplorer|linux_arm,linux_mips,linux_x86_64
+kodexplorer|可道云，在线文档管理器，需要entware环境|修复脚本bug，无法启用程序|0.0.3|KodExplorer|linux_arm,linux_mips,linux_x86_64
 koolproxy|简单，快速屏蔽网页或视频广告|去掉openssl程序，采用kp自带程序生成证书，减小插件体积|0.0.2|KoolProxy|linux_arm,linux_mips,linux_x86_64
 miwifi|小米路由器系统管理，修改samba禁用系统更新等||0.0.3|MIWIFI|linux_arm,linux_mips
-mixbox|一款支持多平台，多架构的Shell工具箱|全新版本会尝试支持更多的平台，但还需要一点时间！|0.0.5|MIXBOX|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
+mixbox|一款支持多平台，多架构的Shell工具箱|修复由于mbdb导致frpc配置无法识别的bug|0.0.6|MIXBOX|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 ngrok|轻量级的内网穿透工具||0.0.2|Ngrok|linux_arm,linux_mips
 pptpd|简单但并不安全的VPN服务器||0.0.2|PPTPD|linux_arm,linux_mips,linux_x86_64
 qiandao|koolshare merlin 自动签到程序||0.0.2|QianDao|linux_arm,linux_x86_64

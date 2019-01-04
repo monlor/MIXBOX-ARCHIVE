@@ -86,8 +86,8 @@ config_nginx() {
 	}
 	EOF
 	sed -i "s/81/${port}/" ${mbtmp}/${appname}.conf
-	rm -rf ${mbroot}/apps/${appname}/config
-	ln -s ${mbtmp}/${appname}.conf ${mbroot}/apps/${appname}/config
+	rm -rf /opt/etc/nginx/vhost/${appname}.conf
+	ln -s ${mbtmp}/${appname}.conf /opt/etc/nginx/vhost/${appname}.conf
 }
 
 detect_webfiles() {
@@ -124,7 +124,7 @@ mount_admin_root() {
 start () {
 
 	result=$(ps | grep -E 'nginx|php-cgi' | grep -v sysa | grep -v grep | wc -l)
-    	if [ "$result" != '0' ] && [ -f "${mbroot}/apps/${appname}/config" ];then
+    	if [ "$result" != '0' ];then
 		logsh "【$service】" "${appname}已经在运行！"
 		exit 1
 	fi
@@ -180,7 +180,7 @@ stop () {
 	logsh "【$service】" "正在停止${appname}服务... "
 	[ "$enable" == '0' ] && destroy
 	result=$(mbdb get mixbox.httpfile.enable)
-	killall php-cgi > /dev/null
+	killall php-cgi &> /dev/null
 	# kill -9 $(ps | grep 'nginx' | grep -v sysa | grep -v grep | awk '{print$1}') > /dev/null 2>&1
 	close_port
 	remove_firewall_start
@@ -188,7 +188,7 @@ stop () {
 	logsh "【$service】" "关闭或卸载不会删除opkg的软件包和${appname}的web文件！"
 	umountsh $PHPCONF && rm -rf ${mbtmp}/php.ini
 	umountsh $NGINXCONF && rm -rf ${mbtmp}/nginx.conf
-	rm -rf ${mbtmp}/${appname}.conf ${mbroot}/apps/${appname}/config
+	rm -rf ${mbtmp}/${appname}.conf 
 	umountsh $WWW/data/User/admin/home 
 
 }
@@ -209,7 +209,7 @@ destroy() {
 status() {
 
 	result=$(pssh | grep -E 'nginx|php-cgi' | grep -v sysa | grep -v grep | wc -l)
-	if [ "$result" -ge '5' ] && [ -f "${mbroot}/apps/${appname}/config" ]; then
+	if [ "$result" -ge '5' ] && [ -f "/opt/etc/nginx/vhost/${appname}.conf" ]; then
 		status="运行端口号: ${port}, 管理目录: $path|1"
 	else
 		status="未运行|0"
