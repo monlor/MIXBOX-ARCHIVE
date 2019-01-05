@@ -149,6 +149,8 @@ get_config() {
 			EOF
 		fi
 	fi
+	# 保存代理类型
+	mbdb set ${appname}.main.proxy_type="$proxy_type"
 
 }
 
@@ -644,6 +646,8 @@ start() {
 
 	start_haveged
 
+	sleep 1
+
 	start_main_process
 
     start_game_process           
@@ -697,7 +701,7 @@ status() {
 	#if [ "$result" == '0' ] || [ "$http_status" != "200" ]; then
 	result2=$(iptables -t nat -S | grep SHADOWSOCK)
 	[ "$ssgena" == '1' ] && ssgflag=", 游戏节点: $ssgid($ssg_mode)"
-	if [ "$result1" -ge 2 ]; then
+	if [ "$result1" -ge 3 ]; then
 		if [ -n "$result2" ]; then
 			status="运行节点: $id($ss_mode)$ssgflag|1" 
 		else
