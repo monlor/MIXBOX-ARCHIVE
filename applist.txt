@@ -1,13 +1,13 @@
 aliddns|动态将你的路由器IP绑定到域名||0.0.2|AliDDNS|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 aria2|Linux下一款高效的下载工具|更新了R3G的二进制文件|0.0.2|Aria2|linux_arm,linux_mips,linux_x86_64
-baidupcs|第三方百度网盘web客户端，基于Go语言||0.0.2|BaiduPCS|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
+baidupcs|第三方百度网盘web客户端，基于Go语言|更新arm和mips程序，作者更新了移动ui|0.0.3|BaiduPCS|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 dropbear|移植小米的SSH功能到工具箱|添加备份功能支持|0.0.2|DropBear|linux_arm,linux_mips
 easyexplorer|一款跨设备的P2P文件同步工具||0.0.2|EasyExplorer|linux_arm,linux_x86_64,darwin_x86_64
 entware|一款开源且强大的包管理工具，许多功能都通过它来实现|增加了启动ONMP安装程序的选项|0.0.2|Entware|linux_arm,linux_mips,linux_x86_64
 fastdick|迅雷快鸟，快带提速工具||0.0.2|FastDick|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 filebrowser|Web文件浏览器||0.0.2|FileBrowser|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 firewall|防火墙端口开放插件|支持添加多种端口号类型|0.0.2|FireWall|linux_arm,linux_mips,linux_x86_64
-frpc|内网穿透工具，相对于ngrok资源占用较多|修改默认的版本识别，从二进制文件获取默认版本|0.0.4|Frpc|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
+frpc|内网穿透工具，相对于ngrok资源占用较多|修复自定义域名配置错误|0.0.5|Frpc|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 frps|内网穿透工具Frp服务端|frp程序更新到0.21.0|0.0.2|Frps|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 httpfile|搭建简单的web文件浏览页面||0.0.2|HttpFile|linux_arm,linux_mips,linux_x86_64
 jetbrains|快速搭建JetBrains激活服务器||0.0.2|JetBrains|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
@@ -19,7 +19,7 @@ mixbox|一款支持多平台，多架构的Shell工具箱|修复由于mbdb导致
 ngrok|轻量级的内网穿透工具||0.0.2|Ngrok|linux_arm,linux_mips
 pptpd|简单但并不安全的VPN服务器||0.0.2|PPTPD|linux_arm,linux_mips,linux_x86_64
 qiandao|koolshare merlin 自动签到程序||0.0.2|QianDao|linux_arm,linux_x86_64
-shadowsocks|最好的翻墙工具，没有之一，还可以加速国内外游戏|修复回国模式的未添加ipset规则的bug|0.0.5|ShadowSocks|linux_arm,linux_mips,linux_x86_64
+shadowsocks|最好的翻墙工具，没有之一，还可以加速国内外游戏|修复回国模式的未添加ipset规则的bug，修复其余设备运行模式一直显示科学上网的bug|0.0.6|ShadowSocks|linux_arm,linux_mips,linux_x86_64
 smartdns|DNS加速工具，从多个上游DNS服务器查询，避免DS污染|更新smartdns程序版本|0.0.3|SmartDNS|linux_arm,linux_mips,linux_x86_64
 ssserver|快速搭建ss服务端程序||0.0.2|SSServer|linux_arm,linux_x86_64
 tinyproxy|轻量级的Http代理工具||0.0.2|TinyProxy|linux_arm,linux_mips,linux_x86_64

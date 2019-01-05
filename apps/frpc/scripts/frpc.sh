@@ -62,7 +62,7 @@ set_config() {
 				echo "subdomain = $domain" >> ${mbroot}/apps/${appname}/config/${appname}.conf
 				logsh "【$service】" "加载${appname}配置:【$name】启动为http/https子域名模式,域名:[$domain]"
 			else
-				echo "custom_domain = $domain" >> ${mbroot}/apps/${appname}/config/${appname}.conf
+				echo "custom_domains = $domain" >> ${mbroot}/apps/${appname}/config/${appname}.conf
 				logsh "【$service】" "加载${appname}配置:【$name】启动为http/https自定义域名模式,域名:[$domain]"
 			fi
 		fi
