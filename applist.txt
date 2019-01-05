@@ -3,7 +3,7 @@ aria2|Linux下一款高效的下载工具|更新了R3G的二进制文件|0.0.2|A
 baidupcs|第三方百度网盘web客户端，基于Go语言|更新arm和mips程序，作者更新了移动ui|0.0.3|BaiduPCS|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 dropbear|移植小米的SSH功能到工具箱|添加备份功能支持|0.0.2|DropBear|linux_arm,linux_mips
 easyexplorer|一款跨设备的P2P文件同步工具||0.0.2|EasyExplorer|linux_arm,linux_x86_64,darwin_x86_64
-entware|一款开源且强大的包管理工具，许多功能都通过它来实现|增加了启动ONMP安装程序的选项|0.0.2|Entware|linux_arm,linux_mips,linux_x86_64
+entware|一款开源且强大的包管理工具，许多功能都通过它来实现|增加了启动ONMP安装程序的选项|0.0.3|Entware|linux_arm,linux_mips,linux_x86_64
 fastdick|迅雷快鸟，快带提速工具||0.0.2|FastDick|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 filebrowser|Web文件浏览器||0.0.2|FileBrowser|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 firewall|防火墙端口开放插件|支持添加多种端口号类型|0.0.2|FireWall|linux_arm,linux_mips,linux_x86_64
