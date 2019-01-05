@@ -667,7 +667,7 @@ start() {
 
 	/etc/init.d/dnsmasq restart
 
-	logsh "【$service】" "启动${appname}服务完成！"
+	logsh "【$service】" "启动${appname}服务完成，启动失败可查看日志或多次重试！"
 
 	# detect_process
 

@@ -19,7 +19,7 @@ if [ "$result" == 0 ]; then
 fi
 
 logsh "【Tools】" "检查定时任务配置"
-cru a monitor "*/5 * * * * ${mbroot}/scripts/monitor.sh"
+cru a monitor "*/3 * * * * ${mbroot}/scripts/monitor.sh"
 
 logsh "【Tools】" "检查工具箱开机启动配置"
 result=$(cat /etc/firewall.user 2> /dev/null | grep init.sh | wc -l) 
