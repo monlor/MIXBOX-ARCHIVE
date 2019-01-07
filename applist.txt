@@ -19,7 +19,7 @@ mixbox|一款支持多平台，多架构的Shell工具箱|修复由于mbdb导致
 ngrok|轻量级的内网穿透工具||0.0.2|Ngrok|linux_arm,linux_mips
 pptpd|简单但并不安全的VPN服务器||0.0.2|PPTPD|linux_arm,linux_mips,linux_x86_64
 qiandao|koolshare merlin 自动签到程序||0.0.2|QianDao|linux_arm,linux_x86_64
-shadowsocks|最好的翻墙工具，没有之一，还可以加速国内外游戏|修复回国模式的未添加ipset规则的bug，修复其余设备运行模式一直显示科学上网的bug|0.0.7|ShadowSocks|linux_arm,linux_mips,linux_x86_64
+shadowsocks|最好的翻墙工具，没有之一，还可以加速国内外游戏|1.修复回国模式的未添加ipset规则的bug，\n \ 2.修复其余设备运行模式一直显示科学上网的bug\n \ 3.修复vray配置文件安全方式为空时的错误|0.0.7|ShadowSocks|linux_arm,linux_mips,linux_x86_64
 smartdns|DNS加速工具，从多个上游DNS服务器查询，避免DS污染|更新smartdns程序版本|0.0.3|SmartDNS|linux_arm,linux_mips,linux_x86_64
 ssserver|快速搭建ss服务端程序||0.0.2|SSServer|linux_arm,linux_x86_64
 tinyproxy|轻量级的Http代理工具||0.0.2|TinyProxy|linux_arm,linux_mips,linux_x86_64

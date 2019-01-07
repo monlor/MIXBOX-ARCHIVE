@@ -61,6 +61,7 @@ get_path(){
 # tcp和kcp下tlsSettings为null，ws和h2下tlsSettings
 [ -z "$ss_mux_enable" ] && local ss_mux_enable=true
 [ -z "$ss_mux_concurrency" ] && local ss_mux_concurrency=8
+[ "$ss_network_security" == "none" ] && ss_network_security=""
 #if [ "$ss_network" == "ws" -o "$ss_network" == "h2" ];then
 case "$ss_network_security" in
 	tls)
