@@ -71,8 +71,7 @@ applist installed -n | while read line; do mixbox upgrade $line; done
 ### 小米路由器目录结构  
 
 	/
-	|--- /etc  
-	|--- /mixbox
+	|--- /etc/mixbox
 	|    |--- /apps/        --- 插件安装目录
 	|    |--- /config/      --- 工具箱配置文件目录
 	|    |--- /scripts/     --- 工具箱脚本目录
