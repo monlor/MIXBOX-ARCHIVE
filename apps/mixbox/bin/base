@@ -178,7 +178,7 @@ readsh() {
 				mbdb set $appname.main.$uciname="$default" || echo "设置key:"$uciname"等于value:"$default"出错！"
 			fi
 		else
-			if [ "$uciname" = "port" -a -n "$(netstat -tunpl 2> /dev/null | grep -w "$res")" ]; then
+			if [ "$uciname" = "port" ] && [ -n "$(netstat -tunpl 2> /dev/null | grep -w "$res")" ]; then
 				echo "端口已被占用！请重新输入！"
 				readsh $@
 			else

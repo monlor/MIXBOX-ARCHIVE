@@ -22,10 +22,10 @@ start () {
 	logsh "【$service】" "正在启动${appname}服务... "
 	cru a "${appname}" "0 6 * * * ${mbroot}/apps/${appname}/scripts/${appname}.sh restart"
 	[ -f "${mbroot}/apps/${appname}/bin/${appname}".old ] && rm -rf "${mbroot}/apps/${appname}/bin/${appname}".old
-	[ ! -d "${mbroot}/apps/${appname}/config" ] && mkdir ${mbroot}/apps/${appname}/config
+	[ ! -d "${CONF}" ] && mkdir ${CONF}
 	open_ports
     write_firewall_start
-	daemon ${mbroot}/apps/${appname}/bin/${appname} -home "${mbroot}/apps/${appname}/config" -gui-address :${port} -no-browser -logfile ${mbroot}/var/log/${appname}.log
+	daemon ${mbroot}/apps/${appname}/bin/${appname} -home "${CONF}" -gui-address :${port} -no-browser -logfile ${mbroot}/var/log/${appname}.log
 	if [ $? -ne 0 ]; then
             logsh "【$service】" "启动${appname}服务失败！"
     else
@@ -42,7 +42,7 @@ stop () {
 	close_port
 	remove_firewall_start
 	killall -9 ${appname} &> /dev/null
-	logsh "【$service】" "卸载插件后可删除${mbroot}/apps/${appname}/config文件夹"
+	logsh "【$service】" "卸载插件后可删除${CONF}文件夹"
 	[ "$enable" == '0' ] && destroy
 
 }
