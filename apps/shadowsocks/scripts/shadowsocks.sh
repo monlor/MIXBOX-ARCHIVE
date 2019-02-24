@@ -701,7 +701,13 @@ status() {
 	#if [ "$result" == '0' ] || [ "$http_status" != "200" ]; then
 	result2=$(iptables -t nat -S | grep SHADOWSOCK)
 	[ "$ssgena" == '1' ] && ssgflag=", 游戏节点: $ssgid($ssg_mode)"
-	if [ "$result1" -ge 3 ]; then
+
+	process_count=3
+	if [ "$proxy_type" == "v2ray" ]; then
+		process_count=2
+	fi
+
+	if [ "$result1" -ge $process_count ]; then
 		if [ -n "$result2" ]; then
 			status="运行节点: $id($ss_mode)$ssgflag|1" 
 		else

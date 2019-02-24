@@ -28,10 +28,12 @@ local ws="null"
 local h2="null"
 local tls="null"
 
-IFIP=`echo $ss_server | grep -E "([0-9]{1,3}[\.]){3}[0-9]{1,3}|:"`
-if [ -z "$IFIP" ]; then
-	ss_server_tmp=`nslookup $ss_server | sed 1,2d | grep -Eo "([0-9]{1,3}[\.]){3}[0-9]{1,3}" | head -1` 
-	[ -z "$ss_server_tmp" ] && logsh "【$service】" "v2ray服务器地址解析失败，跳过解析！" || ss_server="$ss_server_tmp"
+if [ "$ss_network" != "ws" ]; then
+	IFIP=`echo $ss_server | grep -E "([0-9]{1,3}[\.]){3}[0-9]{1,3}|:"`
+	if [ -z "$IFIP" ]; then
+		ss_server_tmp=`nslookup $ss_server | sed 1,2d | grep -Eo "([0-9]{1,3}[\.]){3}[0-9]{1,3}" | head -1` 
+		[ -z "$ss_server_tmp" ] && logsh "【$service】" "v2ray服务器地址解析失败，跳过解析！" || ss_server="$ss_server_tmp"
+	fi
 fi
 
 get_ws_header() {
