@@ -96,7 +96,7 @@ start () {
 	done
 
 	logsh "【$service】" "${appname}服务启动完成"
-	[ "$onmp" == '1' ] && sh -c "$(curl -kfsSl https://raw.githubusercontent.com/mixbox/ONMP/master/oneclick.sh)"
+	[ "$onmp" == '1' ] && sh -c "$(curl -kfsSl https://raw.githubusercontent.com/monlor/ONMP/master/oneclick.sh)"
 
 }
 

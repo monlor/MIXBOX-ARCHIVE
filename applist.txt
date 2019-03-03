@@ -1,9 +1,9 @@
 aliddns|动态将你的路由器IP绑定到域名||0.0.2|AliDDNS|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 aria2|Linux下一款高效的下载工具|更新了R3G的二进制文件|0.0.2|Aria2|linux_arm,linux_mips,linux_x86_64
-baidupcs|第三方百度网盘web客户端，基于Go语言|更新arm和mips程序，作者更新了移动ui|0.0.3|BaiduPCS|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
+baidupcs|第三方百度网盘web客户端，基于Go语言|更新arm和mips程序，作者更新了移动ui|0.0.4|BaiduPCS|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 dropbear|移植小米的SSH功能到工具箱|添加备份功能支持|0.0.2|DropBear|linux_arm,linux_mips
 easyexplorer|一款跨设备的P2P文件同步工具||0.0.2|EasyExplorer|linux_arm,linux_x86_64,darwin_x86_64
-entware|一款开源且强大的包管理工具，许多功能都通过它来实现|增加了启动ONMP安装程序的选项|0.0.3|Entware|linux_arm,linux_mips,linux_x86_64
+entware|一款开源且强大的包管理工具，许多功能都通过它来实现|修复了ONMP无法使用的问题|0.0.4|Entware|linux_arm,linux_mips,linux_x86_64
 fastdick|迅雷快鸟，快带提速工具||0.0.2|FastDick|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 filebrowser|Web文件浏览器||0.0.2|FileBrowser|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 firewall|防火墙端口开放插件|支持添加多种端口号类型|0.0.2|FireWall|linux_arm,linux_mips,linux_x86_64
@@ -14,17 +14,17 @@ jetbrains|快速搭建JetBrains激活服务器||0.0.2|JetBrains|linux_arm,linux_
 kms|快速搭建Windows、Office激活服务器|Support for Windows 10 1809, Windows Server 2019 and Office 2019 built-in|0.0.2|Kms|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 kodexplorer|可道云，在线文档管理器，需要entware环境|修复脚本bug，无法启用程序|0.0.3|KodExplorer|linux_arm,linux_mips,linux_x86_64
 koolproxy|简单，快速屏蔽网页或视频广告|去掉openssl程序，采用kp自带程序生成证书，减小插件体积|0.0.2|KoolProxy|linux_arm,linux_mips,linux_x86_64
-miwifi|小米路由器系统管理，修改samba禁用系统更新等||0.0.3|MIWIFI|linux_arm,linux_mips
+miwifi|小米路由器系统管理，修改samba禁用系统更新等|现在修复小米路由器远程访问会自动开放8098端口|0.0.4|MIWIFI|linux_arm,linux_mips
 mixbox|一款支持多平台，多架构的Shell工具箱|修复由于mbdb导致frpc配置无法识别的bug|0.0.6|MIXBOX|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 ngrok|轻量级的内网穿透工具||0.0.2|Ngrok|linux_arm,linux_mips
 pptpd|简单但并不安全的VPN服务器||0.0.2|PPTPD|linux_arm,linux_mips,linux_x86_64
 qiandao|koolshare merlin 自动签到程序||0.0.2|QianDao|linux_arm,linux_x86_64
-shadowsocks|最好的翻墙工具，没有之一，还可以加速国内外游戏|1.修复回国模式的未添加ipset规则的bug\n\ 2.修复其余设备运行模式一直显示科学上网的bug\n\ 3.修复vray配置文件安全方式为空时的错误|0.0.7|ShadowSocks|linux_arm,linux_mips,linux_x86_64
+shadowsocks|最好的翻墙工具，没有之一，还可以加速国内外游戏|1.修复v2ray配置文件问题（未测试），感谢@leafnsand的pr|0.1.0|ShadowSocks|linux_arm,linux_mips,linux_x86_64
 smartdns|DNS加速工具，从多个上游DNS服务器查询，避免DS污染|更新smartdns程序版本|0.0.3|SmartDNS|linux_arm,linux_mips,linux_x86_64
 ssserver|快速搭建ss服务端程序||0.0.2|SSServer|linux_arm,linux_x86_64
 tinyproxy|轻量级的Http代理工具||0.0.2|TinyProxy|linux_arm,linux_mips,linux_x86_64
 transmission|一款BT下载神器||0.0.3|Transmission|linux_arm,linux_mips,linux_x86_64
-verysync|基于p2p的文件同步工具，局域网同步速度快||0.0.4|VerySync|linux_arm,linux_mips,linux_x86_64
+verysync|基于p2p的文件同步工具，局域网同步速度快|更新程序版本|0.0.5|VerySync|linux_arm,linux_mips,linux_x86_64
 vsftpd|快速搭建Ftp服务器，局域网文件共享||0.0.3|VsFtpd|linux_arm,linux_mips,linux_x86_64
 webd|一款只有40k大小的mini个人网盘||0.0.2|WebD|linux_arm,linux_mips,linux_x86_64,darwin_linux_x86_64
 webshell|网页ssh工具，可在网页上管理路由器||0.0.2|WebShell|linux_arm,linux_mips,linux_x86_64

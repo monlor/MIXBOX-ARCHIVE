@@ -5,7 +5,5 @@ supports="linux_arm,linux_mips,linux_x86_64"
 openport="1"
 backupfiles="config/ssserver.conf,config/sscontrol.conf,config/customize_black.conf,config/customize_white.conf"
 appinfo="最好的翻墙工具，没有之一，还可以加速国内外游戏"
-newinfo="1.修复回国模式的未添加ipset规则的bug\n\
-2.修复其余设备运行模式一直显示科学上网的bug\n\
-3.修复vray配置文件安全方式为空时的错误"
-version="0.0.7"
+newinfo="1.修复v2ray配置文件问题（未测试），感谢@leafnsand的pr"
+version="0.1.0"

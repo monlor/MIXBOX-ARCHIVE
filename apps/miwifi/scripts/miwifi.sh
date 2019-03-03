@@ -59,6 +59,7 @@ enable_remote_web() {
 		mount --bind ${mbtmp}/miwifi-webinitrd.conf /etc/sysapihttpd/miwifi-webinitrd.conf
 		/etc/init.d/sysapihttpd restart &> /dev/null
 		remote_text="启动"
+		iptables -I INPUT -p tcp --dport 8098 -j ACCEPT &> /dev/null
 	fi
 }
 
@@ -66,6 +67,7 @@ disable_remote_web() {
 	umount -lf /etc/sysapihttpd/miwifi-webinitrd.conf &> /dev/null
 	rm -rf ${mbtmp}/miwifi-webinitrd.conf &> /dev/null
 	remote_text="禁用"
+	iptables -D INPUT -p tcp --dport 8098 -j ACCEPT &> /dev/null 
 }
  
 start() {

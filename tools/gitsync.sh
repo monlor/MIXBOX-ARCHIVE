@@ -5,7 +5,7 @@ cd $path
 #find  .  -name  '._*'  -type  f  -print  -exec  rm  -rf  {} \;
 find . -name '.DS_Store' | xargs rm -rf
 find . -name '._*' | xargs rm -rf
-[ "$(uname -m)" = "Darwin" ] && args="\"\"" 
+[ "$(uname -m)" = "Darwin" ] && args="\"\"" || args=""
 
 github_url="https://github.com/monlor/MIXBOX.git"
 github_raw="https://raw.githubusercontent.com/MIXBOX/master"
@@ -18,7 +18,7 @@ inside_raw="https://dev.tencent.com/u/monlor/p/MIXBOX-BETA/git/raw/master"
 version() {
 	local appname="$1"
 	eval `cat apps/${appname}/config/${appname}.uci | grep version`
-	sed -i "$args" '/version/d' apps/${appname}/config/${appname}.uci
+	sed -i $args '/version/d' apps/${appname}/config/${appname}.uci
 	num1=$(echo "$version" | cut -d'.' -f1)
 	num2=$(echo "$version" | cut -d'.' -f2)
 	num3=$(echo "$version" | cut -d'.' -f3)
@@ -95,7 +95,7 @@ localgit() {
 
 github() {
 
-	sed -i "$args" "s#^mburl.*#mburl=\"$github_raw\"#" ./install.sh
+	sed -i $args "s#^mburl.*#mburl=\"$github_raw\"#" ./install.sh
 	localgit
 	git remote rm origin
 	git remote add origin $github_url
@@ -104,7 +104,7 @@ github() {
 
 coding() {
 
-	sed -i "$args" "s#^mburl.*#mburl=\"$coding_raw\"#" ./install.sh
+	sed -i $args "s#^mburl.*#mburl=\"$coding_raw\"#" ./install.sh
 	localgit
 	git remote rm origin
 	git remote add origin $coding_url
@@ -113,7 +113,7 @@ coding() {
 
 inside() {
 
-	sed -i "$args" "s#^mburl.*#mburl=\"$inside_raw\"#" ./install.sh
+	sed -i $args "s#^mburl.*#mburl=\"$inside_raw\"#" ./install.sh
 	localgit
 	git remote rm origin
 	git remote add origin $inside_url

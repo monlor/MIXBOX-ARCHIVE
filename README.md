@@ -6,6 +6,14 @@
 * 我的博客：[Monlor's Blog](https://www.monlor.com)
 * GitHub地址：[monlor/MIXBOX](https://github.com/monlor/MIXBOX)
 
+### 更新日志
+
+* 2019-03-03
+	* 修复`v2ray`配置文件问题（未测试），感谢`@leafnsand`的PR
+	* 修复`Entware`插件无法启动`ONMP`的问题
+	* 插件`VerySync`和`BaiduPCS`的程序版本更新
+	* 现在修复小米路由器远程访问后会自动开放8098端口
+
 ### 介绍
 
 **工具箱`MIXBOX`公测发布，`Monlor Tools`不再更新。新版本有以下改变：**
