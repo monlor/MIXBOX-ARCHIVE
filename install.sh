@@ -17,7 +17,7 @@ logsh "【Tools】" "请按任意键安装工具箱(Ctrl + C 退出)."
 read answer
 #check root
 # [ "$USER" != "root" ] && logsh "【Tools】"  "请使用root用户安装工具箱！" && exit 1
-mburl="https://dev.tencent.com/u/monlor/p/MIXBOX-BETA/git/raw/master"
+mburl="https://dev.tencent.com/u/monlor/p/MIXBOX/git/raw/master"
 mbtmp="/tmp/mbtmp"
 [ ! -d "${mbtmp}" ] && mkdir -p ${mbtmp}
 model=$(uname -ms | tr ' ' '_' | tr '[A-Z]' '[a-z]')
