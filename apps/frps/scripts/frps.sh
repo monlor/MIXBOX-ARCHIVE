@@ -1,6 +1,6 @@
 #!/bin/sh 
 source /etc/mixbox/bin/base
-eval `mbdb export frpc`
+eval `mbdb export frps`
 
 open_ports() {
     [ -n "${port}" ] && open_port ${port}
