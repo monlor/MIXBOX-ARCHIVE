@@ -5,15 +5,12 @@ cd $path
 #find  .  -name  '._*'  -type  f  -print  -exec  rm  -rf  {} \;
 find . -name '.DS_Store' | xargs rm -rf
 find . -name '._*' | xargs rm -rf
-[ "$(uname -m)" = "Darwin" ] && args="\"\"" || args=""
+[ "$(uname -s)" = "Darwin" ] && args="\"\"" || args=""
 
 github_url="https://github.com/monlor/MIXBOX.git"
 github_raw="https://raw.githubusercontent.com/MIXBOX/master"
 coding_url="https://git.dev.tencent.com/monlor/MIXBOX.git"
 coding_raw="https://dev.tencent.com/u/monlor/p/MIXBOX/git/raw/master"
-inside_url="https://git.dev.tencent.com/monlor/MIXBOX-BETA.git"
-inside_raw="https://dev.tencent.com/u/monlor/p/MIXBOX-BETA/git/raw/master"
-
 
 version() {
 	local appname="$1"
@@ -23,7 +20,7 @@ version() {
 	num2=$(echo "$version" | cut -d'.' -f2)
 	num3=$(echo "$version" | cut -d'.' -f3)
 	if [ "$num3" -eq '9' ]; then
-		if [ "$num2" -eq '9' ]; then
+		if [[ "$num2" -eq '9' ]]; then
 			let num1=$num1+1
 			num2=0
 			num3=0
@@ -111,15 +108,6 @@ coding() {
 	git push origin master 
 }
 
-inside() {
-
-	sed -i $args "s#^mburl.*#mburl=\"$inside_raw\"#" ./install.sh
-	localgit
-	git remote rm origin
-	git remote add origin $inside_url
-	git push origin master 
-}
-
 reset() {
 	
 	git checkout --orphan latest_branch
@@ -133,12 +121,11 @@ reset() {
 	# coding
 	git rm -r --cached .
 }
-rm -rf ./install_test.sh
+
 case $1 in 
 	all) 
 		github
 		coding
-		inside
 		;;
 	github)
 		github		
