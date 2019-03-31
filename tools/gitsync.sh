@@ -12,6 +12,12 @@ github_raw="https://raw.githubusercontent.com/MIXBOX/master"
 coding_url="https://git.dev.tencent.com/monlor/MIXBOX.git"
 coding_raw="https://dev.tencent.com/u/monlor/p/MIXBOX/git/raw/master"
 
+sedsh() {
+	[ -z "$1" -o -z "$2" -o -z "$3" ] && echo "null sedsh params!" && exit 1
+	if [ "$(uname -s)" = "Darwin" ]; then
+		sed -i "" "s#$1#$2#g" "$3"
+}
+
 version() {
 	local appname="$1"
 	eval `cat apps/${appname}/config/${appname}.uci | grep version`
@@ -140,9 +146,6 @@ case $1 in
 	pack) 
 		shift 1
 		pack $@
-		;;
-	inside)
-		inside
 		;;
 	reset)
 		reset
