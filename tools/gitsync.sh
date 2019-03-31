@@ -13,15 +13,27 @@ coding_url="https://git.dev.tencent.com/monlor/MIXBOX.git"
 coding_raw="https://dev.tencent.com/u/monlor/p/MIXBOX/git/raw/master"
 
 sedsh() {
-	[ -z "$1" -o -z "$2" -o -z "$3" ] && echo "null sedsh params!" && exit 1
+	[ -z "$1" -o -z "$2" -o -z "$3" -o -z "$4" ] && echo "null sedsh params!" && exit 1
 	if [ "$(uname -s)" = "Darwin" ]; then
-		sed -i "" "s#$1#$2#g" "$3"
+		if [ "$1" = "s" ]; then
+			sed -i "" "s#$2#$3#g" "$4"
+		elif [[ "$1" = "d" ]]; then
+			sed -i "" "#$2#d" "$3"
+		fi
+	else
+		if [[ "$1" = "s" ]]; then
+			sed -i "s#$2#$3#g" "$4"
+		elif [[ "$1" = "d" ]]; then
+			sed -i "#$2#d" "$3"
+		fi
+	fi
 }
 
 version() {
 	local appname="$1"
 	eval `cat apps/${appname}/config/${appname}.uci | grep version`
-	sed -i $args '/version/d' apps/${appname}/config/${appname}.uci
+	# sed -i $args '/version/d' apps/${appname}/config/${appname}.uci
+	sedsh "d" "version" "apps/${appname}/config/${appname}.uci"
 	num1=$(echo "$version" | cut -d'.' -f1)
 	num2=$(echo "$version" | cut -d'.' -f2)
 	num3=$(echo "$version" | cut -d'.' -f3)
@@ -98,7 +110,8 @@ localgit() {
 
 github() {
 
-	sed -i $args "s#^mburl.*#mburl=\"$github_raw\"#" ./install.sh
+	# sed -i $args "s#^mburl.*#mburl=\"$github_raw\"#" ./install.sh
+	sedsh "s" "^mburl.*" "mburl=\"$github_raw\"" "./install.sh"
 	localgit
 	git remote rm origin
 	git remote add origin $github_url
@@ -107,7 +120,8 @@ github() {
 
 coding() {
 
-	sed -i $args "s#^mburl.*#mburl=\"$coding_raw\"#" ./install.sh
+	# sed -i $args "s#^mburl.*#mburl=\"$coding_raw\"#" ./install.sh
+	sedsh "s" "^mburl.*" "mburl=\"$coding_raw\"" "./install.sh"
 	localgit
 	git remote rm origin
 	git remote add origin $coding_url
