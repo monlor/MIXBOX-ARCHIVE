@@ -6,7 +6,7 @@ CONF="$mbdisk"/."${appname}"
 port=$(mbdb get ${appname}.main.port) || port=8886
 
 open_ports() {
-
+	open_port ${port} tcp
 	open_port 22330 tcp
 	open_port 22027,22037,15298,22027,22037,7123 udp
 
