@@ -13,7 +13,7 @@ coding_url="https://git.dev.tencent.com/monlor/MIXBOX.git"
 coding_raw="https://dev.tencent.com/u/monlor/p/MIXBOX/git/raw/master"
 
 sedsh() {
-	[ -z "$1" -o -z "$2" -o -z "$3" -o -z "$4" ] && echo "null sedsh params!" && exit 1
+	[ -z "$1" -o -z "$2" -o -z "$3" ] && echo "null sedsh params!" && exit 1
 	if [ "$(uname -s)" = "Darwin" ]; then
 		if [ "$1" = "s" ]; then
 			sed -i "" "s#$2#$3#g" "$4"
