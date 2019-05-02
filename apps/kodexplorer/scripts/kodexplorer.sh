@@ -13,7 +13,7 @@ CONF="/opt/etc/nginx/vhost/kodexplorer.conf"
 path=$(mbdb get ${appname}.main.path)
 port=$(mbdb get ${appname}.main.port) || port=81
 lanip=$(uci get network.lan.ipaddr)
-opkg_list="php7-cgi php7-mod-curl php7-mod-gd php7-mod-iconv php7-mod-json php7-mod-mbstring php7-mod-opcache php7-mod-session php7-mod-zip nginx spawn-fcgi zoneinfo-core zoneinfo-asia libxml2"
+opkg_list="php7-cgi php7-mod-curl php7-mod-gd php7-mod-iconv php7-mod-json php7-mod-mbstring php7-mod-opcache php7-mod-session php7-mod-zip nginx spawn-fcgi zoneinfo-core zoneinfo-asia libxml2 unzip"
 
 
 config_php() {
