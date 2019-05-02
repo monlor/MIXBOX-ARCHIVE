@@ -8,6 +8,7 @@ eval `mbdb export shadowsocks`
 [ -z "$ss_proxy_default_mode" ] && ss_proxy_default_mode=1
 [ -z "$ss_game_default_mode" ] && ss_game_default_mode=0
 [ -z "$dns_red_ip" ] && dns_red_ip="$lanip"
+[ "$ssgena" != "1" ] && unset ssg_mode
 
 get_v2ray_bin() {
 	result1=$(curl -skL $mburl/appsbin/v2ray-bin/$model/lastest.txt) &> /dev/null
