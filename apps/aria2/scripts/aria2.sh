@@ -31,6 +31,13 @@ set_config() {
 
 	[ ! -d "$path" ] && mkdir -p $path
 
+    # 自动更新bt-tracker
+    list=`curl -s https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt|awk NF|sed ":a;N;s/\n/,/g;ta"`
+    if [ ! -z "${list}" ]; then
+        sed -i "s#.*bt-tracker.*#bt-tracker=${list}#" ${mbroot}/apps/${appname}/config/${appname}.conf
+        logsh "【$service】" "更新bt-tracker"
+    fi
+
 	#R3加载库文件
 	[ "$xq" == "R3" -o "$xq" == "R1CM" ] && export LD_LIBRARY_PATH=${mbroot}/apps/${appname}/lib:/usr/lib:/lib
 
