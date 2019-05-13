@@ -9,6 +9,11 @@ WEBDIR=${mbroot}/apps/${appname}/web
 aria2url=http://$lanip/backup/log/${appname}
 binname=aria2c
 
+open_ports() {
+    # 添加bt下载和DHT监听端口
+    open_port 6881:6999 tcp
+}
+
 set_config() {
 
 	logsh "【$service】" "加载${appname}配置..."
