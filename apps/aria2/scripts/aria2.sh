@@ -31,6 +31,14 @@ set_config() {
 
 	[ ! -d "$path" ] && mkdir -p $path
 
+    # DHT 缓存目录配置
+    if [ ! -d "${path}/.aria2" ]; then
+        mkdir -p "${path}/.aria2"
+        # IPV6默认没有开，可以不用配置
+        sed -i "s#.*dht-file-path.*#dht-file-path=${path}/.aria2/dht.dat#" ${mbroot}/apps/${appname}/config/${appname}.conf
+        sed -i "s#.*dht-file-path6.*#dht-file-path6=${path}/.aria2/dht6.dat#" ${mbroot}/apps/${appname}/config/${appname}.conf
+    fi
+
     # 自动更新bt-tracker
     list=`curl -s https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt|awk NF|sed ":a;N;s/\n/,/g;ta"`
     if [ ! -z "${list}" ]; then
