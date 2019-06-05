@@ -9,6 +9,11 @@ WEBDIR=${mbroot}/apps/${appname}/web
 aria2url=http://$lanip/backup/log/${appname}
 binname=aria2c
 
+open_ports() {
+    # 添加bt下载和DHT监听端口
+    open_port 6881:6999 tcp
+}
+
 set_config() {
 
 	logsh "【$service】" "加载${appname}配置..."
@@ -25,6 +30,21 @@ set_config() {
 	sed -i "s#dir.*#dir=$path#" ${mbroot}/apps/${appname}/config/${appname}.conf
 
 	[ ! -d "$path" ] && mkdir -p $path
+
+    # DHT 缓存目录配置
+    if [ ! -d "${path}/.aria2" ]; then
+        mkdir -p "${path}/.aria2"
+        # IPV6默认没有开，可以不用配置
+        sed -i "s#.*dht-file-path.*#dht-file-path=${path}/.aria2/dht.dat#" ${mbroot}/apps/${appname}/config/${appname}.conf
+        sed -i "s#.*dht-file-path6.*#dht-file-path6=${path}/.aria2/dht6.dat#" ${mbroot}/apps/${appname}/config/${appname}.conf
+    fi
+
+    # 自动更新bt-tracker
+    list=`curl -s https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt|awk NF|sed ":a;N;s/\n/,/g;ta"`
+    if [ ! -z "${list}" ]; then
+        sed -i "s#.*bt-tracker.*#bt-tracker=${list}#" ${mbroot}/apps/${appname}/config/${appname}.conf
+        logsh "【$service】" "更新bt-tracker"
+    fi
 
 	#R3加载库文件
 	[ "$xq" == "R3" -o "$xq" == "R1CM" ] && export LD_LIBRARY_PATH=${mbroot}/apps/${appname}/lib:/usr/lib:/lib
