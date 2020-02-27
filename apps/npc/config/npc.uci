@@ -1,0 +1,7 @@
+service="NPC"
+appname="npc"
+needver="0.0.1"
+backupfiles=""
+supports="linux_arm,linux_mips"
+appinfo="一款轻量级、高性能、功能强大的内网穿透代理服务器"
+newinfo=""

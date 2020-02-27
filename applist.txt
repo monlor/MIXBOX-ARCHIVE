@@ -1,5 +1,5 @@
 aliddns|动态将你的路由器IP绑定到域名||0.0.2|AliDDNS|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
-aria2|Linux下一款高效的下载工具|更新aria2web页面，修复日志问题|0.0.3|Aria2|linux_arm,linux_mips,linux_x86_64
+aria2|Linux下一款高效的下载工具|解决BT无法全速下载问题：DHT 缓存目录配置，感谢@itfsw|0.0.4|Aria2|linux_arm,linux_mips,linux_x86_64
 baidupcs|第三方百度网盘web客户端，基于Go语言|二进制更新至3.6.6|0.0.5|BaiduPCS|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 dropbear|移植小米的SSH功能到工具箱|添加备份功能支持|0.0.2|DropBear|linux_arm,linux_mips
 easyexplorer|一款跨设备的P2P文件同步工具||0.0.2|EasyExplorer|linux_arm,linux_x86_64,darwin_x86_64
@@ -17,6 +17,7 @@ koolproxy|简单，快速屏蔽网页或视频广告|去掉openssl程序，采�
 miwifi|小米路由器系统管理，修改samba禁用系统更新等|现在修复小米路由器远程访问会自动开放8098端口|0.0.4|MIWIFI|linux_arm,linux_mips
 mixbox|一款支持多平台，多架构的Shell工具箱|修复由于mbdb导致frpc配置无法识别的bug|0.0.6|MIXBOX|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 ngrok|轻量级的内网穿透工具||0.0.2|Ngrok|linux_arm,linux_mips
+npc|一款轻量级、高性能、功能强大的内网穿透代理服务器||0.0.2|NPC|linux_arm,linux_mips
 pptpd|简单但并不安全的VPN服务器||0.0.2|PPTPD|linux_arm,linux_mips,linux_x86_64
 qiandao|koolshare merlin 自动签到程序||0.0.2|QianDao|linux_arm,linux_x86_64
 shadowsocks|最好的翻墙工具，没有之一，还可以加速国内外游戏|修复kcptun配置错误|0.1.1|ShadowSocks|linux_arm,linux_mips,linux_x86_64

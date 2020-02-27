@@ -67,8 +67,8 @@ pack_app() {
 		done
 		echo "正在打包插件[$appname]平台[$model]，文件名[${appname}_${model}.tar.gz]..."
 		tar zcvf ${appname}_${model}.tar.gz -C pack/ ${appname}/ &> /dev/null
-		[ ! -d ./appstore/history ] && mkdir ./appstore/history
-		mv ./appstore/${appname}_${model}.tar.gz ./appstore/history &> /dev/null
+		# [ ! -d ./appstore/history ] && mkdir ./appstore/history
+		# mv ./appstore/${appname}_${model}.tar.gz ./appstore/history &> /dev/null
 		mv -f ${appname}_${model}.tar.gz ./appstore
 		rm -rf pack/$appname/
 	done
