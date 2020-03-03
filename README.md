@@ -13,6 +13,7 @@
 * 2020-03-03
 	* 更新工具箱coding下载源，**请手动更换coding下载源：`https://monlor.coding.net/p/MIXBOX/d/MIXBOX/git/raw/master`**
 	* 更新插件`Koolproxy`规则地址
+	* 更新`qiandao`插件，现在支持更多网站签到，**并且支持mips设置，如R3**
 
 * 2020-02-27
 	* 新增插件npc，待测试
