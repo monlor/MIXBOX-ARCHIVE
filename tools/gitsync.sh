@@ -9,7 +9,7 @@ find . -name '._*' | xargs rm -rf
 
 github_url="https://github.com/monlor/MIXBOX.git"
 github_raw="https://raw.githubusercontent.com/MIXBOX/master"
-coding_url="https://e.coding.net/monlor/MIXBOX.git"
+coding_url="git@e.coding.net:monlor/MIXBOX.git"
 coding_raw="https://monlor.coding.net/p/MIXBOX/d/MIXBOX/git/raw/master"
 
 sedsh() {
