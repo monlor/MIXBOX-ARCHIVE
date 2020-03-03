@@ -9,8 +9,8 @@ find . -name '._*' | xargs rm -rf
 
 github_url="https://github.com/monlor/MIXBOX.git"
 github_raw="https://raw.githubusercontent.com/MIXBOX/master"
-coding_url="https://git.dev.tencent.com/monlor/MIXBOX.git"
-coding_raw="https://dev.tencent.com/u/monlor/p/MIXBOX/git/raw/master"
+coding_url="https://e.coding.net/monlor/MIXBOX.git"
+coding_raw="https://monlor.coding.net/p/MIXBOX/d/MIXBOX/git/raw/master"
 
 sedsh() {
 	[ -z "$1" -o -z "$2" -o -z "$3" ] && echo "null sedsh params!" && exit 1
