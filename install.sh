@@ -23,6 +23,7 @@ mbtmp="/tmp/mbtmp"
 model=$(uname -ms | tr ' ' '_' | tr '[A-Z]' '[a-z]')
 [ -n "$(echo $model | grep -E "linux.*arm.*")" ] && model="linux_arm"
 [ -n "$(echo $model | grep -E "linux.*mips.*")" ] && model="linux_mips"
+[ -n "$(echo $model | grep -E "linux.*x86_64.*")" ] && model="linux_x86_64"
 echo "请在以下路径中选择一个合适的工具箱安装位置和一个用户文件目录："
 echo "小米路由器硬盘版推荐 工具箱安装位置：/etc，用户目录：/userdisk/data"
 echo "小米路由器普通版推荐 工具箱安装位置：/etc，用户目录：/extdisks/sda*"
