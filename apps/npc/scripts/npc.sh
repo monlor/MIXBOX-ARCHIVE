@@ -1,4 +1,5 @@
 #!/bin/sh 
+#copyright by monlor
 eval `mbdb export npc`
 source "$(mbdb get mixbox.main.path)"/bin/base
 port=""

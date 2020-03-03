@@ -8,18 +8,18 @@ fastdick|迅雷快鸟，快带提速工具||0.0.2|FastDick|linux_arm,linux_mips,
 filebrowser|Web文件浏览器|更新arm二进制至2.0.3|0.0.3|FileBrowser|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 firewall|防火墙端口开放插件|支持添加多种端口号类型|0.0.2|FireWall|linux_arm,linux_mips,linux_x86_64
 frpc|内网穿透工具，相对于ngrok资源占用较多|修复自定义域名配置错误|0.0.5|Frpc|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
-frps|内网穿透工具Frp服务端|frp程序更新到0.21.0|..2|Frps|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
+frps|内网穿透工具Frp服务端|frp程序更新到0.21.0|1.1.2|Frps|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 httpfile|搭建简单的web文件浏览页面||0.0.2|HttpFile|linux_arm,linux_mips,linux_x86_64
 jetbrains|快速搭建JetBrains激活服务器||0.0.2|JetBrains|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 kms|快速搭建Windows、Office激活服务器|Support for Windows 10 1809, Windows Server 2019 and Office 2019 built-in|0.0.2|Kms|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 kodexplorer|可道云，在线文档管理器，需要entware环境|修复unzip命令缺失|0.0.4|KodExplorer|linux_arm,linux_mips,linux_x86_64
 koolproxy|简单，快速屏蔽网页或视频广告，TG：https://t.me/joinchat/AAAAAD-tO7GPvfOU131_vg|修改为coding规则地址，由于coding连接数限制可能导致规则下载失败！|1.5.2|KoolProxy|linux_arm,linux_mips,linux_x86_64
 miwifi|小米路由器系统管理，修改samba禁用系统更新等|现在修复小米路由器远程访问会自动开放8098端口|0.0.4|MIWIFI|linux_arm,linux_mips
-mixbox|一款支持多平台，多架构的Shell工具箱|修复由于mbdb导致frpc配置无法识别的bug|0.0.7|MIXBOX|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
+mixbox|一款支持多平台，多架构的Shell工具箱|新增功能parse_str，用于解析变量|0.0.8|MIXBOX|linux_arm,linux_mips,linux_x86_64,darwin_x86_64
 ngrok|轻量级的内网穿透工具||0.0.2|Ngrok|linux_arm,linux_mips
 npc|一款轻量级、高性能、功能强大的内网穿透代理服务器||0.0.2|NPC|linux_arm,linux_mips
 pptpd|简单但并不安全的VPN服务器||0.0.2|PPTPD|linux_arm,linux_mips,linux_x86_64
-qiandao|koolshare merlin 自动签到程序||0.0.2|QianDao|linux_arm,linux_x86_64
+qiandao|koolshare merlin 自动签到程序|签到程序更新到版本2.1，支持更多网站的签到，并且支持mipsel设备|0.0.3|QianDao|linux_arm,linux_mips,linux_x86_64
 shadowsocks|最好的翻墙工具，没有之一，还可以加速国内外游戏|修复kcptun配置错误|0.1.1|ShadowSocks|linux_arm,linux_mips,linux_x86_64
 smartdns|DNS加速工具，从多个上游DNS服务器查询，避免DS污染|更新smartdns程序版本|0.0.3|SmartDNS|linux_arm,linux_mips,linux_x86_64
 ssserver|快速搭建ss服务端程序||0.0.2|SSServer|linux_arm,linux_x86_64

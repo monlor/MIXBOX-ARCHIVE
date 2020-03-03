@@ -2,37 +2,24 @@
 source /etc/mixbox/bin/base
 eval `mbdb export qiandao`
 
-
-SETTING_FILE="${mbtmp}/cookie.txt"
+SETTING_FILE="${mbroot}/apps/${appname}/bin/cookie.txt"
 [ -z "$qiandao_time" ] && qiandao_time="8"
-
 
 generate_cookie_conf() {
 
-        rm -rf $SETTING_FILE
-        rm -rf ${mbroot}/apps/${appname}/bin/cookie.txt
-        [ "$qiandao_koolshare" == "1" ] && [ -n "$qiandao_koolshare_setting" ] && echo -e "\"koolshare\"=$qiandao_koolshare_setting" >> $SETTING_FILE
-        [ "$qiandao_baidu" == "1" ] && [ -n "$qiandao_baidu_setting" ] && echo -e "\"baidu\"=$qiandao_baidu_setting" >> $SETTING_FILE
-        [ "$qiandao_v2ex" == "1" ] && [ -n "$qiandao_v2ex_setting" ] && echo -e "\"v2ex\"=$qiandao_v2ex_setting" >> $SETTING_FILE
-        [ "$qiandao_hostloc" == "1" ] && [ -n "$qiandao_hostloc_setting" ] && echo -e "\"hostloc\"=$qiandao_hostloc_setting" >> $SETTING_FILE
-        [ "$qiandao_acfun" == "1" ] && [ -n "$qiandao_acfun_setting" ] && echo -e "\"acfun\"=$qiandao_acfun_setting" >> $SETTING_FILE
-        [ "$qiandao_bilibili" == "1" ] && [ -n "$qiandao_bilibili_setting" ] && echo -e "\"bilibili\"=$qiandao_bilibili_setting" >> $SETTING_FILE
-        [ "$qiandao_smzdm" == "1" ] && [ -n "$qiandao_smzdm_setting" ] && echo -e "\"smzdm\"=$qiandao_smzdm_setting" >> $SETTING_FILE
-        [ "$qiandao_xiami" == "1" ] && [ -n "$qiandao_xiami_setting" ] && echo -e "\"xiami\"=$qiandao_xiami_setting" >> $SETTING_FILE
-        [ "$qiandao_163music" == "1" ] && [ -n "$qiandao_163music_setting" ] && echo -e "\"163music\"=$qiandao_163music_setting" >> $SETTING_FILE
-        [ "$qiandao_miui" == "1" ] && [ -n "$qiandao_miui_setting" ] && echo -e "\"miui\"=$qiandao_miui_setting" >> $SETTING_FILE
-        [ "$qiandao_52pojie" == "1" ] && [ -n "$qiandao_52pojie_setting" ] && echo -e "\"52pojie\"=$qiandao_52pojie_setting" >> $SETTING_FILE
-        [ "$qiandao_kafan" == "1" ] && [ -n "$qiandao_kafan_setting" ] && echo -e "\"kafan\"=$qiandao_kafan_setting" >> $SETTING_FILE
-        [ "$qiandao_right" == "1" ] && [ -n "$qiandao_right_setting" ] && echo -e "\"right\"=$qiandao_right_setting" >> $SETTING_FILE
-        [ "$qiandao_mydigit" == "1" ] && [ -n "$qiandao_mydigit_setting" ] && echo -e "\"mydigit\"=$qiandao_mydigit_setting" >> $SETTING_FILE
-        if [ -f "$SETTING_FILE" ];then
-                ln -sf $SETTING_FILE ${mbroot}/apps/${appname}/bin/cookie.txt
-        else
-                logsh "【$service】" "检测到你没有填写任何cookie配置！关闭插件！" 
-                mbdb set $appname.main.enable=0
-                
-                exit 1
-        fi
+        mv -f ${mbroot}/apps/${appname}/config/cookie_template.txt ${SETTING_FILE}
+
+        local qiandao_setting=""
+        local qiandao_enable=""
+
+        echo "${qiandao_support}" | tr ' ' '\n' | while read line; do
+            test -z "${line}" && continue
+            qiandao_setting="$(parse_str qiandao_${line}_setting)"
+            qiandao_enable="$(parse_str ${line}_setting)"
+            # 该签到网站未启用签到程序时，将cookie置为空
+            [ "${qiandao_enable}" != "1" ] && qiandao_setting=""
+            sed -i "s/##${line}_cookie##/${qiandao_setting}" ${SETTING_FILE}
+        done
 
 }
 

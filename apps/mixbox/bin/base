@@ -279,3 +279,10 @@ bincheck () {
 	return $?
 }
 
+
+# 通过传入一个字符串，取变量名称等于该字符串的变量值
+function parse_str() {
+
+    [ -z "${1}" ] && echo -n "" || eval echo -n '$'"${1}"
+
+}

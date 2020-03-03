@@ -48,6 +48,7 @@ EOF
 echo "生成插件运行脚本..."
 cat > ${appname}/scripts/${appname}.sh <<-EOF
 #!/bin/sh 
+#copyright by monlor
 eval \`mbdb export ${appname}\`
 source "\$(mbdb get mixbox.main.path)"/bin/base
 port=""
