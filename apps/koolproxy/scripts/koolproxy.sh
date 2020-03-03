@@ -16,9 +16,9 @@ start_koolproxy () {
     if [ "$mode" == "1" ]; then
         logsh "【$service】" "启动${appname}为全局模式！"
         cat > ${mbroot}/apps/${appname}/bin/data/source.list <<-EOF
-1|koolproxy.txt|https://kprule.com/koolproxy.txt|
-1|daily.txt|https://kprule.com/daily.txt|
-1|kp.dat|https://kprule.com/kp.dat|
+1|koolproxy.txt|https://houzi-.coding.net/p/my_dream/d/my_dream/git/raw/master/koolproxy.txt|
+1|daily.txt|https://houzi-.coding.net/p/my_dream/d/my_dream/git/raw/master/daily.txt|
+1|kp.dat|https://houzi-.coding.net/p/my_dream/d/my_dream/git/raw/master/kp.dat|
 1|user.txt||
 EOF
     fi
@@ -26,9 +26,9 @@ EOF
     if [ "$mode" == "2" ]; then
         logsh "【$service】" "启动${appname}为黑名单模式！"
         cat > ${mbroot}/apps/${appname}/bin/data/source.list <<-EOF
-1|koolproxy.txt|https://kprule.com/koolproxy.txt|
-1|daily.txt|https://kprule.com/daily.txt|
-1|kp.dat|https://kprule.com/kp.dat|
+1|koolproxy.txt|https://houzi-.coding.net/p/my_dream/d/my_dream/git/raw/master/koolproxy.txt|
+1|daily.txt|https://houzi-.coding.net/p/my_dream/d/my_dream/git/raw/master/daily.txt|
+1|kp.dat|https://houzi-.coding.net/p/my_dream/d/my_dream/git/raw/master/kp.dat|
 1|user.txt||
 EOF
     fi
@@ -36,7 +36,7 @@ EOF
     if [ "$mode" == "3" ]; then
         logsh "【$service】" "启动${appname}为视频模式！"
         cat > ${mbroot}/apps/${appname}/bin/data/source.list <<-EOF
-1|kp.dat|https://kprule.com/kp.dat|
+1|kp.dat|https://houzi-.coding.net/p/my_dream/d/my_dream/git/raw/master/kp.dat|
 1|user.txt||
 EOF
     fi

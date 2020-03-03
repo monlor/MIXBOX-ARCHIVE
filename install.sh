@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 #copyright by monlor
 
 clear
