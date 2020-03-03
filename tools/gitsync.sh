@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 path=./
 cd $path
 [ $? -ne 0 ] && echo "Change directory failed!" && exit
@@ -16,13 +16,13 @@ sedsh() {
 	[ -z "$1" -o -z "$2" -o -z "$3" ] && echo "null sedsh params!" && exit 1
 	if [ "$(uname -s)" = "Darwin" ]; then
 		if [ "$1" = "s" ]; then
-			sed -i "" "s/$2/$3/g" "$4"
+			sed -i "" "s#$2#$3#g" "$4"
 		elif [[ "$1" = "d" ]]; then
 			sed -i "" "/$2/d" "$3"
 		fi
 	else
 		if [[ "$1" = "s" ]]; then
-			sed -i "s/$2/$3/g" "$4"
+			sed -i "s#$2#$3#g" "$4"
 		elif [[ "$1" = "d" ]]; then
 			sed -i "/$2/d" "$3"
 		fi
