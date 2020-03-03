@@ -71,8 +71,8 @@ mkdir ${mbroot}/var/run
 touch ${mbroot}/config/applist.txt #初始化插件列表
 cat ${mbroot}/config/mixbox.uci| while read line; do
     [ -z "$line" ] && continue
-    local ucikey="$(echo $line | cut -d'=' -f1)"
-    local ucivalue="$(echo $line | cut -d'=' -f2 | sed -e 's/\"//g')"
+    ucikey="$(echo $line | cut -d'=' -f1)"
+    ucivalue="$(echo $line | cut -d'=' -f2 | sed -e 's/\"//g')"
     ${mbroot}/bin/mbdb set mixbox.main."$ucikey"="$ucivalue"
 done
 ${mbroot}/bin/mbdb set mixbox.main.mbdisk="${mbdisk}"
