@@ -6,9 +6,9 @@ mbroot="/etc/mixbox"
 #采用了key，value对形式储存数据，调用前设置appname和uciname值，uciname默认值为info
 method="$1"
 [ -z "$method" ] && method="help"
-appname="$(echo "$2" | awk -F '\.|\=' '{print$1}')"
-uciname="$(echo "$2" | awk -F '\.|\=' '{print$2}')"
-key="$(echo "$2" | awk -F '\.|\=' '{print$3}')"
+appname="$(echo "$2" | awk -F '=' '{print$1}' | awk -F '\.' '{print$1}')"
+uciname="$(echo "$2" | awk -F '=' '{print$1}' | awk -F '\.' '{print$2}')"
+key="$(echo "$2" | awk -F '=' '{print$1}' | awk -F '\.' '{print$3}')"
 value="$(echo "$2" | awk -F '=' '{print$2}')"
 
 configdir=${mbroot}/mbdb
