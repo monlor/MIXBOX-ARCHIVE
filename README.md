@@ -6,10 +6,12 @@
 * 我的博客：[Monlor's Blog](https://www.monlor.com)
 * GitHub地址：[monlor/MIXBOX](https://github.com/monlor/MIXBOX)
 
+***
+
 ### 更新日志
 
 * 2020-03-03
-	* 更新工具箱coding下载源，**请手动更换coding下载源：https://monlor.coding.net/p/MIXBOX/d/MIXBOX/git/raw/master**
+	* 更新工具箱coding下载源，**请手动更换coding下载源：`https://monlor.coding.net/p/MIXBOX/d/MIXBOX/git/raw/master`**
 	* 更新插件`Koolproxy`规则地址
 
 * 2020-02-27
@@ -69,13 +71,13 @@
 #### 一键安装
 
 ``` shell
-sh -c "$(curl -kfsSl https://dev.tencent.com/u/monlor/p/MIXBOX/git/raw/master/install.sh)" && source /etc/profile &> /dev/null
+sh -c "$(curl -kfsSl https://monlor.coding.net/p/MIXBOX/d/MIXBOX/git/raw/master/install.sh)" && source /etc/profile &> /dev/null
 ```
 
 #### 卸载`Monlor Tools`工具箱
 
 ``` shell
-sh -c "$(curl -kfsSl https://dev.tencent.com/u/monlor/p/MIXBOX/git/raw/master/temp/uninstall_old.sh)" && source /etc/profile &> /dev/null
+sh -c "$(curl -kfsSl https://monlor.coding.net/p/MIXBOX/d/MIXBOX/git/raw/master/temp/uninstall_old.sh)" && source /etc/profile &> /dev/null
 ```
 
 #### 一键更新所有插件（请先更新工具箱）

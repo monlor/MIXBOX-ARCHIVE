@@ -105,13 +105,13 @@ pack() {
 
 localgit() {
 	git add .
-	git commit -m "`date +%Y-%m-%d`"
+	git commit -m "`date "+%Y-%m-%d %H:%M:%S"`"
 }
 
 github() {
 
 	# sed -i $args "s#^mburl.*#mburl=\"$github_raw\"#" ./install.sh
-	sedsh "s" "^mburl.*" "mburl=\"$github_raw\"" "./install.sh"
+	# sedsh "s" "^mburl.*" "mburl=\"$github_raw\"" "./install.sh"
 	localgit
 	git remote rm origin
 	git remote add origin $github_url
@@ -121,7 +121,7 @@ github() {
 coding() {
 
 	# sed -i $args "s#^mburl.*#mburl=\"$coding_raw\"#" ./install.sh
-	sedsh "s" "^mburl.*" "mburl=\"$coding_raw\"" "./install.sh"
+	# sedsh "s" "^mburl.*" "mburl=\"$coding_raw\"" "./install.sh"
 	localgit
 	git remote rm origin
 	git remote add origin $coding_url
