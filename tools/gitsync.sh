@@ -112,7 +112,6 @@ github() {
 
 	# sed -i $args "s#^mburl.*#mburl=\"$github_raw\"#" ./install.sh
 	# sedsh "s" "^mburl.*" "mburl=\"$github_raw\"" "./install.sh"
-	localgit
 	git remote rm origin
 	git remote add origin $github_url
 	git push origin master 
@@ -122,7 +121,6 @@ coding() {
 
 	# sed -i $args "s#^mburl.*#mburl=\"$coding_raw\"#" ./install.sh
 	# sedsh "s" "^mburl.*" "mburl=\"$coding_raw\"" "./install.sh"
-	localgit
 	git remote rm origin
 	git remote add origin $coding_url
 	git push origin master 
@@ -143,17 +141,16 @@ reset() {
 }
 
 case $1 in 
-	all) 
-		github
-		coding
-		;;
 	github)
+		localgit
 		github		
 		;;
 	coding)
+		localgit
 		coding
 		;;
 	push)
+		localgit
 		github
 		coding
 		;;
