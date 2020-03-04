@@ -1,0 +1,8 @@
+service="QianDao"
+appname="qiandao"
+needver="0.1.1"
+supports="linux_arm,linux_mips,linux_x86_64"
+appinfo="koolshare merlin 自动签到程序"
+newinfo="签到程序更新到版本2.1，支持更多网站的签到，并且支持mipsel设备"
+qiandao_support="baidu v2ex hostloc acfun bilibili 163music miui 52pojie kafan smzdm gztown meizu hdpfans chh koolshare right huawei"
+version="0.0.6"

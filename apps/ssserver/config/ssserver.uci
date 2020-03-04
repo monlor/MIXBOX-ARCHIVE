@@ -1,0 +1,8 @@
+service="SSServer"
+appname="ssserver"
+needver="0.0.1"
+backupfiles=""
+supports="linux_arm,linux_x86_64"
+appinfo="快速搭建ss服务端程序"
+newinfo=""
+version="0.0.2"

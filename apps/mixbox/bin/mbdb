@@ -1,0 +1,70 @@
+#!/bin/sh
+#copyright by monlor
+mbroot="/etc/mixbox"
+
+#${appname}.main.$key=$value 通过uci更轻松的存储数据
+#采用了key，value对形式储存数据，调用前设置appname和uciname值，uciname默认值为info
+method="$1"
+[ -z "$method" ] && method="help"
+appname="$(echo "$2" | awk -F '=' '{print$1}' | awk -F '\.' '{print$1}')"
+uciname="$(echo "$2" | awk -F '=' '{print$1}' | awk -F '\.' '{print$2}')"
+key="$(echo "$2" | awk -F '=' '{print$1}' | awk -F '\.' '{print$3}')"
+value="$(echo "$2" | cut -d'=' -f2-)"
+
+configdir=${mbroot}/mbdb
+alias uci="uci -c ${configdir}"
+
+help() {
+	echo "\`mbdb $@\` error!"
+	echo -e "Usage: $0 {get|set|del|export|show|clean} [key] [value]"
+	echo -e "Options:"
+	echo -e "\tget\tGet value by key"
+	echo -e "\tset\tSet key and value"
+	echo -e "\tdel\tDelete info by key"
+	echo -e "\tkeys\tShow all key"
+	echo -e "\tvalues\tShow all value"
+	echo -e "\tshow\tShow all key and value"
+	echo -e "\tclear\tClear all info"
+	echo -e "\texport\tGet app configure"
+	exit 1
+}
+
+case "$method" in
+	get)
+		uci -q get ${appname}.${uciname}.${key} | sed -e "s/'//g"
+	;;
+	set)
+		[ ! -f ${configdir}/${appname} ] && touch ${configdir}/${appname}
+		uci -q get ${appname}.${uciname} &> /dev/null || uci -q set ${appname}.${uciname}=config
+		uci -q set ${appname}.${uciname}.${key}="${value}"
+		uci commit ${appname}.${uciname}
+	;;
+	del)
+		uci -q del ${appname}.${uciname}.${key}
+	;;
+	keys)
+		uci -q get ${appname}.${uciname} &> /dev/null && uci -q show ${appname}.${uciname} | sed -e "s/'//g" | sed 1d | sed -e "s/${appname}.${uciname}.//g" | cut -d'=' -f1
+	;;
+	values)
+		uci -q get ${appname}.${uciname} &> /dev/null && uci -q show ${appname}.${uciname} | sed -e "s/'//g" | sed 1d | sed -e "s/${appname}.${uciname}.//g" | cut -d'=' -f2-
+	;;
+	show)
+		if [ -z "${uciname}" ]; then 
+			uci -q show ${appname} | sed -e "s/'//g" | sed -e "/${appname}.[a-z]\+\=config/d" -e "s/${appname}\.[a-z]\+\.//"
+		else
+			uci -q get ${appname}.${uciname} &> /dev/null && uci -q show ${appname}.${uciname} | sed -e "s/'//g" | sed -e "/${appname}.[a-z]\+\=config/d" -e "s/${appname}\.[a-z]\+\.//"
+		fi
+	;;
+	clear)
+		uci -q del ${appname}.${uciname}
+	;;
+	export)
+		[ -z "${uciname}" ] && uciname="main"
+		uci -q get ${appname}.${uciname} &> /dev/null && uci -q show ${appname}.${uciname} | sed -e "s/'//g" | sed 1d | sed -e "s/${appname}.${uciname}.//g" | sed -e "s/=/='/" -e "s/$/'/" | tr "\n" ";"
+	;;
+	*)
+		help
+		;;
+esac
+
+exit $?

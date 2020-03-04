@@ -1,0 +1,83 @@
+#!/bin/sh
+#copyright by monlor
+# source /etc/mixbox/bin/base
+export PATH=$PATH:/etc/mixbox/bin
+mbroot="/etc/mixbox"
+mbtmp="/tmp/mbtmp"
+mburl=$(mbdb get mixbox.main.url) 
+model=$(mbdb get mixbox.main.model)
+
+fix_local_applist() {
+
+	rm -rf ${mbroot}/config/applist.txt
+	if [ ! -f ${mbtmp}/applist.txt ]; then
+		echo "未找到在线插件列表，无法修复！"
+		return 1
+	else
+
+		get_applist all -a | while read line
+		do
+			name="$(get_applist ${line} -n)"
+			checkuci $name && echo ${line} >> ${mbroot}/config/applist.txt
+		done
+	fi
+	if [ ! -f ${mbroot}/config/applist.txt ]; then
+		echo "修复失败！"
+		return 1
+	else
+		return 0
+	fi
+}
+
+get_applist() {
+	if [ "$1" = "installed" ]; then
+		[ ! -f ${mbroot}/config/applist.txt ] && fix_local_applist
+		applist_txt="${mbroot}/config/applist.txt"
+	else
+		applist_txt="${mbtmp}/applist.txt"
+	fi
+
+	appname="$1" # all: all app, installed, installed app
+	arg="$2"  # -n:appname, -i:appinfo, -e:newinfo, -v:version, -s:service
+	[ "$appname" = "all" -o "$appname" = "installed" ] && appname=".*"
+	case "$arg" in
+		"-n")
+			cat $applist_txt 2> /dev/null | grep -v mixbox | grep "^${appname}|" | cut -d'|' -f1 | sort -u
+			;;
+		"-i")
+			cat $applist_txt 2> /dev/null | grep "^${appname}|" | cut -d'|' -f2
+			;;
+		"-e")
+			cat $applist_txt 2> /dev/null | grep "^${appname}|" | cut -d'|' -f3
+			;;
+		"-v")
+			cat $applist_txt 2> /dev/null | grep "^${appname}|" | cut -d'|' -f4
+			;;
+		"-s")
+			cat $applist_txt 2> /dev/null | grep "^${appname}|" | cut -d'|' -f5
+			;;
+		"-a")
+			cat $applist_txt 2> /dev/null | grep -v mixbox | grep "^${appname}|"
+			;;
+		*)
+			cat $applist_txt 2> /dev/null | sort -u
+			;;	
+	esac
+}
+
+update_applist() {
+	result1=$(curl -skL --connect-timeout 10 -m 20 -w %{http_code} -o ${mbtmp}/applist_tmp.txt $mburl/applist.txt)
+	[ -f ${mbtmp}/applist_tmp.txt ] && result2=$(du -sh ${mbtmp}/applist_tmp.txt | awk '{print$1}') || result2='0'
+	[ "$result1" != "200" -o "$result2" = '0' ] && exit 1
+	cat ${mbtmp}/applist_tmp.txt | grep "${model}" | sort -u > ${mbtmp}/applist.txt
+	rm -rf ${mbtmp}/applist_tmp.txt
+}
+
+# force udpate
+
+[ "$1" = "update" ] && update_applist && exit
+[ ! -f ${mbtmp}/applist.txt ]  && update_applist
+
+get_applist $@
+
+exit 0

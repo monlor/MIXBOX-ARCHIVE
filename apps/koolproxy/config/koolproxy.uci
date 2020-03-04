@@ -1,0 +1,13 @@
+service=KoolProxy
+appname="koolproxy"
+needver="0.0.1"
+supports="linux_arm,linux_mips,linux_x86_64"
+openport="1"
+backupfiles="config/kpcontrol.conf,bin/data/private,bin/data/certs"
+newinfo="1.修改为coding规则地址，2.现在启动程序时下载规则，3.支持输入mac地址控制局域网设备"
+appinfo="简单，快速屏蔽网页或视频广告，TG：https://t.me/joinchat/AAAAAD-tO7GPvfOU131_vg"
+kp_rule_koolproxy="https://houzi-.coding.net/p/my_dream/d/my_dream/git/raw/master/koolproxy.txt"
+kp_rule_daily="https://houzi-.coding.net/p/my_dream/d/my_dream/git/raw/master/daily.txt"
+kp_rule_dat="https://houzi-.coding.net/p/my_dream/d/my_dream/git/raw/master/kp.dat"
+kp_rule_user="https://raw.githubusercontent.com/kysdm/ad-rules/master/user-rules-koolproxy.txt"
+version="1.5.5"
