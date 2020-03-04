@@ -48,4 +48,4 @@ jobs:
         git commit -m "$(TZ='Asia/Shanghai' date "+%Y-%m-%d %H:%M:%S")" -a
         eval "git branch | grep -q "${BRANCH_NAME}" || git checkout -b "${BRANCH_NAME}""
         eval "git push "${GH_REF}" "${BRANCH_NAME}":"${BRANCH_NAME}" -f"
-        eval "git push "${CO_REF}" "${BRANCH_NAME}":"${BRANCH_NAME}" -f"
+        # eval "git push "${CO_REF}" "${BRANCH_NAME}":"${BRANCH_NAME}" -f"
