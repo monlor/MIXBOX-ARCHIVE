@@ -3,7 +3,7 @@
 export PATH=$PATH:/etc/mixbox/bin
 
 mburl_coding="https://monlor.coding.net/p/mbfiles/d/mbfiles/git/raw/master"
-mburl_github="https://raw.githubusercontent.com/monlor/mbfiles/master"
+mburl_github="https://cdn.jsdelivr.net/gh/monlor/mbfiles"
 mburl_test="https://monlor.coding.net/p/mbfiles/d/mbfiles/git/raw/test"
 mburl=$(mbdb get mixbox.main.url) || mburl="$mburl_coding"
 mbroot=$(mbdb get mixbox.main.path)

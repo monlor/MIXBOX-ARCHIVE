@@ -12,6 +12,11 @@
 
 ### 更新日志
 
+* 2020-03-05
+	* 由于`coding`限制仓库容量不能大于`2G`，尝试使用`github`的`cdn`源：`https://cdn.jsdelivr.net/gh/monlor/mbfiles`
+	* 最新版本里选择`github下载源`默认为`cdn`源，**推荐使用**
+	* 仓库已经重置，删除了历史记录
+
 * 2020-03-04
 	* 为了减少项目体积，现在采用`Github Actions`自动部署插件安装包
 	* coding下载源地址改为`https://monlor.coding.net/p/mbfiles/d/mbfiles/git/raw/master`
@@ -81,19 +86,19 @@
 #### 一键安装
 
 ``` shell
-sh -c "$(curl -kfsSl https://monlor.coding.net/p/mbfiles/d/mbfiles/git/raw/master/install.sh)" && source /etc/profile &> /dev/null
+sh -c "$(curl -kfsSl https://cdn.jsdelivr.net/gh/monlor/mbfiles@master/install.sh)" && source /etc/profile &> /dev/null
 ```
 
 ### 手动更新命令
 
 ``` shell
-sh -c "$(curl -kfsSl https://raw.githubusercontent.com/monlor/MIXBOX/master/apps/mixbox/scripts/update.sh)" && source /etc/profile &> /dev/null
+sh -c "$(curl -kfsSl https://cdn.jsdelivr.net/gh/monlor/MIXBOX@master/apps/mixbox/scripts/update.sh)" && source /etc/profile &> /dev/null
 ```
 
 #### 卸载`Monlor Tools`工具箱
 
 ``` shell
-sh -c "$(curl -kfsSl https://monlor.coding.net/p/mbfiles/d/mbfiles/git/raw/master/temp/uninstall_old.sh)" && source /etc/profile &> /dev/null
+sh -c "$(curl -kfsSl https://cdn.jsdelivr.net/gh/monlor/mbfiles@master/temp/uninstall_old.sh)" && source /etc/profile &> /dev/null
 ```
 
 #### 一键更新所有插件（请先更新工具箱）
