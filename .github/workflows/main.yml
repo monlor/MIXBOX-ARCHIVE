@@ -1,41 +1,11 @@
 name: CI
 
-# on:
-#   push:
-#     branchs:
-#       - 'test'
-#       - 'master'
-#   pull_request:
-#     branchs:
-#       - 'test'
-#       - 'master'
-    # paths: 
-    #   - 'apps/**'
-    #   - 'appsbin/**'
-    #   - 'temp/**'
-# on: [push, pull_request] 
-on: 
-    push:
-        paths-ignore:
-            - 'README.md'
-            - 'tools'
-            - '.github'
-        branchs:
-            - 'test'
-            - 'master'
-    pull_request:
-        paths-ignore:
-            - 'README.md'
-            - 'tools'
-            - '.github'
-        branchs:
-            - 'test'
-            - 'master'        
+on: [push, pull_request]
 
 jobs:
   publish:
 
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
@@ -53,10 +23,8 @@ jobs:
         cp -rf install.sh mbfiles/
     - name: Push changes
       env:
-        GH_REF: github.com/monlor/mbfiles
-        GE_REF: gitee.com/monlor/mbfiles
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        GE_TOKEN: ${{ secrets.GE_TOKEN }}
+        GH_REF: ${{ secrets.GH_REF }}
+        CO_REF: ${{ secrets.CO_REF }}
         BRANCH_NAME: $(cd .. && git branch | awk  '$1 == "*"{print $2}')
       run: |
         cd mbfiles/
@@ -65,8 +33,5 @@ jobs:
         git config --local user.name "monlor"
         git add .
         git commit -m "$(TZ='Asia/Shanghai' date "+%Y-%m-%d %H:%M:%S")" -a
-        eval "git branch | grep -q "${BRANCH_NAME}" || git checkout -b "${BRANCH_NAME}""
-        eval "git push "https://${GH_TOKEN}@${GH_REF}" "${BRANCH_NAME}":"${BRANCH_NAME}" -f"
-        echo "${GE_TOKEN}" > /root/.ssh/id_rsa
-        chmod 600 /root/.ssh/id_rsa
-        eval "git push "https://${GE_REF}" "${BRANCH_NAME}":"${BRANCH_NAME}" -f"
+        eval "git push "${GH_REF}" master:"${BRANCH_NAME}" -f"
+        eval "git push "${CO_REF}" master:"${BRANCH_NAME}" -f"

@@ -17,7 +17,7 @@ logsh "【Tools】" "请按任意键安装工具箱(Ctrl + C 退出)."
 read answer
 #check root
 # [ "$USER" != "root" ] && logsh "【Tools】"  "请使用root用户安装工具箱！" && exit 1
-mburl="https://gitee.com/monlor/mbfiles/raw/master" 
+mburl="https://gitee.com/monlor/mbfiles/raw/master"   
 mbtmp="/tmp/mbtmp"
 [ ! -d "${mbtmp}" ] && mkdir -p ${mbtmp}
 model=$(uname -ms | tr ' ' '_' | tr '[A-Z]' '[a-z]')
@@ -66,12 +66,12 @@ chmod -R +x ${mbroot}/*
 if uname -v | grep "Ubuntu" &> /dev/null; then
 	logsh "【Tools】" "正在切换默认Shell为bash，请输入no！"
 	dpkg-reconfigure dash
-fi
+fi   
 
 logsh "【Tools】" "初始化工具箱配置信息..."
 mkdir ${mbroot}/mbdb
 mkdir ${mbroot}/var
-mkdir ${mbroot}/var/log
+mkdir ${mbroot}/var/log 
 mkdir ${mbroot}/var/run
 touch ${mbroot}/config/applist.txt #初始化插件列表
 cat ${mbroot}/config/mixbox.uci| while read line; do
