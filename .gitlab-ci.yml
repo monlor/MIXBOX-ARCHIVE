@@ -1,0 +1,18 @@
+stages:
+  - pack
+  - deploy
+
+pack:
+  stage: pack
+  only:        
+    - dev
+  script:
+    - bash ./tools/gitsync.sh pack
+
+deploy:
+  stage: deploy
+  only:
+    - dev
+  script:
+    - bash ./tools/gitsync.sh deploy mbfiles dev ${GL_REF}/monlor/mbfiles.git
+   
