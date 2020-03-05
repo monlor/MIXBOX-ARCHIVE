@@ -11,7 +11,7 @@ logsh "【Tools】" "正在卸载工具箱..."
 
 logsh "【Tools】" "停止所有插件"
 
-ls ${mbroot}/apps | while read line
+ls ${mbroot}/apps 2> /dev/null | while read line
 do
 	result=$(mbdb get ${line}.main.enable)
 	if [ "$result" == '1' ]; then
