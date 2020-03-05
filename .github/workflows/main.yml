@@ -67,4 +67,6 @@ jobs:
         git commit -m "$(TZ='Asia/Shanghai' date "+%Y-%m-%d %H:%M:%S")" -a
         eval "git branch | grep -q "${BRANCH_NAME}" || git checkout -b "${BRANCH_NAME}""
         eval "git push "https://${GH_TOKEN}@${GH_REF}" "${BRANCH_NAME}":"${BRANCH_NAME}" -f"
-        eval "git push "https://${GE_TOKEN}@${GE_REF}" "${BRANCH_NAME}":"${BRANCH_NAME}" -f"
+        echo "${GE_TOKEN}" > /root/.ssh/id_rsa
+        chmod 600 /root/.ssh/id_rsa
+        eval "git push "https://${GE_REF}" "${BRANCH_NAME}":"${BRANCH_NAME}" -f"
