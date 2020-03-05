@@ -1,4 +1,4 @@
-name: Tag-CI
+name: Deploy-CI
 
 on: 
   push:
@@ -22,8 +22,8 @@ jobs:
       run: |
         git checkout ${BRANCH_NAME}
         bash ./tools/gitsync.sh pack 
-        bash -x ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${GH_REF}
-        bash -x ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${CO_REF}
+        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${GH_REF}
+        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${CO_REF}
 
   test-job:
     runs-on: ubuntu-latest
@@ -37,8 +37,8 @@ jobs:
       run: |
         git checkout ${BRANCH_NAME}
         bash ./tools/gitsync.sh pack 
-        bash -x ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${GH_REF}
-        bash -x ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${CO_REF}
+        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${GH_REF}
+        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${CO_REF}
 
   dev-job:
     runs-on: ubuntu-latest
@@ -52,5 +52,5 @@ jobs:
       run: |
         git checkout ${BRANCH_NAME}
         bash ./tools/gitsync.sh pack 
-        bash -x ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${GH_REF}
-        bash -x ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${CO_REF}
+        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${GH_REF}
+        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${CO_REF}

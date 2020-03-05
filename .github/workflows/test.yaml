@@ -1,0 +1,27 @@
+name: Test-CI
+
+on: 
+  push:
+    tags:  
+      - test-*
+
+env:
+  GH_REF: ${{ secrets.GH_REF }}
+  CO_REF: ${{ secrets.CO_REF }}
+
+jobs:
+  master-job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Pack And Deploy
+      env:
+        BRANCH_NAME: test
+      run: |
+        git checkout ${BRANCH_NAME}
+        bash ./tools/gitsync.sh pack 
+        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${GH_REF}
+        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${CO_REF}
+
