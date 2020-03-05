@@ -5,6 +5,9 @@ on:
   push:
     branchs:  
       - dev
+    ignore-branchs:
+      - test
+      - master
     ignore-paths:
       - '.github'
       - 'README.md'
@@ -22,6 +25,7 @@ jobs:
 
     - name: Pack And Deploy
       run: |
+        git checkout ${BRANCH_NAME}
         bash ./tools/gitsync.sh pack 
         bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} http://${GL_TOKEN}@${GL_URL}/monlor/mbfiles.git
 
