@@ -16,6 +16,8 @@
 	* 由于`coding`限制仓库容量不能大于`2G`，尝试使用`github`的`cdn`源：`https://cdn.jsdelivr.net/gh/monlor/mbfiles`
 	* 最新版本里选择`github下载源`默认为`cdn`源，**推荐使用**
 	* 仓库已经重置，删除了历史记录
+	* 修复`EasyExployer`启动bug，更新二进制程序版本
+	* 更新`BaiduPCS`二进制程序
 
 * 2020-03-04
 	* 为了减少项目体积，现在采用`Github Actions`自动部署插件安装包
