@@ -21,6 +21,7 @@ backupfiles=""
 supports="linux_arm,linux_mips,linux_x86_64,darwin_linux_x86_64"
 appinfo="${appinfo}"
 newinfo=""
+version="0.0.1"
 EOF
 echo "生成工具箱配置文件..."
 cat > ${appname}/config/mixbox.conf <<EOF
