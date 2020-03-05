@@ -53,8 +53,10 @@ jobs:
         cp -rf install.sh mbfiles/
     - name: Push changes
       env:
-        GH_REF: ${{ secrets.GH_REF }}
-        CO_REF: ${{ secrets.CO_REF }}
+        GH_REF: github.com/monlor/mbfiles
+        GE_REF: gitee.com/monlor/mbfiles
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        GE_TOKEN: ${{ secrets.GE_TOKEN }}
         BRANCH_NAME: $(cd .. && git branch | awk  '$1 == "*"{print $2}')
       run: |
         cd mbfiles/
@@ -64,5 +66,5 @@ jobs:
         git add .
         git commit -m "$(TZ='Asia/Shanghai' date "+%Y-%m-%d %H:%M:%S")" -a
         eval "git branch | grep -q "${BRANCH_NAME}" || git checkout -b "${BRANCH_NAME}""
-        eval "git push "${GH_REF}" "${BRANCH_NAME}":"${BRANCH_NAME}" -f"
-        # eval "git push "${CO_REF}" "${BRANCH_NAME}":"${BRANCH_NAME}" -f"
+        eval "git push "https://${GH_TOKEN}@${GH_REF}" "${BRANCH_NAME}":"${BRANCH_NAME}" -f"
+        eval "git push "https://${GE_TOKEN}@${GE_REF}" "${BRANCH_NAME}":"${BRANCH_NAME}" -f"

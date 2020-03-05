@@ -88,19 +88,19 @@
 #### 一键安装
 
 ``` shell
-sh -c "$(curl -kfsSl https://cdn.jsdelivr.net/gh/monlor/mbfiles@master/install.sh)" && source /etc/profile &> /dev/null
+sh -c "$(curl -kfsSl https://gitee.com/monlor/mbfiles/raw/master/install.sh)" && source /etc/profile &> /dev/null
 ```
 
 ### 手动更新命令
 
 ``` shell
-sh -c "$(curl -kfsSl https://cdn.jsdelivr.net/gh/monlor/MIXBOX@master/apps/mixbox/scripts/update.sh)" && source /etc/profile &> /dev/null
+sh -c "$(curl -kfsSl https://raw.githubusercontent.com/monlor/MIXBOX/master/apps/mixbox/scripts/update.sh)" && source /etc/profile &> /dev/null
 ```
 
 #### 卸载`Monlor Tools`工具箱
 
 ``` shell
-sh -c "$(curl -kfsSl https://cdn.jsdelivr.net/gh/monlor/mbfiles@master/temp/uninstall_old.sh)" && source /etc/profile &> /dev/null
+sh -c "$(curl -kfsSl https://gitee.com/monlor/mbfiles/raw/master/temp/uninstall_old.sh)" && source /etc/profile &> /dev/null
 ```
 
 #### 一键更新所有插件（请先更新工具箱）

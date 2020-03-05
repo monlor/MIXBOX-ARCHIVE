@@ -130,12 +130,13 @@ backup() {
 		cp -rf ${mbroot}/mbdb $mbbackup
 		applist installed -n | while read line; do
 			echo "$(mbdb get ${line}.main.backupfiles)" | tr ',' '\n' | while read file; do
-			    [ -z "$file" ] && continue
+			  [ -z "$file" ] && continue
 				savepath="$(dirname $mbbackup/${line}/$file)"
 				[ ! -d "$savepath" ] && mkdir -p $savepath
 				cp -rf ${mbroot}/apps/${line}/$file $mbbackup/${line}/$file &> /dev/null
 			done
 		done
+		cp -rf ${mbroot}/config/applist.txt $mbbackup/applist.txt
 		cp -rf ${mbroot}/scripts/userscript.sh $mbbackup/userscript.sh
 		cp -rf ${mbroot}/mbdb $mbbackup/mbdb
 		tar zcvf "$mbbackup".tar.gz $mbbackup > /dev/null 2>&1

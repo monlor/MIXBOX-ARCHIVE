@@ -17,7 +17,7 @@ logsh "【Tools】" "请按任意键安装工具箱(Ctrl + C 退出)."
 read answer
 #check root
 # [ "$USER" != "root" ] && logsh "【Tools】"  "请使用root用户安装工具箱！" && exit 1
-mburl="https://monlor.coding.net/p/mbfiles/d/mbfiles/git/raw/master"
+mburl="https://gitee.com/monlor/mbfiles/raw/master"
 mbtmp="/tmp/mbtmp"
 [ ! -d "${mbtmp}" ] && mkdir -p ${mbtmp}
 model=$(uname -ms | tr ' ' '_' | tr '[A-Z]' '[a-z]')
@@ -55,7 +55,7 @@ else
 fi
 [ "$result" != "200" ] && logsh "【Tools】" "文件下载失败！" && exit 1
 logsh "【Tools】" "解压工具箱文件"
-tar -zxvf ${mbtmp}/mixbox.tar.gz -C ${mbtmp}
+tar -zxvf ${mbtmp}/mixbox.tar.gz -C ${mbtmp} > /dev/null
 [ $? -ne 0 ] && logsh "【Tools】" "文件解压失败！" && exit 1 
 # 安装工具箱文件
 cp -rf ${mbtmp}/mixbox ${mbroot}
