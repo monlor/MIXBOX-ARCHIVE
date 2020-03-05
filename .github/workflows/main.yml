@@ -19,8 +19,6 @@ jobs:
     env:
         GH_REF: ${{ secrets.GH_REF }}
         CO_REF: ${{ secrets.CO_REF }}
-        GL_TOKEN: ${{ secrets.GL_TOKEN }}
-        GL_URL: ${{ secrets.GL_URL }}
         BRANCH_NAME: ${{ github.ref }}
     steps:
     - name: Checkout
@@ -31,6 +29,3 @@ jobs:
         bash ./tools/gitsync.sh pack 
         bash ./tools/gitsync.sh deploy mbfiles `basename ${BRANCH_NAME}` ${GH_REF}
         bash ./tools/gitsync.sh deploy mbfiles `basename ${BRANCH_NAME}` ${CO_REF}
-
-    - name: Sync Code
-      run: git push http://${GL_TOKEN}@${GL_URL}/monlor/mixbox.git `basename ${BRANCH_NAME}`:`basename ${BRANCH_NAME}`
