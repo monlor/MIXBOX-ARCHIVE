@@ -5,10 +5,10 @@ on: [push, pull_request]
 jobs:
   publish:
     runs-on: ubuntu-latest
-    steps:
-      env:
+    env:
         GH_REF: ${{ secrets.GH_REF }}
         CO_REF: ${{ secrets.CO_REF }}
+    steps:
     - name: Checkout
       uses: actions/checkout@master
 
