@@ -60,35 +60,52 @@ get_config() {
         if [ "$proxy_type" = "ss" ]; then
             APPPATH=${mbroot}/apps/${appname}/bin/ss-redir
             LOCALPATH=${mbroot}/apps/${appname}/bin/ss-local
-            cat > ${mbroot}/apps/${appname}/config/ss.conf <<-EOF
-		{
-		    "server": "$ss_server",
-		    "server_port": $ss_server_port,
-		    "local_address": "0.0.0.0",
-		    "local_port": 1081,
-		    "password": "$ss_password",
-		    "timeout": 600,
-		    "method": "$ss_method"
-		}
-		EOF
+            # 如果启用了ss混淆
+            if [ -n "$ssr_protocol_param" ]; then
+                cat > ${mbroot}/apps/${appname}/config/ss.conf <<-EOF
+{
+    "server": "$ss_server",
+    "server_port": $ss_server_port,
+    "local_address": "0.0.0.0",
+    "local_port": 1081,
+    "password": "$ss_password",
+    "timeout": 600,
+    "method": "$ss_method",
+    "plugin":"obfs-local",
+    "plugin_opts":"obfs=$ssr_protocol_param;obfs-host=$ssr_obfs_param"
+}
+EOF
+            else
+                cat > ${mbroot}/apps/${appname}/config/ss.conf <<-EOF
+{
+    "server": "$ss_server",
+    "server_port": $ss_server_port,
+    "local_address": "0.0.0.0",
+    "local_port": 1081,
+    "password": "$ss_password",
+    "timeout": 600,
+    "method": "$ss_method"
+}
+EOF
+            fi  
         else
             APPPATH=${mbroot}/apps/${appname}/bin/ssr-redir
             LOCALPATH=${mbroot}/apps/${appname}/bin/ssr-local
             cat > ${mbroot}/apps/${appname}/config/ss.conf <<-EOF
-		{
-		    "server": "$ss_server",
-		    "server_port": $ss_server_port,
-		    "local_address": "0.0.0.0",
-		    "local_port": 1081,
-		    "password": "$ss_password",
-		    "timeout": 600,
-		    "protocol": "$ssr_protocol",
-		    "protocol_param": "$ssr_protocol_param",
-		    "obfs": "$ssr_obfs",
-		    "obfs_param": "$ssr_obfs_param",
-		    "method": "$ss_method"
-		}
-		EOF
+{
+    "server": "$ss_server",
+    "server_port": $ss_server_port,
+    "local_address": "0.0.0.0",
+    "local_port": 1081,
+    "password": "$ss_password",
+    "timeout": 600,
+    "protocol": "$ssr_protocol",
+    "protocol_param": "$ssr_protocol_param",
+    "obfs": "$ssr_obfs",
+    "obfs_param": "$ssr_obfs_param",
+    "method": "$ss_method"
+}
+EOF
         fi
         cp ${mbroot}/apps/${appname}/config/ss.conf ${mbroot}/apps/${appname}/config/dns2socks.conf && sed -i 's/1081/1082/g' ${mbroot}/apps/${appname}/config/dns2socks.conf
     fi
@@ -125,34 +142,51 @@ get_config() {
         fi
         if [ "$proxy_type_game" = "ss" ]; then
             cp -rf ${mbroot}/apps/${appname}/bin/ss-redir ${mbroot}/apps/${appname}/bin/ssg-redir
-            cat > ${mbroot}/apps/${appname}/config/ssg.conf <<-EOF
-		{
-		    "server": "$ssg_server",
-		    "server_port": $ssg_server_port,
-		    "local_address": "0.0.0.0",
-		    "local_port": 1085,
-		    "password": "$ssg_password",
-		    "timeout": 600,
-		    "method": "$ssg_method"
-		}
-		EOF
+            # 如果启用了ss混淆
+            if [ -n "$ssg_protocol_param" ]; then
+                cat > ${mbroot}/apps/${appname}/config/ssg.conf <<-EOF
+{
+    "server": "$ssg_server",
+    "server_port": $ssg_server_port,
+    "local_address": "0.0.0.0",
+    "local_port": 1085,
+    "password": "$ssg_password",
+    "timeout": 600,
+    "method": "$ssg_method",
+    "plugin":"obfs-local",
+    "plugin_opts":"obfs=$ssg_protocol_param;obfs-host=$ssg_obfs_param"
+}
+EOF
+            else
+                cat > ${mbroot}/apps/${appname}/config/ssg.conf <<-EOF
+{
+    "server": "$ssg_server",
+    "server_port": $ssg_server_port,
+    "local_address": "0.0.0.0",
+    "local_port": 1085,
+    "password": "$ssg_password",
+    "timeout": 600,
+    "method": "$ssg_method"
+}
+EOF
+            fi
         else
             cp -rf ${mbroot}/apps/${appname}/bin/ssr-redir ${mbroot}/apps/${appname}/bin/ssg-redir
             cat > ${mbroot}/apps/${appname}/config/ssg.conf <<-EOF
-		{
-		    "server": "$ssg_server",
-		    "server_port": $ssg_server_port,
-		    "local_address": "0.0.0.0",
-		    "local_port": 1085,
-		    "password": "$ssg_password",
-		    "timeout": 600,
-		    "protocol": "$ssg_protocol",
-		    "protocol_param": "$ssg_protocol_param",
-		    "obfs": "$ssg_obfs",
-		    "obfs_param": "$ssg_obfs_param",
-		    "method": "$ssg_method"
-		}
-		EOF
+{
+    "server": "$ssg_server",
+    "server_port": $ssg_server_port,
+    "local_address": "0.0.0.0",
+    "local_port": 1085,
+    "password": "$ssg_password",
+    "timeout": 600,
+    "protocol": "$ssg_protocol",
+    "protocol_param": "$ssg_protocol_param",
+    "obfs": "$ssg_obfs",
+    "obfs_param": "$ssg_obfs_param",
+    "method": "$ssg_method"
+}
+EOF
         fi
     fi
     # 保存代理类型
