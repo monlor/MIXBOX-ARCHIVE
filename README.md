@@ -1,6 +1,6 @@
 # MIXBOX 
 
-![](https://github.com/monlor/MIXBOX/workflows/CI/badge.svg)
+![](https://github.com/monlor/MIXBOX/workflows/Main-CI/badge.svg)
 
 > MIXBOX是一款全新的，完全基于Shell脚本的工具箱，为在路由器上实现程序的快速配置及运行管理，欢迎大佬们stars、fork及pr.
 
