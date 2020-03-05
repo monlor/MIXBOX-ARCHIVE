@@ -67,9 +67,24 @@ get_applist() {
 }
 
 update_applist() {
+	
 	wgetsh ${mbtmp}/applist_tmp.txt $mburl/applist.txt
 	if [ $? -eq 0 ]; then
-		cat ${mbtmp}/applist_tmp.txt | grep "${model}" | sort -u > ${mbtmp}/applist.txt
+		rm -rf ${mbtmp}/applist.txt
+		cat ${mbtmp}/applist_tmp.txt | grep "${model}" | sort -u | while read line; do
+			local install_text=""
+			local update_text=""
+			local appname=""
+			local version=""
+			appname="$(echo -n "$line" | cut -d'|' -f1)"
+			version="$(echo -n "$line" | cut -d '|' -f4)"
+			if ls ${mbroot}/apps/${appname} &> /dev/null; then
+				[ "$(mbdb get ${appname}.main.version)" != "${version}" ] && update_text="有更新"
+			else
+				install_text="未安装"
+			fi
+			echo "${line}|${install_text}|${update_text}" >> ${mbtmp}/applist.txt
+		done
 	fi
 	rm -rf ${mbtmp}/applist_tmp.txt
 }

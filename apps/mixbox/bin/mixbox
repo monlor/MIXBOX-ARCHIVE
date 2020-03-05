@@ -335,9 +335,18 @@ select_app() {
 						read -p "是否要更新${appname}插件？[1/0] " update
 						[ "$update" == '1' ] && ${mbroot}/scripts/appmanage.sh upgrade ${appname} 
 					fi
-
-					source "${mbroot}"/apps/${appname}/config/mixbox.conf 
-					${appname}
+					# todo 配置方式修改
+					if [ -f ${mbroot}/apps/${appname}/config.sh ]; then
+						${mbroot}/apps/${appname}/config.sh
+						if [ $? -eq 0 ]; then
+							${mbroot}/apps/${appname}/scripts/${appname}.sh restart
+						else
+							${mbroot}/apps/${appname}/scripts/${appname}.sh stop
+						fi
+					else
+						source "${mbroot}"/apps/${appname}/config/mixbox.conf 
+						${appname}
+					fi
 					${mbroot}/apps/${appname}/scripts/${appname}.sh status
 				fi
 			else 
