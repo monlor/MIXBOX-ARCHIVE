@@ -40,8 +40,8 @@ base_encode() {
 	if [ -z "${1}" ]; then
 		echo -n "" 
 	else
-		if command -v base64_encode &> /dev/null; then
-			echo -n "$*" | base64_encode
+		if command -v base64-encode &> /dev/null; then
+			echo -n "$*" | base64-encode
 		else
 			echo -n "$*" | baseutil --b64
 		fi
@@ -52,8 +52,8 @@ base_decode() {
 	if [ -z "${1}" ]; then
 		echo -n "" 
 	else
-		if command -v base64_decode &> /dev/null; then
-			echo -n "$*" | base64_decode
+		if command -v base64-decode &> /dev/null; then
+			echo -n "$*" | base64-decode
 		else
 			echo -n "$*" | baseutil --b64 -d
 		fi
