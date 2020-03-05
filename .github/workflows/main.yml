@@ -6,6 +6,10 @@ on:
     branchs:  
       - master
       - test
+    tags-ignore:
+      - deploy-*
+      - test-*
+      - master-*
     ignore-paths:
       - '.github'
       - 'README.md'
