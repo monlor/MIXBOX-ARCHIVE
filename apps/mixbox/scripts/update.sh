@@ -15,6 +15,7 @@ tar -zxvf ${mbtmp}/mixbox.tar.gz -C ${mbtmp} > /dev/null 2>&1
 
 logsh "【Tools】" "更新工具箱文件"
 # 处理工具箱二进制文件
+ln -sf ${mbtmp}/mixbox/bin/base64-encode ${mbtmp}/mixbox/bin/base64-decode
 
 logsh "【Tools】" "初始化uci配置信息..."
 echo >> ${mbtmp}/mixbox/config/mixbox.uci # 防止最后一行读取不到

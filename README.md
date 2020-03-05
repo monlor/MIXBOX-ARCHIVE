@@ -12,6 +12,11 @@
 
 ### 更新日志
 
+* 2020-03-05-2
+	* 由于cdn缓存不刷新，还是滚回了`coding`源：`https://monlor.coding.net/p/mbfiles/d/mbfiles/git/raw/master`
+	* 新增`DLNA`插件`DMS`
+	* `Qiandao`插件bug修复
+
 * 2020-03-05
 	* 由于`coding`限制仓库容量不能大于`2G`，尝试使用`github`的`cdn`源：`https://cdn.jsdelivr.net/gh/monlor/mbfiles`
 	* 最新版本里选择`github下载源`默认为`cdn`源，**推荐使用**
