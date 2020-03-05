@@ -135,5 +135,6 @@ case $1 in
 		reset master
 		;;
 	deploy)
+		shift 1
 		deploy $@
 esac
