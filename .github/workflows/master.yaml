@@ -20,6 +20,7 @@ jobs:
       env:
         BRANCH_NAME: master
       run: |
+        git fetch origin ${BRANCH_NAME}
         git checkout ${BRANCH_NAME}
         bash ./tools/gitsync.sh pack 
         bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${GH_REF}
