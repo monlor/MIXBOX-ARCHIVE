@@ -40,10 +40,8 @@ pack_app() {
 		ls apps/$appname/bin 2> /dev/null | grep -E "${model}|^[a-z0-9-]{1,}[^_]$" | while read line; do
 			cp -rf apps/$appname/bin/$line pack/$appname/bin/${line/_${model}/}
 		done
-		echo "正在打包插件[$appname]平台[$model]，文件名[${appname}_${model}.tar.gz]..."
+		# echo "正在打包插件[$appname]平台[$model]，文件名[${appname}_${model}.tar.gz]..."
 		tar zcvf ${appname}_${model}.tar.gz -C pack/ ${appname}/ &> /dev/null
-		# [ ! -d ./appstore/history ] && mkdir ./appstore/history
-		# mv ./appstore/${appname}_${model}.tar.gz ./appstore/history &> /dev/null
 		mv -f ${appname}_${model}.tar.gz ./appstore
 		rm -rf pack/$appname/
 	done
@@ -64,6 +62,7 @@ pack() {
 	rm -rf appstore/
 	rm -rf mbfiles/
 
+	echo "开始打包插件..."
  	mkdir appstore
 	ls apps/ | while read line; do
 		pack_app $line

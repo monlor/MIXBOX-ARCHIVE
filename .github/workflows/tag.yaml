@@ -5,39 +5,52 @@ on:
     tags:  
       - deploy-*
 
+env:
+  GH_REF: ${{ secrets.GH_REF }}
+  CO_REF: ${{ secrets.CO_REF }}
+
 jobs:
-  publish:
+  master:
     runs-on: ubuntu-latest
-    env:
-      GH_REF: ${{ secrets.GH_REF }}
-      CO_REF: ${{ secrets.CO_REF }}
     steps:
     - name: Checkout
       uses: actions/checkout@master
 
-    - name: Deploy Master
+    - name: Pack And Deploy
       env:
         BRANCH_NAME: master
       run: |
         git checkout ${BRANCH_NAME}
         bash ./tools/gitsync.sh pack 
-        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${GH_REF}
-        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${CO_REF}
+        bash -x ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${GH_REF}
+        bash -x ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${CO_REF}
 
-    - name: Deploy Test
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Pack And Deploy
       env:
         BRANCH_NAME: test
       run: |
         git checkout ${BRANCH_NAME}
         bash ./tools/gitsync.sh pack 
-        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${GH_REF}
-        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${CO_REF}
+        bash -x ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${GH_REF}
+        bash -x ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${CO_REF}
 
-    - name: Deploy Dev
+  dev:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Pack And Deploy
       env:
         BRANCH_NAME: dev
       run: |
         git checkout ${BRANCH_NAME}
         bash ./tools/gitsync.sh pack 
-        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${GH_REF}
-        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${CO_REF}
+        bash -x ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${GH_REF}
+        bash -x ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${CO_REF}

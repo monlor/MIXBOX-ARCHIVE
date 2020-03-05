@@ -12,11 +12,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@master
 
-    - name: Deploy
-      env:
-        GH_REF: ${{ secrets.GH_REF }}
-        CO_REF: ${{ secrets.CO_REF }}
+    - name: Pack And Deploy
       run: |
         bash ./tools/gitsync.sh pack 
-        bash ./tools/gitsync.sh deploy mbfiles `git branch | awk  '$1 == "*"{print $2}'` ${GH_REF}
-        bash ./tools/gitsync.sh deploy mbfiles `git branch | awk  '$1 == "*"{print $2}'` ${CO_REF}
+        bash -x ./tools/gitsync.sh deploy mbfiles `git branch | awk  '$1 == "*"{print $2}'` ${GH_REF}
+        bash -x ./tools/gitsync.sh deploy mbfiles `git branch | awk  '$1 == "*"{print $2}'` ${CO_REF}
