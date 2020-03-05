@@ -102,7 +102,6 @@ reset() {
 # $1: path to push
 # $2: remote branch name
 # $3: remote url with token
-# $4: git extra param
 deploy() {
 
 	cd $1
@@ -111,8 +110,7 @@ deploy() {
   git config --local user.name "monlor"
   git add .
   git commit -m "$(TZ='Asia/Shanghai' date "+%Y-%m-%d %H:%M:%S")" -a
-  git push "$3" master:"$2" -f "$4"
-  git push "$3" master:"$2" -f "$4"
+  git push "$3" master:"$2" -f 
 
 }
 
