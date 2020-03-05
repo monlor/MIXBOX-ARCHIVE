@@ -13,7 +13,7 @@ start() {
     [ -z "$path" ] && echo "媒体目录不能为空！" && exit 1
     # open_port
     # write_firewall_start
-    daemon ${mbroot}/apps/${appname}/bin/${appname} -path "${path}" -friendlyName "${servername}" -http "11338" -fFprobeCachePath "${mbdisk}/.dms-ffprobe-cache"
+    daemon ${mbroot}/apps/${appname}/bin/${appname} -path "${path}" -friendlyName "${servername}" -http ":11338" -fFprobeCachePath "${mbdisk}/.dms-ffprobe-cache"
     if [ $? -ne 0 ]; then
         logsh "【$service】" "启动${appname}服务失败！" && end
     else

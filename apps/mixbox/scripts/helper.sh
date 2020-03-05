@@ -10,12 +10,13 @@ wgetsh() {
 	[ ! -d ${mbtmp} ] && mkdir -p ${mbtmp}
 	rm -rf ${mbtmp}/${wgetfilename}
 	if command -v wget-ssl &> /dev/null; then
-		result1=$(wget-ssl --no-check-certificate --tries=1 --timeout=10 --spider -nv -O "${mbtmp}/${wgetfilename}" "$wgeturl")
+		wget-ssl -q --no-check-certificate --tries=1 --timeout=10 -O "${mbtmp}/${wgetfilename}" "$wgeturl"
+		[ $? -eq 0 ] && result="200"
 	else
 		result1=$(curl -skL --connect-timeout 10 -m 20 -w %{http_code} -o "${mbtmp}/${wgetfilename}" "$wgeturl")
 	fi
 	[ -f "${mbtmp}/${wgetfilename}" ] && result2=$(du -sh "${mbtmp}/${wgetfilename}" 2> /dev/null | awk '{print$1}')
-	if echo -n "$result1" | grep -q "200" && [ "$result2" != '0' ]; then
+	if [ "$result" = "200" ] && [ "$result2" != '0' ]; then
 		chmod +x ${mbtmp}/${wgetfilename} > /dev/null 2>&1
 		mv -f ${mbtmp}/${wgetfilename} $wgetfilepath > /dev/null 2>&1
 		return 0
@@ -32,6 +33,7 @@ wgetlist() {
 		wget --no-check-certificate -q -O - "$1"
 	else
 		curl -kfsSl "$1"
+	fi
 }
 
 base_encode() {
