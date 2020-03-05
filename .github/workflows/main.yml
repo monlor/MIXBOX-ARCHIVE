@@ -1,37 +1,22 @@
-name: CI
+name: Main-CI
 
 on: [push, pull_request]
 
 jobs:
   publish:
-
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout
-      uses: actions/checkout@master
-    - name: Pack files
-      run: |
-        git lfs pull
-        mkdir appstore/
-        mkdir mbfiles/
-        bash ./tools/gitsync.sh pack all
-        cp -rf appsbin/ mbfiles/appsbin/
-        cp -rf appstore/ mbfiles/appstore/
-        cp -rf temp/ mbfiles/temp/
-        cp -rf applist.txt mbfiles/
-        cp -rf install.sh mbfiles/
-    - name: Push changes
       env:
         GH_REF: ${{ secrets.GH_REF }}
         CO_REF: ${{ secrets.CO_REF }}
-        BRANCH_NAME: $(cd .. && git branch | awk  '$1 == "*"{print $2}')
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Deploy
+      env:
+        GH_REF: ${{ secrets.GH_REF }}
+        CO_REF: ${{ secrets.CO_REF }}
       run: |
-        cd mbfiles/
-        git init
-        git config --local user.email "monlor@qq.com"
-        git config --local user.name "monlor"
-        git add .
-        git commit -m "$(TZ='Asia/Shanghai' date "+%Y-%m-%d %H:%M:%S")" -a
-        eval "git push "${GH_REF}" master:"${BRANCH_NAME}" -f"
-        eval "git push "${CO_REF}" master:"${BRANCH_NAME}" -f"
+        bash ./tools/gitsync.sh pack 
+        bash ./tools/gitsync.sh deploy mbfiles `git branch | awk  '$1 == "*"{print $2}'` ${GH_REF}
+        bash ./tools/gitsync.sh deploy mbfiles `git branch | awk  '$1 == "*"{print $2}'` ${CO_REF}

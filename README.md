@@ -88,7 +88,7 @@
 #### 一键安装
 
 ``` shell
-sh -c "$(curl -kfsSl https://gitee.com/monlor/mbfiles/raw/master/install.sh)" && source /etc/profile &> /dev/null
+sh -c "$(curl -kfsSl https://monlor.coding.net/p/mbfiles/d/mbfiles/git/raw/master/install.sh)" && source /etc/profile &> /dev/null
 ```
 
 ### 手动更新命令
@@ -100,7 +100,7 @@ sh -c "$(curl -kfsSl https://raw.githubusercontent.com/monlor/MIXBOX/master/apps
 #### 卸载`Monlor Tools`工具箱
 
 ``` shell
-sh -c "$(curl -kfsSl https://gitee.com/monlor/mbfiles/raw/master/temp/uninstall_old.sh)" && source /etc/profile &> /dev/null
+sh -c "$(curl -kfsSl https://monlor.coding.net/p/mbfiles/d/mbfiles/git/raw/master/temp/uninstall_old.sh)" && source /etc/profile &> /dev/null
 ```
 
 #### 一键更新所有插件（请先更新工具箱）

@@ -9,8 +9,6 @@ find . -name '._*' | xargs rm -rf
 
 github_url="https://github.com/monlor/MIXBOX.git"
 github_raw="https://raw.githubusercontent.com/MIXBOX/master"
-coding_url="git@e.coding.net:monlor/MIXBOX.git"
-coding_raw="https://monlor.coding.net/p/MIXBOX/d/MIXBOX/git/raw/master"
 
 sedsh() {
 	[ -z "$1" -o -z "$2" -o -z "$3" ] && echo "null sedsh params!" && exit 1
@@ -27,30 +25,6 @@ sedsh() {
 			sed -i "/$2/d" "$3"
 		fi
 	fi
-}
-
-version() {
-	local appname="$1"
-	eval `cat apps/${appname}/config/${appname}.uci | grep version`
-	[ -z "$version" ] && echo "版本号读取失败！" && exit 1
-	# sed -i $args '/version/d' apps/${appname}/config/${appname}.uci
-	sedsh "d" "version" "apps/${appname}/config/${appname}.uci"
-	num1=$(echo "$version" | cut -d'.' -f1)
-	num2=$(echo "$version" | cut -d'.' -f2)
-	num3=$(echo "$version" | cut -d'.' -f3)
-	if [ "$num3" -eq '9' ]; then
-		if [[ "$num2" -eq '9' ]]; then
-			let num1=$num1+1
-			num2=0
-			num3=0
-		else
-			let num2=$num2+1
-			num3=0
-		fi
-	else
-		let num3=$num3+1
-	fi
-	echo "version=\"$num1.$num2.$num3\"" >> apps/${appname}/config/${appname}.uci
 }
 
 pack_app() {
@@ -87,20 +61,21 @@ gerneral_applist() {
 
 pack() {
 
-	case "$1" in
-		all )
-			ls apps/ | while read line; do
-				[ "$2" = "-v" ] && version ${line}
-				pack_app $line
-			done
-			;;
-		* )
-			[ -z "$1" ] && echo "未输入插件名！" && exit
-			[ "$2" = "-v" ] && version $1
-			pack_app $1
-			;;
-	esac
+	rm -rf appstore/
+	rm -rf mbfiles/
+
+ 	mkdir appstore
+	ls apps/ | while read line; do
+		pack_app $line
+	done
 	gerneral_applist
+
+	mkdir mbfiles
+	cp -rf appsbin/ mbfiles/appsbin/
+  cp -rf temp/ mbfiles/temp/
+  cp -rf install.sh mbfiles/
+  mv -f appstore/ mbfiles/appstore/
+  mv -f applist.txt mbfiles/
 	
 }
 
@@ -111,21 +86,7 @@ localgit() {
 
 github() {
 
-	# sed -i $args "s#^mburl.*#mburl=\"$github_raw\"#" ./install.sh
-	# sedsh "s" "^mburl.*" "mburl=\"$github_raw\"" "./install.sh"
-	# git remote rm origin
-	# git remote add origin $github_url
 	git push $github_url $1:$1
-}
-
-coding() {
-
-	# sed -i $args "s#^mburl.*#mburl=\"$coding_raw\"#" ./install.sh
-	# sedsh "s" "^mburl.*" "mburl=\"$coding_raw\"" "./install.sh"
-	git remote rm origin
-	git remote add origin $coding_url
-	git push origin $1
-	
 }
 
 reset() {
@@ -136,27 +97,36 @@ reset() {
  	git branch -D master
  	git branch -m master
 	
-   #	git push -f origin master
-	# github
-	# coding
 	git rm -r --cached .
+}
+
+# $1: path to push
+# $2: remote branch name
+# $3: remote url with token
+# $4: git extra param
+deploy() {
+
+	cd $1
+  git init
+  git config --local user.email "monlor@qq.com"
+  git config --local user.name "monlor"
+  git add .
+  git commit -m "$(TZ='Asia/Shanghai' date "+%Y-%m-%d %H:%M:%S")" -a
+  git push "$3" master:"$2" -f "$4"
+  git push "$3" master:"$2" -f "$4"
+
 }
 
 case $1 in 
 	github)
 		github master	
 		;;
-	# coding)
-	# 	localgit
-	# 	coding master
-	# 	;;
 	localgit)
 		localgit
 		;;
 	push)
 		git status && localgit
 		github $2
-		# coding $1
 		;;
 	pack) 
 		shift 1
@@ -165,4 +135,6 @@ case $1 in
 	reset)
 		reset master
 		;;
+	deploy)
+		deploy $@
 esac

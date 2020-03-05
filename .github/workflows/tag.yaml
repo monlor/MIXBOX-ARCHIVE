@@ -1,0 +1,40 @@
+name: Tag-CI
+
+on: 
+  push:
+    tags:  
+      - deploy-*
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Deploy Master
+      env:
+        BRANCH_NAME: master
+      run: |
+        git checkout ${BRANCH_NAME}
+        bash ./tools/gitsync.sh pack 
+        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${GH_REF}
+        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${CO_REF}
+
+    - name: Deploy Test
+      env:
+        BRANCH_NAME: test
+      run: |
+        git checkout ${BRANCH_NAME}
+        bash ./tools/gitsync.sh pack 
+        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${GH_REF}
+        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${CO_REF}
+
+    - name: Deploy Dev
+      env:
+        BRANCH_NAME: dev
+      run: |
+        git checkout ${BRANCH_NAME}
+        bash ./tools/gitsync.sh pack 
+        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${GH_REF}
+        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${CO_REF}
