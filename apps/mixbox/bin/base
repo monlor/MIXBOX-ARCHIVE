@@ -20,6 +20,8 @@ mbtmp=/tmp/mbtmp
 model=$(mbdb get mixbox.main.model)
 xq=$(cat /proc/xiaoqiang/model 2> /dev/null) || xq="$(uname -s)"
 
+source ${mbroot}/scripts/helper.sh
+
 # if [ "$xq" == "R1D" -o "$xq" == "R2D" -o "$xq" == "R3D"  ]; then
 # 	model=arm
 # elif [ "$xq" == "R3" -o "$xq" == "R3P" -o "$xq" == "R3G" -o "$xq" == "R1CM" ]; then
@@ -93,30 +95,6 @@ logsh() {
 		fi
 	fi
 	
-}
-
-wgetsh() {
-	# 传入下载的文件位置和下载地址，自动下载到${mbtmp}，若成功则移到下载位置
-	[ -z "$1" -o -z "$2" ] && return 1
-	[ -x /opt/bin/curl ] && alias curl=/opt/bin/curl
-	local wgetfilepath="$1"
-	local wgetfilename=$(basename $wgetfilepath)
-	local wgetfiledir=$(dirname $wgetfilepath)
-	local wgeturl="$2"
-	[ ! -d "$wgetfiledir" ] && mkdir -p $wgetfiledir
-	[ ! -d ${mbtmp} ] && mkdir -p ${mbtmp}
-	rm -rf ${mbtmp}/${wgetfilename}
-	result1=$(curl -skL --connect-timeout 10 -m 20 -w %{http_code} -o "${mbtmp}/${wgetfilename}" "$wgeturl")
-	[ -f "${mbtmp}/${wgetfilename}" ] && result2=$(du -sh "${mbtmp}/${wgetfilename}" 2> /dev/null | awk '{print$1}')
-	if [ "$result1" != "200" -a "$result2" == '0' ]; then
-		rm -rf ${mbtmp}/${wgetfilename}
-		return 1
-	else
-		chmod +x ${mbtmp}/${wgetfilename} > /dev/null 2>&1
-		mv -f ${mbtmp}/${wgetfilename} $wgetfilepath > /dev/null 2>&1
-		return 0
-	fi
-
 }
 
 pssh() {
@@ -280,26 +258,3 @@ parse_str() {
 
 }
 
-base_encode() {
-	if [ -z "${1}" ]; then
-		echo -n "" 
-	else
-		if command -v base64_encode &> /dev/null; then
-			echo -n "$*" | base64_encode
-		else
-			echo -n "$*" | baseutil --b64
-		fi
-	fi
-}
-
-base_decode() {
-	if [ -z "${1}" ]; then
-		echo -n "" 
-	else
-		if command -v base64_decode &> /dev/null; then
-			echo -n "$*" | base64_decode
-		else
-			echo -n "$*" | baseutil --b64 -d
-		fi
-	fi
-}

@@ -6,6 +6,7 @@ mbroot="/etc/mixbox"
 mbtmp="/tmp/mbtmp"
 mburl=$(mbdb get mixbox.main.url) 
 model=$(mbdb get mixbox.main.model)
+source ${mbroot}/scripts/helper.sh
 
 fix_local_applist() {
 
@@ -66,10 +67,10 @@ get_applist() {
 }
 
 update_applist() {
-	result1=$(curl -skL --connect-timeout 10 -m 20 -w %{http_code} -o ${mbtmp}/applist_tmp.txt $mburl/applist.txt)
-	[ -f ${mbtmp}/applist_tmp.txt ] && result2=$(du -sh ${mbtmp}/applist_tmp.txt | awk '{print$1}') || result2='0'
-	[ "$result1" != "200" -o "$result2" = '0' ] && exit 1
-	cat ${mbtmp}/applist_tmp.txt | grep "${model}" | sort -u > ${mbtmp}/applist.txt
+	wgetsh ${mbtmp}/applist_tmp.txt $mburl/applist.txt
+	if [ $? -eq 0 ]; then
+		cat ${mbtmp}/applist_tmp.txt | grep "${model}" | sort -u > ${mbtmp}/applist.txt
+	fi
 	rm -rf ${mbtmp}/applist_tmp.txt
 }
 
