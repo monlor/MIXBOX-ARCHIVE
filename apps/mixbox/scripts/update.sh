@@ -13,10 +13,6 @@ logsh "【Tools】" "解压工具箱文件"
 tar -zxvf ${mbtmp}/mixbox.tar.gz -C ${mbtmp} > /dev/null 2>&1
 [ $? -ne 0 ] && logsh "【Tools】" "文件解压失败！" && exit
 
-logsh "【Tools】" "更新工具箱文件"
-# 处理工具箱二进制文件
-ln -sf ${mbtmp}/mixbox/bin/base64-encode ${mbtmp}/mixbox/bin/base64-decode
-
 logsh "【Tools】" "初始化uci配置信息..."
 echo >> ${mbtmp}/mixbox/config/mixbox.uci # 防止最后一行读取不到
 source ${mbtmp}/mixbox/config/mixbox.uci
@@ -28,6 +24,11 @@ cat ${mbtmp}/mixbox/config/mixbox.uci | while read line; do
 done
 rm -rf ${mbtmp}/mixbox/scripts/userscript.sh
 cp -rf ${mbtmp}/mixbox/* ${mbroot}/
+
+logsh "【Tools】" "处理工具箱文件"
+# 处理工具箱二进制文件
+ln -sf  ${mbroot}/bin/base64-encode ${mbroot}/bin/base64-decode
+
 logsh "【Tools】" "赋予可执行权限"
 chmod -R +x ${mbroot}/bin
 chmod -R +x ${mbroot}/scripts
