@@ -1,6 +1,18 @@
 name: Main-CI
 
-on: [push, pull_request]
+# on: [push, pull_request]
+on: 
+  push:
+    branchs:  
+      - master
+      - test
+      - dev
+    ignore-paths:
+      - '.github'
+      - 'README.md'
+  pull_request:
+    branchs:  
+      - master
 
 jobs:
   publish:
