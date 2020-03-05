@@ -15,7 +15,7 @@ jobs:
     env:
         GL_TOKEN: ${{ secrets.GL_TOKEN }}
         GL_URL: ${{ secrets.GL_URL }}
-        BRANCH_NAME: ${{ github.ref }}
+        BRANCH_NAME: dev
     steps:
     - name: Checkout
       uses: actions/checkout@master
@@ -23,7 +23,7 @@ jobs:
     - name: Pack And Deploy
       run: |
         bash ./tools/gitsync.sh pack 
-        bash ./tools/gitsync.sh deploy mbfiles `basename ${BRANCH_NAME}` http://${GL_TOKEN}@${GL_URL}/monlor/mbfiles.git
+        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} http://${GL_TOKEN}@${GL_URL}/monlor/mbfiles.git
 
     - name: Sync Code
-      run: git push http://${GL_TOKEN}@${GL_URL}/monlor/mixbox.git `basename ${BRANCH_NAME}`:`basename ${BRANCH_NAME}`
+      run: git push http://${GL_TOKEN}@${GL_URL}/monlor/mixbox.git ${BRANCH_NAME}:${BRANCH_NAME}
