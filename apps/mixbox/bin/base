@@ -281,9 +281,25 @@ parse_str() {
 }
 
 base_encode() {
-	[ -z "${1}" ] && echo -n "" || echo -n "$*" | baseutil --b64
+	if [ -z "${1}" ]; then
+		echo -n "" 
+	else
+		if command -v base64_encode &> /dev/null; then
+			echo -n "$*" | base64_encode
+		else
+			echo -n "$*" | baseutil --b64
+		fi
+	fi
 }
 
 base_decode() {
-	[ -z "${1}" ] && echo -n "" || echo -n "$*" | baseutil --b64 -d
+	if [ -z "${1}" ]; then
+		echo -n "" 
+	else
+		if command -v base64_decode &> /dev/null; then
+			echo -n "$*" | base64_decode
+		else
+			echo -n "$*" | baseutil --b64 -d
+		fi
+	fi
 }
