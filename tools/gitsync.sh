@@ -63,7 +63,7 @@ pack_app() {
 		cp -rf apps/$appname/ pack/$appname/
 		[ ! -d pack/$appname/bin ] && mkdir pack/$appname/bin
 		rm -rf pack/$appname/bin/*
-		ls apps/$appname/bin 2> /dev/null | grep -E "${model}|^[a-z]{1,}[^_]$" | while read line; do
+		ls apps/$appname/bin 2> /dev/null | grep -E "${model}|^[a-z0-9-]{1,}[^_]$" | while read line; do
 			cp -rf apps/$appname/bin/$line pack/$appname/bin/${line/_${model}/}
 		done
 		echo "正在打包插件[$appname]平台[$model]，文件名[${appname}_${model}.tar.gz]..."
