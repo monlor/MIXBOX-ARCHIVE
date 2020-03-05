@@ -1,18 +1,10 @@
-stages:
-  - pack
-  - deploy
+image: lholota/bash-git
 
-pack:
-  stage: pack
-  only:        
-    - dev
-  script:
-    - bash ./tools/gitsync.sh pack
+stages:
+  - deploy
 
 deploy:
   stage: deploy
-  only:
-    - dev
   script:
-    - bash ./tools/gitsync.sh deploy mbfiles dev ${GL_REF}/monlor/mbfiles.git
-   
+    - bash -e ./tools/gitsync.sh pack
+    - bash -e ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git
