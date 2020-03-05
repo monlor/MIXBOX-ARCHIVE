@@ -19,6 +19,7 @@ on:
         paths-ignore:
             - 'README.md'
             - 'tools'
+            - '.github'
         branchs:
             - 'test'
             - 'master'
@@ -26,6 +27,7 @@ on:
         paths-ignore:
             - 'README.md'
             - 'tools'
+            - '.github'
         branchs:
             - 'test'
             - 'master'        
