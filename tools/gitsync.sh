@@ -83,8 +83,8 @@ pack() {
 		mkdir -p ${pack_dir}/appsbin
 	fi
 	
-	cp -rf appsbin/* ${pack_dir}/
-  cp -rf temp/* ${pack_dir}/
+	cp -rf appsbin/* ${pack_dir}/appsbin/
+  cp -rf temp/* ${pack_dir}/temp/
   cp -rf install.sh ${pack_dir}/
   mv -f appstore/* ${pack_dir}/appstore/
   mv -f applist.txt ${pack_dir}/
