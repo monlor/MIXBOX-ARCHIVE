@@ -63,15 +63,15 @@ base_decode() {
 # $1 > $2 => -1
 # $1 < $2 => 1
 # $1 = $2 => 0
-versioncmp() {
+# versioncmp() {
 
-	[ "$1" = "$2" ] && echo -n "0" && return
+# 	[ "$1" = "$2" ] && echo -n "0" && return
 
-	if test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; then
-		echo -n "-1"
-	else 
-		echo -n "1"
-	fi
+# 	if test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; then
+# 		echo -n "-1"
+# 	else 
+# 		echo -n "1"
+# 	fi
 
-}
+# }
 
