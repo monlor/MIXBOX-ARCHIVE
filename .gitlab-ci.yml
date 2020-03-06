@@ -4,7 +4,7 @@ stages:
   - pack
   - deploy
 
-pack:
+pack:branchs:
   stage: pack
   only:        
     - master
@@ -13,7 +13,7 @@ pack:
   script:
     - bash -e ./tools/gitsync.sh pack
 
-deploy:
+deploy:branchs:
   stage: deploy
   only:        
     - master
@@ -23,7 +23,7 @@ deploy:
     - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git
     - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${CO_REF}/monlor/mbfiles.git
 
-pack-master:
+pack:master:
   stage: pack
   only:
     - tags
@@ -33,8 +33,11 @@ pack-master:
     - git fetch origin master
     - git checkout master
     - bash -e ./tools/gitsync.sh pack mbfiles-master
+  artifacts:
+    paths:
+    - mbfiles-msater/
 
-pack-test:
+pack:test:
   stage: pack
   only:
     - tags
@@ -44,8 +47,11 @@ pack-test:
     - git fetch origin test
     - git checkout test
     - bash -e ./tools/gitsync.sh pack mbfiles-test
+  artifacts:
+    paths:
+    - mbfiles-test/
 
-deploy-master:
+deploy:master:
   stage: deploy
   only:
     - tags
@@ -54,18 +60,13 @@ deploy-master:
   script:
     - bash ./tools/gitsync.sh deploy mbfiles-master ${CI_COMMIT_REF_NAME} ${CO_REF}/monlor/mbfiles.git
     - bash ./tools/gitsync.sh deploy mbfiles-test ${CI_COMMIT_REF_NAME} ${CO_REF}/monlor/mbfiles.git
+  dependencies:
+    - pack:master
+    - pack:test
 
 cache:
   key: ${CI_COMMIT_REF_NAME}
   untracked: true
   paths: 
     - mbfiles/
-
-cache:
-  key: deploy-*
-  untracked: true
-  paths: 
-    - mbfiles-master/
-    - mbfiles-test/
-
 
