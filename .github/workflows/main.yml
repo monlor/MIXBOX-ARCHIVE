@@ -6,6 +6,7 @@ on:
     branchs:  
       - master
       - test
+      - dev
     ignore-paths:
       - '.github'
       - 'README.md'
