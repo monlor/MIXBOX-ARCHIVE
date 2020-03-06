@@ -9,11 +9,11 @@ wgetsh() {
 	[ ! -d "$wgetfiledir" ] && mkdir -p $wgetfiledir
 	[ ! -d ${mbtmp} ] && mkdir -p ${mbtmp}
 	rm -rf ${mbtmp}/${wgetfilename}
-	if command -v wget-ssl &> /dev/null; then
+	if command -v curl &> /dev/null; then
+		result1=$(curl -skL --connect-timeout 10 -m 20 -w %{http_code} -o "${mbtmp}/${wgetfilename}" "$wgeturl")
+	else
 		wget-ssl -q --no-check-certificate --tries=1 --timeout=10 -O "${mbtmp}/${wgetfilename}" "$wgeturl"
 		[ $? -eq 0 ] && result="200"
-	else
-		result1=$(curl -skL --connect-timeout 10 -m 20 -w %{http_code} -o "${mbtmp}/${wgetfilename}" "$wgeturl")
 	fi
 	[ -f "${mbtmp}/${wgetfilename}" ] && result2=$(du -sh "${mbtmp}/${wgetfilename}" 2> /dev/null | awk '{print$1}')
 	if [ "$result" = "200" ] && [ "$result2" != '0' ]; then

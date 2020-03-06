@@ -116,11 +116,15 @@ deploy() {
 	sed -Ei "s#mbfiles/git/raw/[a-z]+#mbfiles/git/raw/$2#" $1/install.sh
 
 	cd $1
-  git init
-  git config --local user.email "monlor@qq.com"
-  git config --local user.name "monlor"
-  git add .
-  git commit -m "$(TZ='Asia/Shanghai' date "+%Y-%m-%d %H:%M:%S")" -a
+	if [ ! -d ".git" ]; then
+	  git init
+	  git config --local user.email "monlor@qq.com"
+	  git config --local user.name "monlor"
+	fi
+	if git status &> /dev/null; then
+	  git add .
+	  git commit -m "$(TZ='Asia/Shanghai' date "+%Y-%m-%d %H:%M:%S")" -a
+	fi
   git push "$3" master:"$2" -f 
 
 }

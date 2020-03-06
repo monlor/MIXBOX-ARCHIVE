@@ -47,11 +47,11 @@ fi
 
 logsh "【Tools】" "下载工具箱文件..."
 rm -rf ${mbtmp}/mixbox.tar.gz > /dev/null 2>&1
-if command -v wget-ssl &> /dev/null; then
+if command -v curl &> /dev/null; then
+	result=$(curl -w %{http_code} -skLo ${mbtmp}/mixbox.tar.gz ${mburl}/appstore/mixbox_${model}.tar.gz)
+else
 	wget-ssl -q --no-check-certificate --tries=1 --timeout=10 -O ${mbtmp}/mixbox.tar.gz ${mburl}/appstore/mixbox_${model}.tar.gz
 	[ $? -eq 0 ] && result="200"
-else
-	result=$(curl -w %{http_code} -skLo ${mbtmp}/mixbox.tar.gz ${mburl}/appstore/mixbox_${model}.tar.gz)
 fi
 [ "$result" != "200" ] && logsh "【Tools】" "文件下载失败！" && exit 1
 logsh "【Tools】" "解压工具箱文件"
