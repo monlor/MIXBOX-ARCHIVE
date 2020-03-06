@@ -124,8 +124,8 @@ deploy() {
 	if git status &> /dev/null; then
 	  git add .
 	  git commit -m "$(TZ='Asia/Shanghai' date "+%Y-%m-%d %H:%M:%S")" -a
-	  git push "$3" master:"$2" -f 
 	fi
+	git push "$3" master:"$2" -f 
   
 }
 
