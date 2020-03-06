@@ -9,8 +9,6 @@ on:
       - dev
     tags-ignore:
       - deploy-*
-    paths-ignore:
-      - 'README.md'
   pull_request:
     branchs:  
       - master
