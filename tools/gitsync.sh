@@ -118,10 +118,9 @@ deploy() {
 	cd $1
 	if [ ! -d ".git" ]; then
 	  git init
-	  git config --local user.email "monlor@qq.com"
-	  git config --local user.name "monlor"
-
 	fi
+	git config --local user.email "monlor@qq.com"
+	 git config --local user.name "monlor"
 	if [ ! -f ".gitattributes" ]; then
 		git lfs install
 	  git lfs track "*"
