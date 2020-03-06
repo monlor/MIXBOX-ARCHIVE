@@ -3,6 +3,7 @@ image: lholota/bash-git:latest
 stages:
   - pack
   - deploy
+  - syncode
 
 pack:branchs:
   stage: pack
@@ -12,6 +13,11 @@ pack:branchs:
     - dev
   script:
     - bash -e ./tools/gitsync.sh pack
+  cache:
+    key: ${CI_COMMIT_REF_NAME}
+    untracked: true
+    paths: 
+      - mbfiles/
 
 deploy:branchs:
   stage: deploy
@@ -22,6 +28,11 @@ deploy:branchs:
   script:
     - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git
     - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${CO_REF}/monlor/mbfiles.git
+  cache:
+    key: ${CI_COMMIT_REF_NAME}
+    untracked: true
+    paths: 
+      - mbfiles/
 
 pack:master:
   stage: pack
@@ -32,10 +43,15 @@ pack:master:
   script:
     - git fetch origin master
     - git checkout master
-    - bash -e ./tools/gitsync.sh pack mbfiles-master
-  artifacts:
-    paths:
-    - mbfiles-msater/
+    - bash -e ./tools/gitsync.sh pack
+  # artifacts:
+  #   paths:
+  #   - mbfiles-msater/
+  cache:
+    key: master
+    untracked: true
+    paths: 
+      - mbfiles/
 
 pack:test:
   stage: pack
@@ -46,10 +62,15 @@ pack:test:
   script:
     - git fetch origin test
     - git checkout test
-    - bash -e ./tools/gitsync.sh pack mbfiles-test
-  artifacts:
-    paths:
-    - mbfiles-test/
+    - bash -e ./tools/gitsync.sh pack
+  # artifacts:
+  #   paths:
+  #   - mbfiles-test/
+  cache:
+    key: test
+    untracked: true
+    paths: 
+      - mbfiles/
 
 deploy:master:
   stage: deploy
@@ -58,15 +79,45 @@ deploy:master:
   tags:
     - deploy-*
   script:
-    - bash ./tools/gitsync.sh deploy mbfiles-master ${CI_COMMIT_REF_NAME} ${CO_REF}/monlor/mbfiles.git
-    - bash ./tools/gitsync.sh deploy mbfiles-test ${CI_COMMIT_REF_NAME} ${CO_REF}/monlor/mbfiles.git
-  dependencies:
-    - pack:master
-    - pack:test
+    - bash ./tools/gitsync.sh deploy mbfiles master ${CO_REF}/monlor/mbfiles.git
+  # dependencies:
+  #   - pack:master
+  #   - pack:test
+  cache:
+    key: master
+    untracked: true
+    paths: 
+      - mbfiles/
 
-cache:
-  key: ${CI_COMMIT_REF_NAME}
-  untracked: true
-  paths: 
-    - mbfiles/
+deploy:test:
+  stage: deploy
+  only:
+    - tags
+  tags:
+    - deploy-*
+  script:
+    - bash ./tools/gitsync.sh deploy mbfiles test ${CO_REF}/monlor/mbfiles.git
+  # dependencies:
+  #   - pack:master
+  #   - pack:test
+  cache:
+    key: test
+    untracked: true
+    paths: 
+      - mbfiles/
+
+syncode:github:
+  stage: syncode
+  only:        
+    - master
+    - test
+    - dev
+  script:
+    - git push ${GH_REF}/monlor/MIXBOX.git ${CI_COMMIT_REF_NAME}:${CI_COMMIT_REF_NAME}
+
+# cache:
+#   key: ${CI_COMMIT_REF_NAME}
+#   untracked: true
+#   paths: 
+#     - mbfiles/
 
