@@ -1,10 +1,70 @@
 image: lholota/bash-git
 
 stages:
+  - pack
   - deploy
 
-deploy:
-  stage: deploy
+pack:
+  stage: pack
+  only:        
+    - master
+    - test
+    - dev
   script:
     - bash -e ./tools/gitsync.sh pack
+
+deploy-gitlab:
+  stage: deploy
+  only:        
+    - master
+    - test
+    - dev
+  script:
     - bash -e ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git
+
+deploy-coding:
+  stage: deploy
+  only:        
+    - master
+    - test
+  script:
+    - bash -e ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${CO_REF}/monlor/mbfiles.git
+
+pack-all:
+  stage: pack
+  only:
+    - tags
+  tags:
+    - deploy-*
+  script:
+    - git fetch origin master
+    - git checkout master
+    - bash -e ./tools/gitsync.sh pack mbfiles-master
+    - git fetch origin test
+    - git checkout test
+    - bash -e ./tools/gitsync.sh pack mbfiles-test
+
+deploy-all:
+  stage: deploy
+  only:
+    - tags
+  tags:
+    - deploy-*
+  script:
+    - bash -e ./tools/gitsync.sh deploy mbfiles-master ${CI_COMMIT_REF_NAME} ${CO_REF}/monlor/mbfiles.git
+    - bash -e ./tools/gitsync.sh deploy mbfiles-test ${CI_COMMIT_REF_NAME} ${CO_REF}/monlor/mbfiles.git
+
+cache:
+  key: ${CI_COMMIT_REF_NAME}
+  untracked: true
+  paths: 
+    - mbfiles/
+
+cache:
+  key: deploy-all
+  untracked: true
+  paths: 
+    - mbfiles-master/
+    - mbfiles-test/
+
+
