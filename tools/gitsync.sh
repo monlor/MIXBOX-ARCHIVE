@@ -113,6 +113,8 @@ reset() {
 # $3: remote url with token
 deploy() {
 
+	ls
+
 	sed -Ei "s#mbfiles/git/raw/[a-z]+#mbfiles/git/raw/$2#" $1/install.sh
 
 	cd $1
