@@ -120,11 +120,13 @@ deploy() {
 	  git init
 	fi
 	git config --local user.email "monlor@qq.com"
-	 git config --local user.name "monlor"
-	if [ ! -f ".gitattributes" ]; then
-		git lfs install
-	  git lfs track "*"
-	fi
+	git config --local user.name "monlor"
+
+	git lfs install
+  rm -rf .gitattributes
+  git lfs track "*_linux_*"
+  git lfs track "*_darwin_*"
+
 	if git status &> /dev/null; then
 	  git add .
 	  git commit -m "$(TZ='Asia/Shanghai' date "+%Y-%m-%d %H:%M:%S")" -a
