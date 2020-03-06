@@ -76,12 +76,9 @@ pack() {
 	done
 	gerneral_applist
 
-	if [ ! -d ${pack_dir} ]; then
-		mkdir -p ${pack_dir}
-		mkdir -p ${pack_dir}/appstore
-		mkdir -p ${pack_dir}/temp
-		mkdir -p ${pack_dir}/appsbin
-	fi
+	test ! -d ${pack_dir}/appstore && mkdir -p ${pack_dir}/appstore
+	test ! -d ${pack_dir}/temp && mkdir -p ${pack_dir}/temp
+	test ! -d ${pack_dir}/appsbin && mkdir -p ${pack_dir}/appsbin
 	
 	cp -rf appsbin/* ${pack_dir}/appsbin/
   cp -rf temp/* ${pack_dir}/temp/
@@ -137,7 +134,7 @@ deploy() {
 	  git add .
 	  git commit -m "$(TZ='Asia/Shanghai' date "+%Y-%m-%d %H:%M:%S")" -a
 	fi
-	# git lfs push "$3" --all
+	git lfs push "$3" --all
   git push "$3"
 }
 
