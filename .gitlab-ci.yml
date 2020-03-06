@@ -12,19 +12,19 @@ deploy:branchs:
     - apk add git-lfs
     - git clone -b ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git 
     - bash -e ./tools/gitsync.sh pack
-    - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git
+    # - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git
     - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${CO_REF}/monlor/mbfiles.git
     - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${GH_REF}/monlor/mbfiles.git
 
-deploy:dev:
-  stage: deploy
-  only:        
-    - dev
-  script:
-    - apk add git-lfs
-    - git clone -b ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git 
-    - bash -e ./tools/gitsync.sh pack
-    - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git
+# deploy:dev:
+#   stage: deploy
+#   only:        
+#     - dev
+#   script:
+#     - apk add git-lfs
+#     - git clone -b ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git 
+#     - bash -e ./tools/gitsync.sh pack
+#     - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git
 
 deploy:master:
   stage: deploy
