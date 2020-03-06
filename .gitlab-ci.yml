@@ -113,6 +113,8 @@ syncode:github:
     - test
     - dev
   script:
+    - git fetch origin ${CI_COMMIT_REF_NAME}
+    - git checkout ${CI_COMMIT_REF_NAME}
     - git push ${GH_REF}/monlor/MIXBOX.git ${CI_COMMIT_REF_NAME}:${CI_COMMIT_REF_NAME}
 
 # cache:
