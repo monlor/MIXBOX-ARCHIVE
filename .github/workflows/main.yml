@@ -7,8 +7,8 @@ on:
       - master
       - test
       - dev
-    tags-ignore:
-      - deploy-*
+    tags:
+      - '!deploy-*'
   pull_request:
     branchs:  
       - master
