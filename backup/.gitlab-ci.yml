@@ -1,0 +1,79 @@
+image: lholota/bash-git:latest
+
+stages:
+  - deploy
+
+deploy:branchs:
+  stage: deploy
+  only:        
+    - master
+    - test
+  script:
+    - apk add git-lfs
+    - git clone -b ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git 
+    - bash -e ./tools/gitsync.sh pack
+    # - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git
+    - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${CO_REF}/monlor/mbfiles.git
+    - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${GH_REF}/monlor/mbfiles.git
+
+# deploy:dev:
+#   stage: deploy
+#   only:        
+#     - dev
+#   script:
+#     - apk add git-lfs
+#     - git clone -b ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git 
+#     - bash -e ./tools/gitsync.sh pack
+#     - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git
+
+deploy:master:
+  stage: deploy
+  only:
+    - tags
+  tags:
+    - deploy-*
+  script:
+    - apk add git-lfs
+    - git fetch origin master
+    - git checkout master
+    - git clone -b master ${GL_REF}/monlor/mbfiles.git 
+    - bash -e ./tools/gitsync.sh pack
+    - bash ./tools/gitsync.sh deploy mbfiles master ${CO_REF}/monlor/mbfiles.git
+  cache:
+    key: master
+    untracked: true
+
+deploy:test:
+  stage: deploy
+  only:
+    - tags
+  tags:
+    - deploy-*
+  script:
+    - apk add git-lfs
+    - git fetch origin test
+    - git checkout test
+    - git clone -b test ${GL_REF}/monlor/mbfiles.git 
+    - bash -e ./tools/gitsync.sh pack
+    - bash ./tools/gitsync.sh deploy mbfiles test ${CO_REF}/monlor/mbfiles.git
+  cache:
+    key: test
+    untracked: true
+
+syncode:github:
+  stage: deploy
+  only:        
+    - master
+    - test
+    - dev
+  script:
+    - git fetch origin ${CI_COMMIT_REF_NAME}
+    - git checkout ${CI_COMMIT_REF_NAME}
+    - git push ${GH_REF}/monlor/MIXBOX.git ${CI_COMMIT_REF_NAME}:${CI_COMMIT_REF_NAME}
+
+# cache:
+#   key: ${CI_COMMIT_REF_NAME}
+#   untracked: true
+#   paths: 
+#     - mbfiles/
+
