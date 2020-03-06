@@ -130,7 +130,7 @@ deploy() {
 	  git add .
 	  git commit -m "$(TZ='Asia/Shanghai' date "+%Y-%m-%d %H:%M:%S")" -a
 	fi
-	git push "$3" master:"$2" -f 
+	git lfs push "$3" master:"$2" --all
   
 }
 

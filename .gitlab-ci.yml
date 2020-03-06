@@ -26,6 +26,7 @@ deploy:branchs:
     - master
     - test
   script:
+    - apk add git-lfs
     - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git
     - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${CO_REF}/monlor/mbfiles.git
     - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${GH_REF}/monlor/mbfiles.git
@@ -40,6 +41,7 @@ deploy:dev:
   only:        
     - dev
   script:
+    - apk add git-lfs
     - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git
   cache:
     key: ${CI_COMMIT_REF_NAME}
@@ -94,6 +96,7 @@ deploy:master:
   tags:
     - deploy-*
   script:
+    - apk add git-lfs
     - bash ./tools/gitsync.sh deploy mbfiles master ${CO_REF}/monlor/mbfiles.git
   # dependencies:
   #   - pack:master
@@ -111,6 +114,7 @@ deploy:test:
   tags:
     - deploy-*
   script:
+    - apk add git-lfs
     - bash ./tools/gitsync.sh deploy mbfiles test ${CO_REF}/monlor/mbfiles.git
   # dependencies:
   #   - pack:master
