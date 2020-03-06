@@ -1,6 +1,6 @@
 #!/bin/sh -e
 #copyright by monlor
-  
+   
 clear
 logsh() {
 	# 输出信息到/tmp/messages和标准输出
