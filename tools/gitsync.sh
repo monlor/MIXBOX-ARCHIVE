@@ -82,6 +82,8 @@ pack() {
   cp -rf install.sh ${pack_dir}/
   mv -f appstore/* ${pack_dir}/appstore/
   mv -f applist.txt ${pack_dir}/
+
+  rm -rf appstore/
 	
 }
 

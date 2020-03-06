@@ -13,7 +13,7 @@ pack:
   script:
     - bash -e ./tools/gitsync.sh pack
 
-deploy-gitlab:
+deploy:
   stage: deploy
   only:        
     - master
@@ -21,13 +21,6 @@ deploy-gitlab:
     - dev
   script:
     - bash -e ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git
-
-deploy-coding:
-  stage: deploy
-  only:        
-    - master
-    - test
-  script:
     - bash -e ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${CO_REF}/monlor/mbfiles.git
 
 pack-master:
@@ -60,14 +53,6 @@ deploy-master:
     - deploy-*
   script:
     - bash -e ./tools/gitsync.sh deploy mbfiles-master ${CI_COMMIT_REF_NAME} ${CO_REF}/monlor/mbfiles.git
-
-deploy-test:
-  stage: deploy
-  only:
-    - tags
-  tags:
-    - deploy-*
-  script:
     - bash -e ./tools/gitsync.sh deploy mbfiles-test ${CI_COMMIT_REF_NAME} ${CO_REF}/monlor/mbfiles.git
 
 cache:
@@ -77,7 +62,7 @@ cache:
     - mbfiles/
 
 cache:
-  key: deploy-all
+  key: deploy-*
   untracked: true
   paths: 
     - mbfiles-master/
