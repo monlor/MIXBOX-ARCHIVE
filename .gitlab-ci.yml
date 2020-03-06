@@ -1,22 +1,7 @@
 image: lholota/bash-git:latest
 
 stages:
-  - pack
   - deploy
-  - syncode
-
-pack:branchs:
-  stage: pack
-  only:        
-    - master
-    - test
-    - dev
-  script:
-    - bash -e ./tools/gitsync.sh pack
-  retry: 2
-  cache:
-    key: ${CI_COMMIT_REF_NAME}
-    untracked: true
 
 deploy:branchs:
   stage: deploy
@@ -25,12 +10,11 @@ deploy:branchs:
     - test
   script:
     - apk add git-lfs
+    - git clone -b ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git 
+    - bash -e ./tools/gitsync.sh pack
     - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git
     - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${CO_REF}/monlor/mbfiles.git
     - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${GH_REF}/monlor/mbfiles.git
-  cache:
-    key: ${CI_COMMIT_REF_NAME}
-    untracked: true
 
 deploy:dev:
   stage: deploy
@@ -38,46 +22,9 @@ deploy:dev:
     - dev
   script:
     - apk add git-lfs
+    - git clone -b ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git 
+    - bash -e ./tools/gitsync.sh pack
     - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git
-  cache:
-    key: ${CI_COMMIT_REF_NAME}
-    untracked: true
-
-pack:master:
-  stage: pack
-  only:
-    - tags
-  tags:
-    - deploy-*
-  script:
-    - git fetch origin master
-    - git checkout master
-    - bash -e ./tools/gitsync.sh pack
-  retry: 2
-  # artifacts:
-  #   paths:
-  #   - mbfiles-msater/
-  cache:
-    key: master
-    untracked: true
-
-pack:test:
-  stage: pack
-  only:
-    - tags
-  tags:
-    - deploy-*
-  script:
-    - git fetch origin test
-    - git checkout test
-    - bash -e ./tools/gitsync.sh pack
-  retry: 2
-  # artifacts:
-  #   paths:
-  #   - mbfiles-test/
-  cache:
-    key: test
-    untracked: true
 
 deploy:master:
   stage: deploy
@@ -87,10 +34,11 @@ deploy:master:
     - deploy-*
   script:
     - apk add git-lfs
+    - git fetch origin master
+    - git checkout master
+    - git clone -b master ${GL_REF}/monlor/mbfiles.git 
+    - bash -e ./tools/gitsync.sh pack
     - bash ./tools/gitsync.sh deploy mbfiles master ${CO_REF}/monlor/mbfiles.git
-  # dependencies:
-  #   - pack:master
-  #   - pack:test
   cache:
     key: master
     untracked: true
@@ -103,16 +51,17 @@ deploy:test:
     - deploy-*
   script:
     - apk add git-lfs
+    - git fetch origin test
+    - git checkout test
+    - git clone -b test ${GL_REF}/monlor/mbfiles.git 
+    - bash -e ./tools/gitsync.sh pack
     - bash ./tools/gitsync.sh deploy mbfiles test ${CO_REF}/monlor/mbfiles.git
-  # dependencies:
-  #   - pack:master
-  #   - pack:test
   cache:
     key: test
     untracked: true
 
 syncode:github:
-  stage: syncode
+  stage: deploy
   only:        
     - master
     - test
