@@ -7,12 +7,18 @@ on:
       - master
       - test
       - dev
+    tags-ignore:
+      - deploy-*
+      - test-*
+      - master-*
     ignore-paths:
       - '.github'
       - 'README.md'
   pull_request:
     branchs:  
       - master
+      - test
+      - dev
 
 jobs:
   publish:

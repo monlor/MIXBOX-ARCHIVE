@@ -76,9 +76,15 @@ pack() {
 	done
 	gerneral_applist
 
-	mkdir -p ${pack_dir}/appstore 2> /dev/null
-	cp -rf appsbin ${pack_dir}/
-  cp -rf temp ${pack_dir}/
+	if [ ! -d ${pack_dir} ]; then
+		mkdir -p ${pack_dir}
+		mkdir -p ${pack_dir}/appstore
+		mkdir -p ${pack_dir}/temp
+		mkdir -p ${pack_dir}/appsbin
+	fi
+	
+	cp -rf appsbin/* ${pack_dir}/
+  cp -rf temp/* ${pack_dir}/
   cp -rf install.sh ${pack_dir}/
   mv -f appstore/* ${pack_dir}/appstore/
   mv -f applist.txt ${pack_dir}/
