@@ -17,8 +17,6 @@ pack:branchs:
   cache:
     key: ${CI_COMMIT_REF_NAME}
     untracked: true
-    paths: 
-      - mbfiles/
 
 deploy:branchs:
   stage: deploy
@@ -33,8 +31,6 @@ deploy:branchs:
   cache:
     key: ${CI_COMMIT_REF_NAME}
     untracked: true
-    paths: 
-      - mbfiles/
 
 deploy:dev:
   stage: deploy
@@ -46,8 +42,6 @@ deploy:dev:
   cache:
     key: ${CI_COMMIT_REF_NAME}
     untracked: true
-    paths: 
-      - mbfiles/
 
 pack:master:
   stage: pack
@@ -66,8 +60,6 @@ pack:master:
   cache:
     key: master
     untracked: true
-    paths: 
-      - mbfiles/
 
 pack:test:
   stage: pack
@@ -86,8 +78,6 @@ pack:test:
   cache:
     key: test
     untracked: true
-    paths: 
-      - mbfiles/
 
 deploy:master:
   stage: deploy
@@ -104,8 +94,6 @@ deploy:master:
   cache:
     key: master
     untracked: true
-    paths: 
-      - mbfiles/
 
 deploy:test:
   stage: deploy
@@ -122,8 +110,6 @@ deploy:test:
   cache:
     key: test
     untracked: true
-    paths: 
-      - mbfiles/
 
 syncode:github:
   stage: syncode
