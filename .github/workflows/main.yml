@@ -28,5 +28,5 @@ jobs:
       run: |
         git clone -b `basename ${BRANCH_NAME}` ${GH_REF}
         bash ./tools/gitsync.sh pack 
-        bash ./tools/gitsync.sh deploy mbfiles `basename ${BRANCH_NAME}` ${GH_REF}
+        # bash ./tools/gitsync.sh deploy mbfiles `basename ${BRANCH_NAME}` ${GH_REF}
         bash ./tools/gitsync.sh deploy mbfiles `basename ${BRANCH_NAME}` ${CO_REF}
