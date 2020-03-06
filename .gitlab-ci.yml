@@ -12,10 +12,6 @@ pack:
     - dev
   script:
     - bash -e ./tools/gitsync.sh pack
-  cache:
-    key: ${CI_COMMIT_REF_NAME}
-    paths: 
-      - mbfiles/
 
 deploy-gitlab:
   stage: deploy
@@ -25,10 +21,6 @@ deploy-gitlab:
     - dev
   script:
     - bash -e ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git
-  cache:
-    key: ${CI_COMMIT_REF_NAME}
-    paths: 
-      - mbfiles/
 
 deploy-coding:
   stage: deploy
@@ -37,10 +29,6 @@ deploy-coding:
     - test
   script:
     - bash -e ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${CO_REF}/monlor/mbfiles.git
-  cache:
-    key: ${CI_COMMIT_REF_NAME}
-    paths: 
-      - mbfiles/
 
 pack-master:
   stage: pack
@@ -52,10 +40,6 @@ pack-master:
     - git fetch origin master
     - git checkout master
     - bash -e ./tools/gitsync.sh pack mbfiles-master
-  cache:
-    key: deploy-master
-    paths: 
-      - mbfiles-master/
 
 pack-test:
   stage: pack
@@ -67,10 +51,6 @@ pack-test:
     - git fetch origin test
     - git checkout test
     - bash -e ./tools/gitsync.sh pack mbfiles-test
-  cache:
-    key: deploy-test
-    paths:
-      - mbfiles-test/
 
 deploy-master:
   stage: deploy
@@ -80,10 +60,6 @@ deploy-master:
     - deploy-*
   script:
     - bash -e ./tools/gitsync.sh deploy mbfiles-master ${CI_COMMIT_REF_NAME} ${CO_REF}/monlor/mbfiles.git
-  cache:
-    key: deploy-master
-    paths: 
-      - mbfiles-master/
 
 deploy-test:
   stage: deploy
@@ -93,10 +69,18 @@ deploy-test:
     - deploy-*
   script:
     - bash -e ./tools/gitsync.sh deploy mbfiles-test ${CI_COMMIT_REF_NAME} ${CO_REF}/monlor/mbfiles.git
-  cache:
-    key: deploy-test
-    paths:
-      - mbfiles-test/
 
+cache:
+  key: ${CI_COMMIT_REF_NAME}
+  untracked: true
+  paths: 
+    - mbfiles/
+
+cache:
+  key: deploy-all
+  untracked: true
+  paths: 
+    - mbfiles-master/
+    - mbfiles-test/
 
 
