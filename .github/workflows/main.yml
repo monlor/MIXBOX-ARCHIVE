@@ -3,12 +3,8 @@ name: Main-CI
 # on: [push, pull_request]
 on: 
   push:
-    branchs:  
-      - master
-      - test
-      - dev
     tags-ignore:
-      - 'deploy-*'
+      - deploy-*
   pull_request:
     branchs:  
       - master
