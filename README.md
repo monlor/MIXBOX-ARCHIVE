@@ -12,6 +12,10 @@
 
 ### 更新日志
 
+* 2020-03-06
+	* 更新frps到0.31.2
+	* 修复工具箱下载插件失败的问题
+
 * 2020-03-05-2
 	* 由于cdn缓存不刷新，还是滚回了`coding`源：`https://monlor.coding.net/p/mbfiles/d/mbfiles/git/raw/master`
 	* 新增`DLNA`插件`DMS`

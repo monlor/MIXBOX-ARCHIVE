@@ -1,4 +1,5 @@
 #!/bin/sh 
+#copyright by monlor
 source /etc/mixbox/bin/base
 eval `mbdb export ngrok`
 
