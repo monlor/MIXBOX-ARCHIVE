@@ -22,8 +22,8 @@ jobs:
       run: |
         git fetch origin ${BRANCH_NAME}
         git checkout ${BRANCH_NAME}
+        git clone -b ${BRANCH_NAME} ${CO_REF}
         bash ./tools/gitsync.sh pack 
-        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${GH_REF}
         bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${CO_REF}
 
   test-job:
@@ -38,7 +38,23 @@ jobs:
       run: |
         git fetch origin ${BRANCH_NAME}
         git checkout ${BRANCH_NAME}
+        git clone -b ${BRANCH_NAME} ${CO_REF}
         bash ./tools/gitsync.sh pack 
-        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${GH_REF}
+        bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${CO_REF}
+
+  dev-job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Pack And Deploy
+      env:
+        BRANCH_NAME: dev
+      run: |
+        git fetch origin ${BRANCH_NAME}
+        git checkout ${BRANCH_NAME}
+        git clone -b ${BRANCH_NAME} ${CO_REF}
+        bash ./tools/gitsync.sh pack 
         bash ./tools/gitsync.sh deploy mbfiles ${BRANCH_NAME} ${CO_REF}
 
