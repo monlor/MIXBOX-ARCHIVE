@@ -13,6 +13,7 @@ pack:branchs:
     - dev
   script:
     - bash -e ./tools/gitsync.sh pack
+  retry: 2
   cache:
     key: ${CI_COMMIT_REF_NAME}
     untracked: true
@@ -24,10 +25,22 @@ deploy:branchs:
   only:        
     - master
     - test
-    - dev
   script:
     - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git
     - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${CO_REF}/monlor/mbfiles.git
+    - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${GH_REF}/monlor/mbfiles.git
+  cache:
+    key: ${CI_COMMIT_REF_NAME}
+    untracked: true
+    paths: 
+      - mbfiles/
+
+deploy:dev:
+  stage: deploy
+  only:        
+    - dev
+  script:
+    - bash ./tools/gitsync.sh deploy mbfiles ${CI_COMMIT_REF_NAME} ${GL_REF}/monlor/mbfiles.git
   cache:
     key: ${CI_COMMIT_REF_NAME}
     untracked: true
@@ -44,6 +57,7 @@ pack:master:
     - git fetch origin master
     - git checkout master
     - bash -e ./tools/gitsync.sh pack
+  retry: 2
   # artifacts:
   #   paths:
   #   - mbfiles-msater/
@@ -63,6 +77,7 @@ pack:test:
     - git fetch origin test
     - git checkout test
     - bash -e ./tools/gitsync.sh pack
+  retry: 2
   # artifacts:
   #   paths:
   #   - mbfiles-test/

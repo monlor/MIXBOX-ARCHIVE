@@ -120,6 +120,11 @@ deploy() {
 	  git init
 	  git config --local user.email "monlor@qq.com"
 	  git config --local user.name "monlor"
+
+	fi
+	if [ ! -f ".gitattributes" ]; then
+		git lfs install
+	  git lfs track "*"
 	fi
 	if git status &> /dev/null; then
 	  git add .
