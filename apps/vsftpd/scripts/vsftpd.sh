@@ -11,7 +11,6 @@ userpath=/etc/mixbox/apps/vsftpd/config/vsftpd.users
 [ ! -d /var/run/vsftpd ] && mkdir -p /var/run/vsftpd
 [ -z "$port" ] && port=21
 [ -z "$anon_root" ] && anon_root=/var/ftp 
-[ ! -f "${configpath}" ] && touch ${configpath}
 
 add(){
 	sed -i "/$1/"d /etc/passwd
@@ -74,7 +73,7 @@ set_config() {
 		anon_enable=NO
 	fi
 	
-	mount --bind ${mbroot}/apps/${appname}/config/${appname}.conf ${configpath}
+	cp -rf ${mbroot}/apps/${appname}/config/${appname}.conf ${configpath}
 	echo -e "anonymous_enable=$anon_enable\nanon_root=$anon_root\nlisten_port=${port}" >> ${configpath}
 
 }
@@ -121,8 +120,9 @@ stop () {
 	do
 		[ ! -z "${line}" ] && del ${line}
 	done
-	rm -rf ${configpath}
 	killall -9 ${appname} &> /dev/null
+	rm -rf ${configpath}
+	
 	
 
 }
