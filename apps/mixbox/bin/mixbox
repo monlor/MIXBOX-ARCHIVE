@@ -336,8 +336,8 @@ select_app() {
 						[ "$update" == '1' ] && ${mbroot}/scripts/appmanage.sh upgrade ${appname} 
 					fi
 					# todo 配置方式修改
-					if [ -f ${mbroot}/apps/${appname}/config.sh ]; then
-						${mbroot}/apps/${appname}/config.sh
+					if [ -f ${mbroot}/apps/${appname}/scripts/config.sh ]; then
+						${mbroot}/apps/${appname}/scripts/config.sh
 						if [ $? -eq 0 ]; then
 							${mbroot}/apps/${appname}/scripts/${appname}.sh restart
 						else
