@@ -40,11 +40,7 @@ base_encode() {
 	if [ -z "${1}" ]; then
 		echo -n "" 
 	else
-		if base64-encode &> /dev/null; then
-			echo -n "$*" | base64-encode
-		else
-			echo -n "$*" | baseutil --b64
-		fi
+		echo -n "$*" | base64
 	fi
 }
 
@@ -52,26 +48,22 @@ base_decode() {
 	if [ -z "${1}" ]; then
 		echo -n "" 
 	else
-		if base64-decode &> /dev/null; then
-			echo -n "$*" | base64-decode
-		else
-			echo -n "$*" | baseutil --b64 -d
-		fi
+		echo -n "$*" | base64 -d
 	fi
 }
 
 # $1 > $2 => -1
 # $1 < $2 => 1
 # $1 = $2 => 0
-# versioncmp() {
+versioncmp() {
 
-# 	[ "$1" = "$2" ] && echo -n "0" && return
+	[ "$1" = "$2" ] && echo -n "0" && return
 
-# 	if test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; then
-# 		echo -n "-1"
-# 	else 
-# 		echo -n "1"
-# 	fi
+	if test "$(echo "$@" | tr " " "\n" | sort | head -n 1)" != "$1"; then
+		echo -n "-1"
+	else 
+		echo -n "1"
+	fi
 
-# }
+}
 
