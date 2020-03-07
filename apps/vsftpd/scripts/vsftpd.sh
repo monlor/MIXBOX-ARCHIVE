@@ -135,8 +135,7 @@ stop () {
 
 status() {
 
-	result=$(pssh | grep ${mbroot}/apps/${appname}/bin/${appname} | grep -v grep | wc -l)
-	if [ "$result" == '0' ]; then
+  if [ -n "$(pidof "${BINPATH}")" ]; then
 		status="未运行|0"
 	else
 		status="运行端口号: ${port}|1"
