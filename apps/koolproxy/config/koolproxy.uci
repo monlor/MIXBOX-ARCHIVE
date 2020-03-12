@@ -10,4 +10,4 @@ kp_rule_koolproxy="https://houzi-.coding.net/p/my_dream/d/my_dream/git/raw/maste
 kp_rule_daily="https://houzi-.coding.net/p/my_dream/d/my_dream/git/raw/master/daily.txt"
 kp_rule_dat="https://houzi-.coding.net/p/my_dream/d/my_dream/git/raw/master/kp.dat"
 kp_rule_user="https://raw.githubusercontent.com/kysdm/ad-rules/master/user-rules-koolproxy.txt"
-version="1.5.5"
+version="1.5.6"
