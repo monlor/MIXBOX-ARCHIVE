@@ -71,7 +71,7 @@ get_config() {
   "password": "$ss_password",
   "timeout": 600,
   "method": "$ss_method",
-  "plugin":"obfs-local",
+  "plugin":"${mbroot}/apps/${appname}/bin/obfs-local",
   "plugin_opts":"obfs=$ssr_protocol_param;obfs-host=$ssr_obfs_param"
 }
 EOF
@@ -153,7 +153,7 @@ EOF
   "password": "$ssg_password",
   "timeout": 600,
   "method": "$ssg_method",
-  "plugin":"obfs-local",
+  "plugin":"${mbroot}/apps/${appname}/bin/obfs-local",
   "plugin_opts":"obfs=$ssg_protocol_param;obfs-host=$ssg_obfs_param"
 }
 EOF
