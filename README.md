@@ -8,6 +8,8 @@
 * 我的博客：[Monlor's Blog](https://www.monlor.com)
 * GitHub地址：[monlor/MIXBOX](https://github.com/monlor/MIXBOX)
 
+**新版本请手动更换下载源：`https://monlor.coding.net/p/mbfiles/d/mbfiles/git/raw/master`**
+
 ***
 
 ### 更新日志
