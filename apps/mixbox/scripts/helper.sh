@@ -40,7 +40,7 @@ base_encode() {
 	if [ -z "${1}" ]; then
 		echo -n "" 
 	else
-		echo -n "$*" | base64
+		echo -n "$*" | base64 | tr -d '\n'
 	fi
 }
 
