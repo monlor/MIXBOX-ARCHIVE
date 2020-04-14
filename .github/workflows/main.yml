@@ -7,6 +7,9 @@ on:
       - master
       - test
       - dev
+    paths-ignore:
+      - '.github/**'
+      - 'README.md'
   # pull_request:
   #   branchs:  
   #     - master
