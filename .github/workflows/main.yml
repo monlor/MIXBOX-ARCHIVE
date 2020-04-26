@@ -23,6 +23,8 @@ jobs:
         CO_REF: ${{ secrets.CO_REF }}
         BRANCH_NAME: ${{ github.ref }}
     steps:
+    - name: Checkout
+      uses: actions/checkout@master
     - name: Deploy To Coding
       run: |
         git clone -b `basename ${BRANCH_NAME}` ${CO_REF}
@@ -35,6 +37,8 @@ jobs:
         GH_REF: ${{ secrets.GH_REF }}
         BRANCH_NAME: ${{ github.ref }}
     steps:
+    - name: Checkout
+      uses: actions/checkout@master
     - name: Deploy To GitHub
       run: |
         git clone -b `basename ${BRANCH_NAME}` ${GH_REF}
