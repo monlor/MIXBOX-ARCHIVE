@@ -34,6 +34,7 @@ add(){
 	echo -e "$2\n$2" | passwd $1 > /dev/null 2>&1
 
 }
+
 del(){
 	sed -i "/^$1/"d /etc/passwd
 	sed -i "/^$1/"d /etc/shadow
