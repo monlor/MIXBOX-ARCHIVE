@@ -1,6 +1,6 @@
 # MIXBOX 
 
-![](https://github.com/monlor/MIXBOX/workflows/Master-CI/badge.svg)
+![](https://github.com/monlor/MIXBOX/workflows/Main-CI/badge.svg)
 
 > MIXBOX是一款全新的，完全基于Shell脚本的工具箱，为在路由器上实现程序的快速配置及运行管理，欢迎大佬们stars、fork及pr.
 
@@ -17,6 +17,7 @@
 * 2020-04-26
 	* 优化工具箱离线使用
 	* `vsftpd`不能使用的用户可以尝试`entware`的方式启用
+	* 更新一些arm程序的二进制版本，感谢@DC提供的二进制程序
 
 * 2020-03-06
 	* 更新frps到0.31.2
