@@ -72,7 +72,7 @@ pack() {
 			version_new=`cat apps/$line/config/$line.uci | grep "version=" | cut -d'=' -f2 | sed -e 's/"//g'`
 			[ "$version_new" != "$version_old" ] && echo "打包$line..." || continue
 		fi
-		pack_app $line
+		pack_app $line 
 	done
 	gerneral_applist
 
