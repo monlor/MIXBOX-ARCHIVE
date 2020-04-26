@@ -17,19 +17,26 @@ on:
   #     - dev
 
 jobs:
-  publish:
+  coding-deploy:
     runs-on: ubuntu-latest
     env:
-        GH_REF: ${{ secrets.GH_REF }}
         CO_REF: ${{ secrets.CO_REF }}
         BRANCH_NAME: ${{ github.ref }}
     steps:
-    - name: Checkout
-      uses: actions/checkout@master
-
-    - name: Pack And Deploy
+    - name: Deploy To Coding
       run: |
         git clone -b `basename ${BRANCH_NAME}` ${CO_REF}
         bash ./tools/gitsync.sh pack 
         bash ./tools/gitsync.sh deploy_lfs mbfiles `basename ${BRANCH_NAME}` ${CO_REF}
+
+  github-deploy:
+    runs-on: ubuntu-latest
+    env:
+        GH_REF: ${{ secrets.GH_REF }}
+        BRANCH_NAME: ${{ github.ref }}
+    steps:
+    - name: Deploy To GitHub
+      run: |
+        git clone -b `basename ${BRANCH_NAME}` ${GH_REF}
+        bash ./tools/gitsync.sh pack 
         bash ./tools/gitsync.sh deploy mbfiles `basename ${BRANCH_NAME}` ${GH_REF}
