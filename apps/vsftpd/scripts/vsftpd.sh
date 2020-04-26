@@ -95,7 +95,7 @@ start () {
 	if [ ! -f ${mbroot}/apps/${appname}/bin/${appname} ]; then
 		bincheck ${binname} 
   	if [ $? -eq 0 ]; then
-  		logsh "【$service】" "安装程序成功，链接程序到工具箱..."
+  		logsh "【$service】" "安装程序成功！"
   	else
   		logsh "【$service】" "程序安装失败！"
   		end
@@ -105,7 +105,7 @@ start () {
 	set_config
 	
 	open_port
-   write_firewall_start
+  write_firewall_start
 	daemon $BINPATH
 	if [ $? -ne 0 ]; then
             logsh "【$service】" "启动${appname}服务失败！"
