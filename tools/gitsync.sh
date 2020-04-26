@@ -70,7 +70,7 @@ pack() {
 		if [ -f ${pack_dir}/applist.txt ]; then
 			version_old=`cat ${pack_dir}/applist.txt | grep "$line|" | cut -d'|' -f4`
 			version_new=`cat apps/$line/config/$line.uci | grep "version=" | cut -d'=' -f2 | sed -e 's/"//g'`
-			[ "$version_new" = "$version_old" ] && echo "$line未更新，跳过打包..." && continue
+			[ "$version_new" != "$version_old" ] && echo "打包$line..." || continue
 		fi
 		pack_app $line
 	done
@@ -114,7 +114,7 @@ reset() {
 # $1: path to push
 # $2: remote branch name
 # $3: remote url with token
-deploy() {
+deploy_lfs() {
 
 	sed -Ei "s#mbfiles/git/raw/[a-z]+#mbfiles/git/raw/$2#" $1/install.sh
 
@@ -138,6 +138,24 @@ deploy() {
   git push "$3"
 }
 
+deploy() {
+
+	sed -Ei "s#mbfiles/git/raw/[a-z]+#mbfiles/git/raw/$2#" $1/install.sh
+
+	cd $1
+	if [ ! -d ".git" ]; then
+	  git init
+	fi
+	git config --local user.email "monlor@qq.com"
+	git config --local user.name "monlor"
+
+	if git status &> /dev/null; then
+	  git add .
+	  git commit -m "$(TZ='Asia/Shanghai' date "+%Y-%m-%d %H:%M:%S")" -a
+	fi
+  git push "$3"
+}
+
 case $1 in 
 	github)
 		github master	
@@ -156,7 +174,12 @@ case $1 in
 	reset)
 		reset master
 		;;
+	deploy_lfs)
+		shift 1
+		deploy_lfs $@
+		;;
 	deploy)
 		shift 1
 		deploy $@
+		;;
 esac

@@ -13,14 +13,17 @@ eval `mbdb export shadowsocks`
 get_v2ray_bin() {
   result1=$(curl -skL $mburl/appsbin/v2ray-bin/$model/lastest.txt) &> /dev/null
   result2=$(${mbroot}/apps/${appname}/bin/v2ray -version | head -1 | cut -d' ' -f2) &> /dev/null
-  [ -z "$result1" ] && logsh "【$service】" "获取v2ray在线版本失败，请检查网络！" && exit 1
-  logsh "【$service】" "检测v2ray版本，本地版本：$result2，在线版本：$result1"
-  if [ "$result1" != "$result2" ]; then
-    logsh "【$service】" "版本不一致，正在更新..."
-    wgetsh ${mbroot}/apps/${appname}/bin/v2ray $mburl/appsbin/v2ray-bin/$model/v2ray
-    wgetsh ${mbroot}/apps/${appname}/bin/v2ctl $mburl/appsbin/v2ray-bin/$model/v2ctl
-    chmod +x ${mbroot}/apps/${appname}/bin/v2ray
-    chmod +x ${mbroot}/apps/${appname}/bin/v2ctl
+  if [ -z "$result1" ]; then 
+    logsh "【$service】" "获取v2ray在线版本失败，请检查网络！"
+  else
+    logsh "【$service】" "检测v2ray版本，本地版本：$result2，在线版本：$result1"
+    if [ "$result1" != "$result2" ]; then
+      logsh "【$service】" "版本不一致，正在更新..."
+      wgetsh ${mbroot}/apps/${appname}/bin/v2ray $mburl/appsbin/v2ray-bin/$model/v2ray
+      wgetsh ${mbroot}/apps/${appname}/bin/v2ctl $mburl/appsbin/v2ray-bin/$model/v2ctl
+      chmod +x ${mbroot}/apps/${appname}/bin/v2ray
+      chmod +x ${mbroot}/apps/${appname}/bin/v2ctl
+    fi
   fi
 }
 

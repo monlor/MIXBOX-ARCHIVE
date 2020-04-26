@@ -1,6 +1,5 @@
 #!/bin/sh
 #copyright by monlor
-[ -n "$(uci -q get monlor.tools 2> /dev/null)" ] && echo "工具箱版本过低，此更新程序已不再支持，请执行[$(uci -q get monlor.tools.path)/scripts/uninstall.sh]卸载工具箱后重新安装新的版本！" && exit 1
 source /etc/mixbox/bin/base
 
 logsh "【Tools】" "正在更新工具箱程序... "
@@ -27,15 +26,15 @@ cp -rf ${mbtmp}/mixbox/* ${mbroot}/
 
 logsh "【Tools】" "处理工具箱文件"
 # 处理工具箱二进制文件
-ln -sf  ${mbroot}/bin/base64-encode ${mbroot}/bin/base64-decode
+ln -sf ${mbroot}/bin/base64-encode ${mbroot}/bin/base64-decode
 
 logsh "【Tools】" "赋予可执行权限"
 chmod -R +x ${mbroot}/bin
 chmod -R +x ${mbroot}/scripts
 
-# 执行初始化脚本
-
-# ${mbroot}/scripts/init.sh
+# 清理工作
+logsh "【Tools】" "一点点清理工作..."
+rm -rf ${mbroot}/bin/base64*
 
 if [ -z "$(mbdb get mixbox.main.model)" ]; then
 	model=$(uname -ms | tr ' ' '_' | tr '[A-Z]' '[a-z]')

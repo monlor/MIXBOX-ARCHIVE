@@ -69,7 +69,8 @@ get_applist() {
 update_applist() {
 	
 	wgetsh ${mbtmp}/applist_tmp.txt $mburl/applist.txt
-	if [ $? -eq 0 ]; then
+	# 判断applist的内容，防止软件源异常
+	if [ $? -eq 0 ] && [ -n `cat ${mbtmp}/applist_tmp.txt | grep -E "^mixbox"` ]; then
 		rm -rf ${mbtmp}/applist.txt
 		cat ${mbtmp}/applist_tmp.txt | grep "${model}" | sort -u | while read line; do
 			local install_text=""
