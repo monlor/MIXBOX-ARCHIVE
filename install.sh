@@ -62,9 +62,6 @@ cp -rf ${mbtmp}/mixbox ${mbroot}
 chmod -R +x ${mbroot}/*
 [ "${mbroot}" != "/etc/mixbox" ] && ln -s ${mbroot} /etc/mixbox
 
-# 工具箱文件处理
-ln -sf /etc/mixbox/bin/base64-encode /etc/mixbox/bin/base64-decode
-
 ## for ubuntu
 if uname -v | grep "Ubuntu" &> /dev/null; then
 	logsh "【Tools】" "正在切换默认Shell为bash，请输入no！"
