@@ -8,7 +8,7 @@
 * 我的博客：[Monlor's Blog](https://www.monlor.com)
 * GitHub地址：[monlor/MIXBOX](https://github.com/monlor/MIXBOX)
 
-**新版本请手动更换下载源：`https://monlor.coding.net/p/mbfiles/d/mbfiles/git/raw/master`**
+**0.1.9.7以前的版本请手动更换下载源：`https://monlor.coding.net/p/mbfiles/d/mbfiles/git/raw/master`**
 
 ***
 
@@ -19,14 +19,17 @@
 	* `vsftpd`不能使用的用户可以尝试`entware`的方式启用
 	* 更新一些arm程序的二进制版本，感谢@DC提供的二进制程序
 
+
 * 2020-03-06
 	* 更新frps到0.31.2
 	* 修复工具箱下载插件失败的问题
+
 
 * 2020-03-05-2
 	* 由于cdn缓存不刷新，还是滚回了`coding`源：`https://monlor.coding.net/p/mbfiles/d/mbfiles/git/raw/master`
 	* 新增`DLNA`插件`DMS`
 	* `Qiandao`插件bug修复
+
 
 * 2020-03-05
 	* 由于`coding`限制仓库容量不能大于`2G`，尝试使用`github`的`cdn`源：`https://cdn.jsdelivr.net/gh/monlor/mbfiles`
@@ -35,6 +38,7 @@
 	* 修复`EasyExployer`启动bug，更新二进制程序版本
 	* 更新`BaiduPCS`二进制程序
 
+
 * 2020-03-04
 	* 为了减少项目体积，现在采用`Github Actions`自动部署插件安装包
 	* coding下载源地址改为`https://monlor.coding.net/p/mbfiles/d/mbfiles/git/raw/master`
@@ -42,20 +46,24 @@
 	* 这一版更新需要手动更新，请执行下方的**手动更新命令**，并手动更换下载源
 	* 不想更新的以前的版本同样会保留，只是不再会更新
 
+
 * 2020-03-03
 	* 更新工具箱coding下载源，**请手动更换coding下载源：`https://monlor.coding.net/p/MIXBOX/d/MIXBOX/git/raw/master`**
 	* 更新插件`Koolproxy`规则地址
 	* 更新`qiandao`插件，现在支持更多网站签到，**并且支持mips设置，如R3**
 
+
 * 2020-02-27
 	* 新增插件npc，待测试
 	* aria2版本更新
+
 
 * 2019-03-03
 	* 修复`v2ray`配置文件问题（未测试），感谢`@leafnsand`的PR
 	* 修复`Entware`插件无法启动`ONMP`的问题
 	* 插件`VerySync`和`BaiduPCS`的程序版本更新
 	* 现在修复小米路由器远程访问后会自动开放8098端口
+
 
 ### 介绍
 
@@ -70,6 +78,7 @@
 	* 工具箱现在不会特意去兼容某个型号，比如`R3`上的`Aria2`问题，只考虑`CPU`架构，`mips`/`arm`等，所以如果`R3`/`R1CM`发现程序不兼容的情况，可以选择自己替换程序，或同时安装`Monlor-Tools`工具箱
 	* 插件安装去掉了离线安装的功能，后续会加入进来，给用户提供一个自己修改打包插件的机会
 
+
 * ShadowSocks
 	* 订阅现在会多次尝试，如已安装`EntWare`中的`curl`程序会自动调用用作订阅
 	* 现已支持`v2ray`并测试黑白名单和全局模式，正常使用，v2ray订阅暂不支持
@@ -77,9 +86,11 @@
 	* 优化添加`ss`节点时的提示信息
 	* 增加`haveged`程序，用于生成随机数
 
+
 * KoolProxy
 	* 由于作者更新程序修改了视频模式的启用方式，更新了启动脚本
 	* `https`证书生成不再使用`openssl`程序，而使用`kp`自带程序生成
+
 
 * 新增插件
 	* AliDDNS：获取当前网络的ip，自动解析到阿里云
@@ -92,7 +103,9 @@
 	* Transmission：强大的`pt`下载工具，基于`EntWare`环境
 	* WebD：极其小巧的网盘工具，功能比较简单
 
+
 * 其他等等等小更新...
+
 
 ### 注意事项
 
@@ -113,10 +126,10 @@ sh -c "$(curl -kfsSl https://monlor.coding.net/p/mbfiles/d/mbfiles/git/raw/maste
 sh -c "$(curl -kfsSl https://raw.githubusercontent.com/monlor/MIXBOX/master/apps/mixbox/scripts/update.sh)" && source /etc/profile &> /dev/null
 ```
 
-#### 卸载`Monlor Tools`工具箱
+### 手动卸载命令
 
 ``` shell
-sh -c "$(curl -kfsSl https://monlor.coding.net/p/mbfiles/d/mbfiles/git/raw/master/temp/uninstall_old.sh)" && source /etc/profile &> /dev/null
+sh -c "$(curl -kfsSl https://raw.githubusercontent.com/monlor/MIXBOX/master/apps/mixbox/scripts/uninstall.sh)" && source /etc/profile &> /dev/null
 ```
 
 #### 一键更新所有插件（请先更新工具箱）
@@ -133,20 +146,21 @@ mixbox help
 
 ### 小米路由器目录结构  
 
-	/
-	|--- /etc/mixbox
-	|    |--- /apps/        --- 插件安装目录
-	|    |--- /config/      --- 工具箱配置文件目录
-	|    |--- /scripts/     --- 工具箱脚本目录
-	|    |--- /mbdb/        --- 工具箱数据文件目录
-	|	 |--- /var/		--- 工具箱运行pid及日志存放目录
-	|--- /tmp
-	|    |--- /messages     --- 系统日志，工具箱日志
-	|--- /userdisk
-	|    |--- /data/        --- 硬盘目录
-	|--- /extdisks/
-	|    |--- /sd*/         --- 外接盘目录
-
+```
+/
+|--- /etc/mixbox
+|    |--- /apps/        --- 插件安装目录
+|    |--- /config/      --- 工具箱配置文件目录
+|    |--- /scripts/     --- 工具箱脚本目录
+|    |--- /mbdb/        --- 工具箱数据文件目录
+|  |--- /var/   --- 工具箱运行pid及日志存放目录
+|--- /tmp
+|    |--- /messages     --- 系统日志，工具箱日志
+|--- /userdisk
+|    |--- /data/        --- 硬盘目录
+|--- /extdisks/
+|    |--- /sd*/         --- 外接盘目录
+```
 
 ### 插件列表
 
@@ -199,8 +213,6 @@ mixbox help
 * 插件名必须为小写，插件服务名一般为驼峰的写法
 * 插件二进制名称建议与插件名对应，二进制名不能出现下划线，建议用横杠，如obfs-local
 * 执行完插件生成脚本后，插件会生成在apps中，注意名称不能与现有插件重复
-* `gitsync.sh`是打包插件的脚本，-v为更新版本号`可无`，打包的插件生成在appstore下
-	
 
 #### 请喝咖啡
 
