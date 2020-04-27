@@ -128,8 +128,6 @@ stop () {
 	done
 	killall -9 ${appname} &> /dev/null
 	rm -rf ${configpath}
-	
-	
 
 }
 
