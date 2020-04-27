@@ -137,9 +137,9 @@ stop () {
 status() {
 
   if [ -n "$(pidof "${BINPATH}")" ]; then
-		status="未运行|0"
+  	status="运行端口号: ${port}|1"
 	else
-		status="运行端口号: ${port}|1"
+		status="未运行|0"
 	fi
 	mbdb set $appname.main.status="$status" 
 
