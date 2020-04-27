@@ -40,7 +40,9 @@ set_config() {
     fi
 
     # 自动更新bt-tracker
-    list=`wgetlist https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt|awk NF|sed ":a;N;s/\n/,/g;ta"`
+    list1="$(wgetlist https://cdn.jsdelivr.net/gh/ngosang/trackerslist/trackers_all.txt)"
+    list2="$(wgetlist https://trackerslist.com/all.txt)"
+    list="$(echo -e "${list1}\n${list2}" | sort -u | awk NF | sed ":a;N;s/\n/,/g;ta")"
     if [ ! -z "${list}" ]; then
         sed -i "s#.*bt-tracker.*#bt-tracker=${list}#" ${mbroot}/apps/${appname}/config/${appname}.conf
         logsh "【$service】" "更新bt-tracker"
