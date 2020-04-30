@@ -79,10 +79,6 @@ pack() {
 	test ! -d ${pack_dir}/appstore && mkdir -p ${pack_dir}/appstore
 	test ! -d ${pack_dir}/temp && mkdir -p ${pack_dir}/temp
 	test ! -d ${pack_dir}/appsbin && mkdir -p ${pack_dir}/appsbin
-	
-	rm -rf ${pack_dir}/appsbin/*
-	rm -rf ${pack_dir}/temp/*
-	rm -rf ${pack_dir}/appstore/*
 
 	cp -rf appsbin/* ${pack_dir}/appsbin/
   cp -rf temp/* ${pack_dir}/temp/
