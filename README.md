@@ -14,6 +14,10 @@
 
 ### 更新日志
 
+* 2020-05-04
+	* 更新`v2ray`配置文件，inbound 和 inboundDetour 中增加 sniffing 配置
+
+
 * 2020-04-26
 	* 优化工具箱离线使用
 	* `vsftpd`不能使用的用户可以尝试`entware`的方式启用
