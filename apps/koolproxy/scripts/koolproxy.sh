@@ -260,7 +260,7 @@ stop () {
     cru d "${appname}"
     cru d "${appname}"_rule
     logsh "【$service】" "关闭${appname}主进程..."
-    ps  | grep ${mbroot}/apps/${appname}/bin/${appname} | grep -v grep | grep -v {koolproxy} | grep -v restart | awk '{print $1}' | xargs kill -9 > /dev/null 2>&1
+    killall "${appname}" &> /dev/null
 	
 }
 
