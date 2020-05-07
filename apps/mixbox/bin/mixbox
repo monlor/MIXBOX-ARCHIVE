@@ -171,20 +171,20 @@ modify_source() {
 	case "$mburl" in
 		"$mburl_coding") url_text="coding下载源" ;;
 		"$mburl_github") url_text="github下载源" ;;
-		# "$mburl_test") url_text="coding测试源" ;;
+		"$mburl_gitee") url_text="gitee下载源" ;;
 		*) url_text="$mburl" ;;
 	esac
 	echo "下载源【$url_text】使用中"
 	echo "0. 不修改"
 	echo "1. coding下载源"
 	echo "2. github下载源"
-	# echo "3. coding测试源(不推荐)"
+	echo "3. gitee下载源(推荐)"
 	read -p "请选择或输入下载源：" res
 	case "$res" in
 		0) return ;;
 		1) mburl_tmp="$mburl_coding" ;;
 		2) mburl_tmp="$mburl_github" ;;
-		# 3) mburl_tmp="$mburl_test" ;;
+		3) mburl_tmp="$mburl_gitee" ;;
 		*) [ -n "$res" ] && mburl_tmp="$res" ;;
 	esac
 	if [ -n "$mburl_tmp" ]; then

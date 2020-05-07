@@ -4,8 +4,8 @@ export PATH=$PATH:/etc/mixbox/bin
 
 mburl_coding="https://monlor.coding.net/p/mbfiles/d/mbfiles/git/raw/master"
 mburl_github="https://raw.githubusercontent.com/monlor/mbfiles/master"
-# mburl_test="https://monlor.coding.net/p/mbfiles/d/mbfiles/git/raw/test"
-mburl=$(mbdb get mixbox.main.url) || mburl="$mburl_coding"
+mburl_gitee="https://gitee.com/monlor/mbfiles/raw/master"
+mburl=$(mbdb get mixbox.main.url) || mburl="$mburl_gitee"
 mbroot=$(mbdb get mixbox.main.path)
 mbdisk=$(mbdb get mixbox.main.mbdisk)
 mbbackup="/etc/mbbackup"

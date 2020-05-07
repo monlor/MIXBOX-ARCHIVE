@@ -19,28 +19,36 @@ on:
 jobs:
   coding-deploy:
     runs-on: ubuntu-latest
-    env:
-        CO_REF: ${{ secrets.CO_REF }}
-        BRANCH_NAME: ${{ github.ref }}
     steps:
     - name: Checkout
       uses: actions/checkout@master
     - name: Deploy To Coding
+      env:
+        CO_REF: ${{ secrets.CO_REF }}
+        BRANCH_NAME: ${{ github.ref }}
       run: |
         git clone -b `basename ${BRANCH_NAME}` ${CO_REF}
-        bash ./tools/gitsync.sh pack 
-        bash ./tools/gitsync.sh deploy_lfs mbfiles `basename ${BRANCH_NAME}` ${CO_REF}
+        ./tools/gitsync.sh pack 
+        ./tools/gitsync.sh deploy_lfs mbfiles `basename ${BRANCH_NAME}` ${CO_REF}
 
   github-deploy:
     runs-on: ubuntu-latest
-    env:
-        GH_REF: ${{ secrets.GH_REF }}
-        BRANCH_NAME: ${{ github.ref }}
     steps:
     - name: Checkout
       uses: actions/checkout@master
     - name: Deploy To GitHub
+      env:
+        GH_REF: ${{ secrets.GH_REF }}
+        BRANCH_NAME: ${{ github.ref }}
       run: |
         git clone -b `basename ${BRANCH_NAME}` ${GH_REF}
-        bash ./tools/gitsync.sh pack 
-        bash ./tools/gitsync.sh deploy mbfiles `basename ${BRANCH_NAME}` ${GH_REF}
+        ./tools/gitsync.sh pack 
+        ./tools/gitsync.sh deploy mbfiles `basename ${BRANCH_NAME}` ${GH_REF}
+    - name: Sync To Gitee
+      uses: wearerequired/git-mirror-action@v1
+      env:
+          SSH_PRIVATE_KEY: ${{ secrets.GE_TOKEN }}
+      with:
+          source-repo: 'git@github.com:monlor/mbfiles.git'
+          destination-repo: 'git@gitee.com:monlor/mbfiles.git'
+
