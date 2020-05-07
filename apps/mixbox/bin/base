@@ -2,7 +2,7 @@
 #copyright by monlor
 export PATH=$PATH:/etc/mixbox/bin
 
-mburl_coding="https://monlor.coding.net/p/mbfiles/d/mbfiles/git/raw/master"
+mburl_coding="https://monlor.coding.net/p/mbfiles/d/mbfiles/git/lfs/master"
 mburl_github="https://raw.githubusercontent.com/monlor/mbfiles/master"
 mburl_gitee="https://gitee.com/monlor/mbfiles/raw/master"
 mburl=$(mbdb get mixbox.main.url) || mburl="$mburl_gitee"

@@ -16,6 +16,8 @@
 
 * 2020-05-07
 	* 更换gitee为默认源 
+	* coding更换lfs储存方式的文件地址，导致工具箱下载源失效
+	* **注意安装命令已更换**
 
 
 * 2020-05-04
@@ -125,7 +127,7 @@
 #### 一键安装
 
 ``` shell
-sh -c "$(curl -kfsSl https://monlor.coding.net/p/mbfiles/d/mbfiles/git/raw/master/install.sh)" && source /etc/profile &> /dev/null
+sh -c "$(curl -kfsSl https://monlor.coding.net/p/mbfiles/d/mbfiles/git/lfs/master/install.sh)" && source /etc/profile &> /dev/null
 ```
 
 #### github源一键安装命令
