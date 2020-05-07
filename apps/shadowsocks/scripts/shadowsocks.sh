@@ -587,7 +587,7 @@ start_main_process() {
     killall -9 v2ray &> /dev/null
     cd ${mbroot}/bin
     result=$(${mbroot}/apps/${appname}/bin/v2ray -test -config="${mbroot}/apps/${appname}/config/v2ray.json" | grep "Configuration OK.")
-    [ -z "$result" ] && logsh "【$service】" "配置文件测试失败！" && exit 1
+    [ -z "$result" ] && logsh "【$service】" "配置文件测试失败！" 
     logsh "【$service】" "启动v2ray主进程($id)..."
     [ -z "$ss_mode" ] && logsh "【$service】" "未配置${appname}运行模式！" && exit 1
     daemon ${mbroot}/apps/${appname}/bin/v2ray -config="${mbroot}/apps/${appname}/config/v2ray.json"

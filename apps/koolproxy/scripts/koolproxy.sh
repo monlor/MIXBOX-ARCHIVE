@@ -2,6 +2,8 @@
 source /etc/mixbox/bin/base
 eval `mbdb export koolproxy`
 
+koolproxy_acl_default_mode=${koolproxy_acl_default_mode:-1}
+
 # 1|koolproxy.txt|https://kprule.com/koolproxy.txt|静态规则
 # 1|daily.txt|https://kprule.com/daily.txt|每日规则
 # 1|kp.dat|https://kprule.com/kp.dat|视频规则
@@ -165,7 +167,6 @@ lan_acess_control () {
         logsh "【$service】" "加载ACL规则:【$proxy_name】模式为:$(get_mode_name $proxy_mode)"
         iptables -t nat -A KOOLPROXY $(factor $mac "-m mac --mac-source") -p tcp $(get_jump_mode $proxy_mode) $(get_action_chain $proxy_mode)
     done
-    koolproxy_acl_default_mode=$(mbdb get ${appname}.main.koolproxy_acl_default_mode) || koolproxy_acl_default_mode=1
     logsh "【$service】" "加载ACL规则:其余主机模式为:$(get_mode_name $koolproxy_acl_default_mode)"
 }
 
