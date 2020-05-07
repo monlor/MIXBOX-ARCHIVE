@@ -70,7 +70,7 @@ pack() {
 		if [ -f ${pack_dir}/applist.txt ]; then
 			version_old=`cat ${pack_dir}/applist.txt | grep "$line|" | cut -d'|' -f4`
 			version_new=`cat apps/$line/config/$line.uci | grep "version=" | cut -d'=' -f2 | sed -e 's/"//g'`
-			if [ "$version_new" != "$version_old" ] || [ ! -f ${pack_dir}/appstore/${line}* ]; then
+			if [ "$version_new" != "$version_old" ] || [ -z `ls ${pack_dir}/appstore/${line}*` ]; then
 				echo "打包$line..." 
 			else
 				continue
