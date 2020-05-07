@@ -8,7 +8,7 @@
 * 我的博客：[Monlor's Blog](https://www.monlor.com)
 * GitHub地址：[monlor/MIXBOX](https://github.com/monlor/MIXBOX)
 
-**0.1.9.7以前的版本请手动更换下载源：`https://monlor.coding.net/p/mbfiles/d/mbfiles/git/raw/master`**
+**0.1.9.7以前的版本请手动更换下载源：`https://monlor.coding.net/p/mbfiles/d/mbfiles/git/lfs/master`**
 
 ***
 
@@ -18,6 +18,7 @@
 	* 更换gitee为默认源 
 	* coding更换lfs储存方式的文件地址，导致工具箱下载源失效
 	* **注意安装命令已更换**
+	* 回滚v2ray的sniff配置
 
 
 * 2020-05-04

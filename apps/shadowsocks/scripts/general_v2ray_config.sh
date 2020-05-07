@@ -183,10 +183,6 @@ cat >> "$v2ray_config" <<-EOF
 			"ip": "127.0.0.1",
 			"clients": null
 		},
-		"sniffing": {
-			"enabled": true,
-			"destOverride": ["http","tls"]
-		},
 		"streamSettings": null
 	},
 EOF
@@ -200,10 +196,6 @@ cat >> "$v2ray_config" <<-EOF
 				"settings": {
 					"network": "tcp,udp",
 					"followRedirect": true
-				},
-				"sniffing": {
-					"enabled": true,
-					"destOverride": ["http","tls"]
 				}
 			}
 		],
