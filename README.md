@@ -14,6 +14,10 @@
 
 ### 更新日志
 
+* 2020-05-07
+	* 更换gitee为默认源 
+
+
 * 2020-05-04
 	* 更新`v2ray`配置文件，inbound 和 inboundDetour 中增加 sniffing 配置
 
@@ -122,6 +126,12 @@
 
 ``` shell
 sh -c "$(curl -kfsSl https://monlor.coding.net/p/mbfiles/d/mbfiles/git/raw/master/install.sh)" && source /etc/profile &> /dev/null
+```
+
+#### github源一键安装命令
+
+``` shell
+sh -c "$(curl -kfsSl https://raw.githubusercontent.com/monlor/mbfiles/master/install_github.sh)" && source /etc/profile &> /dev/null
 ```
 
 ### 手动更新命令
