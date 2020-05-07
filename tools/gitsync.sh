@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash 
 path=./
 cd $path
 [ $? -ne 0 ] && echo "Change directory failed!" && exit
@@ -64,7 +64,7 @@ pack() {
 	rm -rf appstore/
 
 	echo "开始打包插件..."
- 	mkdir appstore
+ 	mkdir -p appstore
 	ls apps/ | while read line; do
 		# 取用缓存数据
 		if [ -f ${pack_dir}/applist.txt ]; then
