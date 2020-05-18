@@ -10,6 +10,7 @@ on:
     paths-ignore:
       - '.github/**'
       - 'README.md'
+      - 'changelog.md'
   # pull_request:
   #   branchs:  
   #     - master
