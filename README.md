@@ -81,7 +81,7 @@ sh -c "$(curl -kfsSl https://raw.githubusercontent.com/monlor/mbfiles/master/ins
 ### 手动更新命令
 
 ``` shell
-sh -c "$(curl -kfsSl https://raw.githubusercontent.com/monlor/MIXBOX/master/apps/mixbox/scripts/update.sh)" && source /etc/profile &> /dev/null
+sh -c "$(curl -kfsSl https://monlor.coding.net/p/mbfiles/d/mbfiles/git/lfs/master/update.sh)" && source /etc/profile &> /dev/null
 ```
 
 ### 手动卸载命令

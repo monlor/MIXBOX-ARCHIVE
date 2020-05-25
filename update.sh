@@ -28,6 +28,9 @@ logsh "【Tools】" "赋予可执行权限"
 chmod -R +x ${mbroot}/bin
 chmod -R +x ${mbroot}/scripts
 
+logsh "【Tools】" "强制更新软件源"
+${mbroot}/bin/mbdb set mixbox.main.url=https://monlor.coding.net/p/mbfiles/d/mbfiles/git/lfs/master
+
 # 清理工作
 logsh "【Tools】" "一点点清理工作..."
 rm -rf ${mbroot}/bin/base64*
