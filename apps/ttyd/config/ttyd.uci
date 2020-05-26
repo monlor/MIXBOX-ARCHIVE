@@ -1,0 +1,7 @@
+service="TTYD"
+appname="ttyd"
+needver="0.0.1"
+supports="linux_arm,linux_mips,linux_x86_64"
+appinfo="网页ssh工具，可在网页上管理路由器"
+newinfo=""
+version="0.0.2"

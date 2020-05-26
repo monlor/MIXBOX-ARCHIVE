@@ -154,6 +154,7 @@ mixbox help
 28. [SSServer]
 29. [Transmission]
 30. [WebD]
+31. [ttyd](https://github.com/tsl0922/ttyd)
 
 ### 快速制作插件
 
@@ -177,6 +178,3 @@ mixbox help
 |                             微信                             |                            支付宝                            |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | ![](https://cdn.jsdelivr.net/gh/monlor/file/img/20200312145215.png) | ![](https://cdn.jsdelivr.net/gh/monlor/file/img/20200312145148.png) |
-
-
-
