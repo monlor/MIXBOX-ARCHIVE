@@ -194,7 +194,7 @@ remove_firewall_start(){
 
 daemon() {
 	local binname="$(basename "${1}")"
-	nohup $@ &> ${mbroot}/var/log/${binname}.log &
+	$@ &> ${mbroot}/var/log/${binname}.log &
 	return $?
 }
 
