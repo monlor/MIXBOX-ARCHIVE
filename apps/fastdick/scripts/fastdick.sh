@@ -30,7 +30,7 @@ start () {
     logsh "【$service】" "正在启动${appname}服务... "
     # open_port
     # write_firewall_start
-    nohup ${mbroot}/apps/${appname}/bin/${appname} &> ${mbroot}/var/log/${appname}.log & 
+    ${mbroot}/apps/${appname}/bin/${appname} &> ${mbroot}/var/log/${appname}.log & 
     logsh "【$service】" "启动${appname}服务完成！"
     
 
