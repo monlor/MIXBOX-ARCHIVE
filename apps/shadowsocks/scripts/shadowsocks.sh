@@ -325,6 +325,7 @@ ipset_rules_smartdns() {
     cp -rf ${mbroot}/apps/${appname}/config/gfwlist.conf ${mbtmp}/gfwlist.conf
     sed -i 's/7913/15353/g' ${mbtmp}/gfwlist.conf
     sed -i '/^server/d' ${mbtmp}/gfwlist.conf
+    mkdir -p ${mbtmp}
     ln -s ${mbtmp}/gfwlist.conf /tmp/etc/dnsmasq.d/gfwlist_ipset.conf
   fi
   # 使规则生效
