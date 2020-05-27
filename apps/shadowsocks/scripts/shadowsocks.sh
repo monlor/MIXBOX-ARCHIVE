@@ -401,7 +401,7 @@ ipset_rules() {
     echo "ipset=/.microsoft.com/customize_white" >> ${mbtmp}/wblist.conf
   fi
   #黑白名单规则
-  mkdir /tmp/etc/dnsmasq.d/
+  test ! -d /tmp/etc/dnsmasq.d && mkdir -p /tmp/etc/dnsmasq.d
   if [ "$ss_mode" = "whitelist" -o "$ssg_mode" = "frgame" -o "$ss_mode" = "homemode" ]; then
     sed -e "s/^/-A nogfwnet &/g" -e "1 i\-N nogfwnet hash:net" ${mbroot}/apps/${appname}/config/chnroute.txt | ipset -R -! 
   elif [ "$ss_mode" = "gfwlist" -o "$ssg_mode" = "cngame" ]; then
