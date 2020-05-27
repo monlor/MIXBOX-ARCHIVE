@@ -194,7 +194,11 @@ remove_firewall_start(){
 
 daemon() {
 	local binname="$(basename "${1}")"
-	$@ &> ${mbroot}/var/log/${binname}.log &
+	if type nohup >/dev/null 2>&1; then 
+		nohup $@ &> ${mbroot}/var/log/${binname}.log &
+	else 
+		$@ &> ${mbroot}/var/log/${binname}.log &
+	fi
 	return $?
 }
 
