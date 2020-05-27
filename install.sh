@@ -21,6 +21,7 @@ mburl="https://monlor.coding.net/p/mbfiles/d/mbfiles/git/lfs/master"
 mbtmp="/tmp/mbtmp"
 [ ! -d "${mbtmp}" ] && mkdir -p ${mbtmp}
 model=$(uname -ms | tr ' ' '_' | tr '[A-Z]' '[a-z]')
+[ -n "$(echo $model | grep -E "linux.*aarch64.*")" ] && model="linux_aarch64"
 [ -n "$(echo $model | grep -E "linux.*arm.*")" ] && model="linux_arm"
 [ -n "$(echo $model | grep -E "linux.*mips.*")" ] && model="linux_mips"
 [ -n "$(echo $model | grep -E "linux.*x86_64.*")" ] && model="linux_x86_64"

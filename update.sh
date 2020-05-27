@@ -37,6 +37,7 @@ rm -rf ${mbroot}/bin/base64*
 
 if [ -z "$(mbdb get mixbox.main.model)" ]; then
 	model=$(uname -ms | tr ' ' '_' | tr '[A-Z]' '[a-z]')
+	[ -n "$(echo $model | grep -E "linux.*aarch64.*")" ] && model="linux_aarch64"
 	[ -n "$(echo $model | grep -E "linux.*arm.*")" ] && model="linux_arm"
 	[ -n "$(echo $model | grep -E "linux.*mips.*")" ] && model="linux_mips"
 	mbdb set mixbox.main.model="$model"
