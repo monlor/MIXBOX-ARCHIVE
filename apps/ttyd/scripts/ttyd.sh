@@ -1,8 +1,8 @@
 #!/bin/sh
 source /etc/mixbox/bin/base
-eval `mbdb export webshell`
+eval `mbdb export ttyd`
 
-port=${port:-6000}
+port=${port:-7681}
 
 start () {
 
@@ -31,14 +31,13 @@ stop () {
 
 
 status() {
-
-	if [ -n "$(pidof ${mbroot}/apps/${appname}/bin/${appname})" ]; then
-		status="未运行|0"
-	else
+	if pgrep -x "${mbroot}/apps/${appname}/bin/${appname}" >/dev/null; then
 		status="运行端口号: ${port}|1"
+	else
+		status="未运行|0"
 	fi
-	mbdb set $appname.main.status="$status" 
 
+	mbdb set $appname.main.status="$status" 
 }
 
 case "$1" in
@@ -48,5 +47,3 @@ case "$1" in
 	reload) close_port && open_port ;;
 	status) status ;;
 esac
-
-
