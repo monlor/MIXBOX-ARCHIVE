@@ -28,14 +28,9 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@master
-    - name: Cache 
-      uses: actions/cache@v2
-      with:
-        path: mbfiles
-        key: ${{ github.run_id }}
     - name: Deploy To Coding
       run: |
-        test ! -d mbfiles && git clone -b `basename ${BRANCH_NAME}` ${CO_REF}
+        test ! -d mbfiles && git clone -b `basename ${BRANCH_NAME}` ${CO_REF} 
         ./tools/gitsync.sh pack 
         ./tools/gitsync.sh deploy_lfs mbfiles `basename ${BRANCH_NAME}` ${CO_REF}
 
@@ -44,11 +39,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@master
-    - name: Cache 
-      uses: actions/cache@v2
-      with:
-        path: mbfiles
-        key: ${{ github.run_id }}
     - name: Deploy To GitHub
       run: |
         test ! -d mbfiles && git clone -b `basename ${BRANCH_NAME}` ${GH_REF}
