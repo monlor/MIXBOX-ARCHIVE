@@ -8,7 +8,7 @@ on:
       - test
       - dev
     paths-ignore:
-      - '.github/**'
+      # - '.github/**'
       - 'README.md'
       - 'changelog.md'
   # pull_request:
