@@ -32,7 +32,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: mbfiles
-        key: ${BRANCH_NAME}-coding
+        key: ${BRANCH_NAME}-${{ hashFiles('**/lockfiles') }}
     - name: Deploy To Coding
       run: |
         test ! -d mbfiles && git clone -b `basename ${BRANCH_NAME}` ${CO_REF}
@@ -48,7 +48,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: mbfiles
-        key: ${BRANCH_NAME}-github
+        key: ${BRANCH_NAME}-${{ hashFiles('**/lockfiles') }}
     - name: Deploy To GitHub
       run: |
         test ! -d mbfiles && git clone -b `basename ${BRANCH_NAME}` ${GH_REF}
