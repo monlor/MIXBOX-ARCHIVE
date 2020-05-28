@@ -17,18 +17,25 @@ on:
   #     - test
   #     - dev
 
+env:
+  BRANCH_NAME: ${{ github.ref }}
+  CO_REF: ${{ secrets.CO_REF }}
+  GH_REF: ${{ secrets.GH_REF }}
+
 jobs:
   coding-deploy:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@master
+    - name: Cache 
+      uses: actions/cache@v2
+      with:
+        path: mbfiles
+        key: ${BRANCH_NAME}-coding
     - name: Deploy To Coding
-      env:
-        CO_REF: ${{ secrets.CO_REF }}
-        BRANCH_NAME: ${{ github.ref }}
       run: |
-        git clone -b `basename ${BRANCH_NAME}` ${CO_REF}
+        test ! -d mbfiles && git clone -b `basename ${BRANCH_NAME}` ${CO_REF}
         ./tools/gitsync.sh pack 
         ./tools/gitsync.sh deploy_lfs mbfiles `basename ${BRANCH_NAME}` ${CO_REF}
 
@@ -37,14 +44,21 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@master
+    - name: Cache 
+      uses: actions/cache@v2
+      with:
+        path: mbfiles
+        key: ${BRANCH_NAME}-github
     - name: Deploy To GitHub
-      env:
-        GH_REF: ${{ secrets.GH_REF }}
-        BRANCH_NAME: ${{ github.ref }}
       run: |
-        git clone -b `basename ${BRANCH_NAME}` ${GH_REF}
+        test ! -d mbfiles && git clone -b `basename ${BRANCH_NAME}` ${GH_REF}
         ./tools/gitsync.sh pack 
         ./tools/gitsync.sh deploy mbfiles `basename ${BRANCH_NAME}` ${GH_REF}
+
+  gitee-deploy:
+    runs-on: ubuntu-latest
+    needs: github-deploy
+    steps:
     - name: Sync To Gitee
       uses: wearerequired/git-mirror-action@v1
       env:
