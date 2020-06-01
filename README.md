@@ -4,7 +4,7 @@
 
 > MIXBOX是一款全新的，完全基于Shell脚本的工具箱，为在路由器上实现程序的快速配置及运行管理，欢迎大佬们stars、fork及pr.
 
-* Telegram群：[MIXBOX CHAT](https://t.me/joinchat/FMraA0lwzH9fzEW1wXdCFA)
+* Telegram群：[MIXBOX CHAT](https://t.me/mixboxchat)
 * 我的博客：[Monlor's Blog](https://www.monlor.com)，[备用地址](https://monlor.github.io)
 * GitHub地址：[monlor/MIXBOX](https://github.com/monlor/MIXBOX)
 
