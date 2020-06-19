@@ -7,12 +7,8 @@ eval `mbdb export dropbear`
 get_config() {
 
     logsh "【$service】" "检查${appname}配置文件中..."
-    [ ! -f ${mbroot}/apps/${appname}/config/dropbear_rsa_host_key -a ! -f /etc/dropbear/dropbear_rsa_host_key ] && logsh "【$service】" "缺失证书文件无法启动！" && exit 1
-    [ ! -f  ${mbroot}/apps/${appname}/config/dropbear_dss_host_key -a ! -f /etc/dropbear/dropbear_dss_host_key ] && logsh "【$service】" "缺失证书文件无法启动！" && exit 1
-    [ ! -f ${mbroot}/apps/${appname}/bin/${appname} ] && cp -rf /usr/sbin/dropbear ${mbroot}/apps/${appname}/bin/${appname}
-    # [ ! -f ${mbroot}/apps/${appname}/bin/dropbearkey ] && cp -rf /usr/bin/dropbearkey ${mbroot}/apps/${appname}/bin/dropbearkey
-    [ ! -f ${mbroot}/apps/${appname}/config/dropbear_rsa_host_key ] && cp -rf /etc/dropbear/dropbear_rsa_host_key ${mbroot}/apps/${appname}/config/dropbear_rsa_host_key
-    [ ! -f ${mbroot}/apps/${appname}/config/dropbear_dss_host_key ] && cp -rf /etc/dropbear/dropbear_dss_host_key ${mbroot}/apps/${appname}/config/dropbear_dss_host_key
+    [ ! -f ${mbroot}/apps/${appname}/bin/${appname} ] && cp -rf /usr/sbin/dropbear ${mbroot}/apps/${appname}/bin/${appname} && logsh "【$service】" "移植主程序文件成功！"
+    [ ! -f ${mbroot}/apps/${appname}/config/dropbear_rsa_host_key ] && cp -rf /etc/dropbear/dropbear_rsa_host_key ${mbroot}/apps/${appname}/config/dropbear_rsa_host_key && logsh "【$service】" "移植证书成功！"
 
 }
 

@@ -22,11 +22,11 @@ ss_mux_concurrency=`cutsh "$idinfo" 15`
 
 rm -rf "$v2ray_config"
 logsh "【$service】" "生成V2Ray配置文件..."
-local kcp="null"
-local tcp="null"
-local ws="null"
-local h2="null"
-local tls="null"
+kcp="null"
+tcp="null"
+ws="null"
+h2="null"
+tls="null"
 
 if [ "$ss_network" != "ws" ]; then
 	IFIP=`echo $ss_server | grep -E "([0-9]{1,3}[\.]){3}[0-9]{1,3}|:"`
@@ -61,19 +61,19 @@ get_path(){
 }
 
 # tcp和kcp下tlsSettings为null，ws和h2下tlsSettings
-[ -z "$ss_mux_enable" ] && local ss_mux_enable=true
-[ -z "$ss_mux_concurrency" ] && local ss_mux_concurrency=8
+[ -z "$ss_mux_enable" ] && ss_mux_enable=true
+[ -z "$ss_mux_concurrency" ] && ss_mux_concurrency=8
 [ "$ss_network_security" == "none" ] && ss_network_security=""
 #if [ "$ss_network" == "ws" -o "$ss_network" == "h2" ];then
 case "$ss_network_security" in
 	tls)
-		local tls="{
+		tls="{
 		\"allowInsecure\": true,
 		\"serverName\": null
 		}"
 	;;
 	*)
-		local tls="null"
+		tls="null"
 	;;
 esac
 #fi
@@ -85,7 +85,7 @@ fi
 case "$ss_network" in
 	tcp)
 		if [ "$ss_headtype_tcp" == "http" ];then
-			local tcp="{
+			tcp="{
 			\"connectionReuse\": true,
 			\"header\": {
 			\"type\": \"http\",
@@ -115,11 +115,11 @@ case "$ss_network" in
 			}
 			}"
 		else
-			local tcp="null"
+			tcp="null"
 		fi        
 	;;
 	kcp)
-		local kcp="{
+		kcp="{
 		\"mtu\": 1350,
 		\"tti\": 50,
 		\"uplinkCapacity\": 12,
@@ -135,14 +135,14 @@ case "$ss_network" in
 		}"
 	;;
 	ws)
-		local ws="{
+		ws="{
 		\"connectionReuse\": true,
 		\"path\": $(get_path $ss_network_path),
 		\"headers\": $(get_ws_header $ss_network_host)
 		}"
 	;;
 	h2)
-		local h2="{
+		h2="{
 	\"path\": $(get_path $ss_network_path),
 	\"host\": $(get_h2_host $ss_network_host)
 	}"

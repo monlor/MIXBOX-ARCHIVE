@@ -12,7 +12,6 @@ if [ "$enable" == '1' ]; then
 
     # readsh "请输入${appname}外网访问配置[1/0]" "openport" "0"
     readsh "重启${appname}服务[1/0] " "res" "1"
-    [ "$res" = '1' -o -z "$res" ] && return 0
-else
-    return 1
+    [ "$res" != '0' ] && exit 0
 fi
+exit 1
