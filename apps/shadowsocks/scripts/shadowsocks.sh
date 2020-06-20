@@ -19,10 +19,16 @@ get_v2ray_bin() {
     logsh "【$service】" "检测v2ray版本，本地版本：$result2，在线版本：$result1"
     if [ "$result1" != "$result2" ]; then
       logsh "【$service】" "版本不一致，正在更新..."
-      wgetsh ${mbroot}/apps/${appname}/bin/v2ray $mburl/appsbin/v2ray-bin/$model/v2ray
-      wgetsh ${mbroot}/apps/${appname}/bin/v2ctl $mburl/appsbin/v2ray-bin/$model/v2ctl
-      chmod +x ${mbroot}/apps/${appname}/bin/v2ray
-      chmod +x ${mbroot}/apps/${appname}/bin/v2ctl
+      wgetsh ${mbtmp}/v2ray $mburl/appsbin/v2ray-bin/$model/v2ray
+      wgetsh ${mbtmp}/v2ctl $mburl/appsbin/v2ray-bin/$model/v2ctl
+      chmod +x ${mbtmp}/v2ray
+      chmod +x ${mbtmp}/v2ctl
+      if ${mbtmp}/v2ray -version &> /dev/null; then
+        mv -f ${mbtmp}/v2ray ${mbroot}/apps/${appname}/bin/v2ray
+        mv -f ${mbtmp}/v2ctl ${mbroot}/apps/${appname}/bin/v2ctl
+      else
+        echo "测试v2ray程序失败！跳过更新..."
+      fi
     fi
   fi
 }

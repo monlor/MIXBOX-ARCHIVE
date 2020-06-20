@@ -78,16 +78,22 @@ sh -c "$(curl -kfsSl https://monlor.coding.net/p/mbfiles/d/mbfiles/git/lfs/maste
 sh -c "$(curl -kfsSl https://raw.githubusercontent.com/monlor/mbfiles/master/install_github.sh)" && source /etc/profile &> /dev/null
 ```
 
+#### ghcdn源一键安装命令
+
+``` shell
+sh -c "$(curl -kfsSl https://cdn.jsdelivr.net/gh/monlor/mbfiles/install_ghcdn.sh)" && source /etc/profile &> /dev/null
+```
+
 ### 手动更新命令
 
 ``` shell
-sh -c "$(curl -kfsSl https://monlor.coding.net/p/mbfiles/d/mbfiles/git/lfs/master/update.sh)" && source /etc/profile &> /dev/null
+sh -c "$(curl -kfsSl https://cdn.jsdelivr.net/gh/monlor/mbfiles/update.sh)" && source /etc/profile &> /dev/null
 ```
 
 ### 手动卸载命令
 
 ``` shell
-sh -c "$(curl -kfsSl https://raw.githubusercontent.com/monlor/MIXBOX/master/apps/mixbox/scripts/uninstall.sh)" && source /etc/profile &> /dev/null
+sh -c "$(curl -kfsSl https://cdn.jsdelivr.net/gh/monlor/MIXBOX/apps/mixbox/scripts/uninstall.sh)" && source /etc/profile &> /dev/null
 ```
 
 #### 一键更新所有插件（请先更新工具箱）
