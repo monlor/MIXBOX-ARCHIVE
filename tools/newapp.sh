@@ -24,27 +24,23 @@ newinfo=""
 version="0.0.1"
 EOF
 echo "生成工具箱配置文件..."
-cat > ${appname}/config/mixbox.conf <<EOF
-#------------------【$2】--------------------
-${appname}() {
+cat > ${appname}/scripts/config.sh <<EOF
+#!/bin/sh
+#copyright by monlor
 
-  eval \`mbdb export ${appname}\`
-  source "\$(mbdb get mixbox.main.path)"/bin/base
-  echo "********* \$service ***********"
-  echo "[\${appinfo}]"
-  readsh "启动\${appname}服务[1/0] " "enable" "1"
-  if [ "\$enable" == '1' ]; then
-      # Scripts Here
-      
-      # readsh "请输入\${appname}外网访问配置[1/0]" "openport" "0"
-      readsh "重启\${appname}服务[1/0] " "res" "1"
-      [ "\$res" = '1' -o -z "\$res" ] && \${mbroot}/apps/\${appname}/scripts/\${appname}.sh restart
-  else
-      \${mbroot}/apps/\${appname}/scripts/\${appname}.sh stop
-  fi
-
-}
-#------------------【$2】--------------------
+eval \`mbdb export ${appname}\`
+source "\$(mbdb get mixbox.main.path)"/bin/base
+echo "********* \$service ***********"
+echo "[\${appinfo}]"
+readsh "启动\${appname}服务[1/0] " "enable" "1"
+if [ "\$enable" == '1' ]; then
+  # Scripts Here
+  
+  # readsh "请输入\${appname}外网访问配置[1/0]" "openport" "0"
+  readsh "重启\${appname}服务[1/0]" "res" "1"
+  [ "\$res" != '0' ] && exit 0
+fi
+exit 1
 EOF
 echo "生成插件运行脚本..."
 cat > ${appname}/scripts/${appname}.sh <<-EOF
