@@ -1,4 +1,4 @@
-e#!/bin/sh
+#!/bin/sh
 #copyright by monlor
 #------------------【Tools】--------------------
 source /etc/mixbox/bin/base
