@@ -13,10 +13,12 @@ start() {
     [ -z "$time" ] && time=10
     
     cru a "${appname}" "*/$time * * * * ${mbroot}/apps/${appname}/scripts/${appname}.sh restart"
-    if [ "${ipv6}" = '1' ]; then
+    if [ "${type}" = '1' -o "${type}" = '2' ]; then
         daemon ${mbroot}/apps/${appname}/bin/${appname} --id "$app_key" --secret "$app_secret" auto-update -6 --domain "$domain"
     fi
-    daemon ${mbroot}/apps/${appname}/bin/${appname} --id "$app_key" --secret "$app_secret" auto-update --domain "$domain" 
+    if [ "${type}" = '0' -o "${type}" = '2' ]; then
+        daemon ${mbroot}/apps/${appname}/bin/${appname} --id "$app_key" --secret "$app_secret" auto-update --domain "$domain" 
+    fi
     if [ $? -ne 0 ]; then
             logsh "【$service】" "启动${appname}服务失败！"
     else
