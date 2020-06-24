@@ -7,7 +7,6 @@ start() {
     # [ -n "$(pidof ${appname})" ] && logsh "【$service】" "${appname}已经在运行！" && exit 1
     logsh "【$service】" "正在启动${appname}服务... "
     # Scripts Here
-    local extra_cmd=""
     # open_port
     # write_firewall_start
     [ -z "$app_key" -o -z "$app_secret" -o -z "$domain" ] && logsh "【$service】" "访问ID或密钥或域名为空！" && exit 1
@@ -15,9 +14,9 @@ start() {
     
     cru a "${appname}" "*/$time * * * * ${mbroot}/apps/${appname}/scripts/${appname}.sh restart"
     if [ "${ipv6}" = '1' ]; then
-        extra_cmd="&& ${mbroot}/apps/${appname}/bin/${appname} --id "$app_key" --secret "$app_secret" auto-update -6 --domain "$domain""
+        daemon ${mbroot}/apps/${appname}/bin/${appname} --id "$app_key" --secret "$app_secret" auto-update -6 --domain "$domain"
     fi
-    daemon ${mbroot}/apps/${appname}/bin/${appname} --id "$app_key" --secret "$app_secret" auto-update --domain "$domain" ${extra_cmd}
+    daemon ${mbroot}/apps/${appname}/bin/${appname} --id "$app_key" --secret "$app_secret" auto-update --domain "$domain" 
     if [ $? -ne 0 ]; then
             logsh "【$service】" "启动${appname}服务失败！"
     else
