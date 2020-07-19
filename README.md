@@ -61,15 +61,16 @@
 * **经测试`R3`不支持`EntWare`环境，原因未知，所以基于`EntWare`的程序都无法使用**
 * **0.1.9.7以前的版本请手动更换下载源**，步骤：mixbox => 工具箱管理 => 更换下载源 => 输入以下地址
 ```
-https://monlor.coding.net/p/mbfiles/d/mbfiles/git/lfs/master
+https://cdn.jsdelivr.net/gh/monlor/mbfiles
 ```
+* 默认源更换为jsdelivr源，coding源不再使用
 
 ### 命令
 
 #### 一键安装
 
 ``` shell
-sh -c "$(curl -kfsSl https://monlor.coding.net/p/mbfiles/d/mbfiles/git/lfs/master/install.sh)" && source /etc/profile &> /dev/null
+sh -c "$(curl -kfsSl https://cdn.jsdelivr.net/gh/monlor/mbfiles/install.sh)" && source /etc/profile &> /dev/null
 ```
 
 #### github源一键安装命令
