@@ -1,7 +1,7 @@
 service="HttpFile"
 appname="httpfile"
 needver="0.0.1"
-supports="linux_arm,linux_mips,linux_x86_64"
+supports="linux_aarch64,linux_arm,linux_mips,linux_x86_64"
 newinfo="脚本逻辑错误"
 appinfo="搭建简单的web文件浏览页面"
 version="0.0.3"

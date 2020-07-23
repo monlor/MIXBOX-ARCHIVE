@@ -1,7 +1,7 @@
 service="EasyExplorer"
 appname="easyexplorer"
 needver="0.0.1"
-supports="linux_aarch64,linux_arm,linux_x86_64,darwin_x86_64"
+supports="linux_aarch64,linux_aarch64,linux_arm,linux_x86_64,darwin_x86_64"
 appinfo="一款跨设备的P2P文件同步工具"
 newinfo="修复程序无法运行的bug，更新二进制版本为最新版"
 version="0.0.5"
