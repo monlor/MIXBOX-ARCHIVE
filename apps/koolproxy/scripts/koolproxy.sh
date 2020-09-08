@@ -219,14 +219,14 @@ detect_cert () {
     fi
 }
 
-update_userrule () {
-    result=$(mbdb get ${appname}.main.autorule)
-    if [ "$result" == '1' ]; then
-        cru a "${appname}"_rule "20 5 * * * ${mbroot}/apps/${appname}/scripts/updaterules.sh"
-    else
-        cru d "${appname}"_rule
-    fi
-}
+# update_userrule () {
+#     result=$(mbdb get ${appname}.main.autorule)
+#     if [ "$result" == '1' ]; then
+#         cru a "${appname}"_rule "20 5 * * * ${mbroot}/apps/${appname}/scripts/updaterules.sh"
+#     else
+#         cru d "${appname}"_rule
+#     fi
+# }
 
 start () {
 
@@ -238,7 +238,7 @@ start () {
     cru a "${appname}" "0 6 * * * ${mbroot}/apps/${appname}/scripts/${appname}.sh restart"
     [ -z $mode ] && logsh "【$service】" "${appname}未配置" && exit
     detect_cert
-    update_userrule
+    # update_userrule
     update_rules
     start_koolproxy
     add_ipset_conf && restart_dnsmasq
