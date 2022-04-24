@@ -1,0 +1,8 @@
+service="LingMaxDNS"
+appname="lingmaxdns"
+needver="0.0.1"
+backupfiles=""
+supports="linux_aarch64,linux_arm,linux_mips"
+appinfo="DNS优化插件，类似SmartDNS"
+newinfo=""
+version="0.0.1"
