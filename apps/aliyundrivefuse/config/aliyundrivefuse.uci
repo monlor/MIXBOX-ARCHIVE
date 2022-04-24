@@ -1,0 +1,8 @@
+service="AliyunDriveFuse"
+appname="aliyundrivefuse"
+needver="0.0.1"
+backupfiles=""
+supports="linux_aarch64,linux_arm"
+appinfo="阿里云盘 FUSE 磁盘挂载"
+newinfo=""
+version="0.0.1"
