@@ -12,6 +12,13 @@
 
 ### [更新日志](https://github.com/monlor/MIXBOX/blob/master/changelog.md)
 
+### 2022-04-25
+* 更新frp版本0.42.0
+* 添加插件[aliyundrive-fuse](https://github.com/messense/aliyundrive-fuse), [LingMaxDns](https://www.right.com.cn/forum/thread-8137820-1-1.html)
+
+#### 2022-04-18
+* 由于部分地区安装失败，现在新增 ghproxy 源、github.do 源
+* 如果还是安装失败，可能因为 CDN 未同步，请在24小时后继续尝试，或者尝试其他源
 
 ### 介绍
 
@@ -67,22 +74,34 @@ https://cdn.jsdelivr.net/gh/monlor/mbfiles
 
 ### 命令
 
-#### 一键安装
+#### 本站提供的下载源，基于 cloudflare 搭建【NEW】
+
+```shell
+export MB_URL=https://g.monlor.com/https://raw.githubusercontent.com/monlor/mbfiles/master && sh -c "$(curl -kfsSl ${MB_URL}/install.sh)" && source /etc/profile &> /dev/null
+```
+
+#### ghproxy源一键安装命令【NEW】
 
 ``` shell
-sh -c "$(curl -kfsSl https://cdn.jsdelivr.net/gh/monlor/mbfiles/install.sh)" && source /etc/profile &> /dev/null
+export MB_URL=https://ghproxy.com/https://raw.githubusercontent.com/monlor/mbfiles/master && sh -c "$(curl -kfsSl ${MB_URL}/install.sh)" && source /etc/profile &> /dev/null
+```
+
+#### github.do源一键安装命令【NEW】
+
+``` shell
+export MB_URL=https://github.do/https://raw.githubusercontent.com/monlor/mbfiles/master && sh -c "$(curl -kfsSl ${MB_URL}/install.sh)" && source /etc/profile &> /dev/null
 ```
 
 #### github源一键安装命令
 
 ``` shell
-sh -c "$(curl -kfsSl https://raw.githubusercontent.com/monlor/mbfiles/master/install_github.sh)" && source /etc/profile &> /dev/null
+export MB_URL=https://raw.githubusercontent.com/monlor/mbfiles/master && sh -c "$(curl -kfsSl ${MB_URL}/install.sh)" && source /etc/profile &> /dev/null
 ```
 
-#### ghcdn源一键安装命令
+#### jsdelivr源一键安装命令
 
 ``` shell
-sh -c "$(curl -kfsSl https://cdn.jsdelivr.net/gh/monlor/mbfiles/install_ghcdn.sh)" && source /etc/profile &> /dev/null
+export MB_URL=https://cdn.jsdelivr.net/gh/monlor/mbfiles && sh -c "$(curl -kfsSl ${MB_URL}/install.sh)" && source /etc/profile &> /dev/null
 ```
 
 ### 手动更新命令
