@@ -14,7 +14,7 @@
 
 ### 2022-04-25
 * 更新frp版本0.42.0
-* 添加插件[aliyundrive-fuse](https://github.com/messense/aliyundrive-fuse), [LingMaxDns](https://www.right.com.cn/forum/thread-8137820-1-1.html)
+* 【测试版】添加插件[aliyundrive-fuse](https://github.com/messense/aliyundrive-fuse), [LingMaxDns](https://www.right.com.cn/forum/thread-8137820-1-1.html)
 
 #### 2022-04-18
 * 由于部分地区安装失败，现在新增 ghproxy 源、github.do 源
