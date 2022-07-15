@@ -13,16 +13,7 @@ koolproxy_acl_default_mode=${koolproxy_acl_default_mode:-1}
 # 1|fanboy.txt|https://kprule.com/fanboy.txt|Fanboy规则
 
 update_rules() {
-
-    logsh "【$service】" "下载kp规则：koolproxy.txt..."
-    wgetsh ${mbroot}/apps/${appname}/bin/data/rules/koolproxy.txt ${kp_rule_koolproxy}
-
-    logsh "【$service】" "下载kp规则：daily.txt..."
-    wgetsh ${mbroot}/apps/${appname}/bin/data/rules/daily.txt ${kp_rule_daily}
-
-    logsh "【$service】" "下载kp规则：kp.dat..."
-    wgetsh ${mbroot}/apps/${appname}/bin/data/rules/kp.dat ${kp_rule_dat}
-
+    ${mbroot}/apps/${appname}/scripts/updaterules.sh
 }
 
 start_koolproxy () {
