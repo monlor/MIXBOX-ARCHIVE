@@ -9,6 +9,7 @@ open_ports() {
     [ -n "$http_port" ] && open_port $http_port
     [ -n "$https_port" ] && open_port $https_port
     [ -n "$dashboard_port" ] && open_port $dashboard_port
+    [ -n "$allow_tcp_ports" ] && open_port ${allow_tcp_ports//-/:}
 }
 
 start() {
@@ -39,6 +40,7 @@ token = $token
 #max_ports_per_client = 0
 #authentication_timeout = 900
 `[ -n "$subdomain" ] && echo "subdomain_host = $subdomain"`
+`[ -n "$allow_tcp_ports" ] && echo "allow_ports = $allow_tcp_ports"`
 tcp_mux = true
 EOF
 	daemon ${mbroot}/apps/${appname}/bin/${appname} -c ${mbroot}/apps/${appname}/config/${appname}.conf

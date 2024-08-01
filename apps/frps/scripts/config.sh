@@ -18,6 +18,7 @@ if [ "$enable" == '1' ]; then
 		readsh "请输入${appname}的kcp配置[1/0]" "kcp" "1"
 		readsh "请输入${appname}用于http穿透的端口号" "http_port" "90"
 		readsh "请输入${appname}用于https穿透的端口号" "https_port" "91"
+		readsh "请输入${appname}用于tcp的端口号" "allow_tcp_ports" "10001-11000"
 		readsh "请输入${appname}访问密钥" "token" "12345678"
 		readsh "请输入${appname}子域名" "subdomain" 
 		read -p "是否启用${appname}的web控制面板？[1/0] " res
